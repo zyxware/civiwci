@@ -1,6 +1,6 @@
 -- WCI progress bar.
 CREATE TABLE IF NOT EXISTS civicrm_wci_progress_bar (
-  id int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Custom Progress bar Id',
+  id int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Custom Progress bar Id.',
   name varchar(64) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Name of progress bar.',
   starting_amount float unsigned NULL COMMENT 'Arbitrary starting amount for progress bar.',
   PRIMARY KEY (`id`),
@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS civicrm_wci_progress_bar (
 
 -- WCI progress bar formula
 CREATE TABLE IF NOT EXISTS civicrm_wci_progress_bar_formula (
-  id int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Formula entry Id',
+  id int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Formula entry Id.',
   contribution_page_id int(10) unsigned NOT NULL COMMENT 'Reference contribution page id.',
   progress_bar_id int(10) unsigned DEFAULT NULL COMMENT 'Custom Progress bar reference id.',
   percentage float unsigned NULL COMMENT 'Percentage amount.',
@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS civicrm_wci_progress_bar_formula (
 
 -- WCI widget
 CREATE TABLE IF NOT EXISTS civicrm_wci_widget (
-  id int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Widget Id',
+  id int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Widget Id.',
   title varchar(64) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Widget title.',
   logo_image varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Image url of widget logo image.',
   image varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Url of widget image.',
@@ -30,9 +30,9 @@ CREATE TABLE IF NOT EXISTS civicrm_wci_widget (
   email_signup_group_id int(10) unsigned DEFAULT NULL COMMENT 'Group reference for email newsletter signup.',
   size_variant varchar(25) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Widget size variant.',
   color_title varchar(10) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Widget title color.',
-  color_title_background varchar(10) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Widget title background color.',
+  color_title_bg varchar(10) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Widget title background color.',
   color_progress_bar varchar(10) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Progress bar color.',
-  color_widget_bg varchar(10) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Widget title color.',
+  color_widget_bg varchar(10) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Widget background color.',
   color_description varchar(10) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Widget description color.',
   color_border varchar(10) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Widget border color.',
   color_button varchar(10) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Widget button text color.',

@@ -1,15 +1,9 @@
 <?xml version="1.0"?>
 <menu>
   <item>
-    <path>civicrm/wci</path>
-    <page_callback>CRM_Wci_Page_WCIDashboard</page_callback>
-    <title>WCIDashboard</title>
-    <access_arguments>access CiviCRM</access_arguments>
-  </item>
-  <item>
-    <path>civicrm/wci/create-widget</path>
+    <path>civicrm/wci/widget/add</path>
     <page_callback>CRM_Wci_Form_CreateWidget</page_callback>
-    <title>CreateWidget</title>
+    <title>Create Widget</title>
     <access_arguments>access CiviCRM</access_arguments>
   </item>
 </menu>

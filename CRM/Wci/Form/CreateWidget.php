@@ -9,8 +9,20 @@ require_once 'CRM/Core/Form.php';
  */
 class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
   
+  /**
+   * the widget id saved to the session for an update
+   *
+   * @var int
+   * @access protected
+   */
+  protected $_id;
+  
   function preProcess() {
     parent::preProcess();
+
+    $this->_id = CRM_Utils_Request::retrieve('id', 'Positive',
+      $this, FALSE, NULL, 'REQUEST'
+    );
 
     $this->_colorFields = array('color_title' => array(ts('Title Text Color'),
         'text',
@@ -60,6 +72,17 @@ class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
     );
   }
 
+  function setDefaultValues() {
+    $defaults = array();
+    
+    $defaults['size_variant'] = 'normal';
+    foreach ($this->_colorFields as $name => $val) {
+      $defaults[$name] = $val[3];
+    }
+
+    return $defaults;
+  }
+
   function buildQuickForm() {
     
     // add form elements
@@ -69,7 +92,7 @@ class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
     $this->add('select', 'button_link_to', ts('Contribution button'), $this->getContributionPageOptions());
     $this->add('text', 'button_title', ts('Contribution button title'));
     $this->add('select', 'progress_bar', ts('Progress bar'), array('' => '- select -'));
-    $this->add('textarea', 'description', ts('Description'));
+    $this->addWysiwyg('description', ts('Description'), '');
     $this->add('select', 'email_signup_group_id', ts('Newsletter signup'), $this->getGroupOptions());
     $this->add('select', 'size_variant', ts('Size variant'), $this->getSizeOptions());
     foreach ($this->_colorFields as $name => $val) {
@@ -82,7 +105,7 @@ class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
     }
     $this->add('textarea', 'style_rules', ts('Additional Style Rules'));
     $this->add('checkbox', 'override', ts('Override default template'));
-    $this->add('textarea', 'custom_template', ts('Custom template'));
+    $this->addWysiwyg('custom_template', ts('Custom template'), '');
     $this->addButtons(array(
       array(
         'type' => 'submit',
@@ -107,7 +130,7 @@ class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
       '' => ts('- select -'),
     );
     
-    $result = civicrm_api3('contribution_page', 'get');    
+    $result = civicrm_api3('contribution_page', 'get');
     foreach ($result['values'] as $contribution_page) {
       $options[$contribution_page['id']] = $contribution_page['title'];
     }
@@ -130,7 +153,6 @@ class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
 
   function getSizeOptions() {
     $options = array(
-      '' => ts('- select -'),
       'thin' => ts('Thin'),
       'normal' => ts('Normal'),
       'wide' => ts('Wide'),

@@ -3,6 +3,7 @@ CREATE TABLE IF NOT EXISTS civicrm_wci_progress_bar (
   id int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Custom Progress bar Id.',
   name varchar(64) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Name of progress bar.',
   starting_amount float unsigned NULL COMMENT 'Arbitrary starting amount for progress bar.',
+  goal_amount float unsigned NULL COMMENT 'Goal amount for progress bar.',
   PRIMARY KEY (`id`),
   UNIQUE KEY `unique_wci_name` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;

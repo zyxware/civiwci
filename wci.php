@@ -108,16 +108,6 @@ function wci_civicrm_alterSettingsFolders(&$metaDataFolders = NULL) {
 }
 
 function wci_civicrm_navigationMenu( &$params ) {
-  echo "test";
-
- // Check that our item doesn't already exist
-  $menu_item_search = array('url' => 'civicrm/trends');
-  $menu_items = array();
-  CRM_Core_BAO_Navigation::retrieve($menu_item_search, $menu_items);
- 
-  if ( ! empty($menu_items) ) {
-    return;
-  }
  
   $navId = CRM_Core_DAO::singleValueQuery("SELECT max(id) FROM civicrm_navigation");
   if (is_integer($navId)) {

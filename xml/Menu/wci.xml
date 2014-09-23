@@ -6,4 +6,10 @@
     <title>Create Widget</title>
     <access_arguments>access CiviCRM</access_arguments>
   </item>
+  <item>
+    <path>civicrm/wci/progress-bar/add</path>
+    <page_callback>CRM_Wci_Form_ProgressBar</page_callback>
+    <title>ProgressBar</title>
+    <access_arguments>access CiviCRM</access_arguments>
+  </item>
 </menu>

@@ -43,7 +43,7 @@ class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
     $this->add(
       'text', // field type
       'percentage_1', // field name
-      'percentage', // field label
+      'Percentage', // field label
       true // is required
     );
     

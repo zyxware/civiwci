@@ -46,20 +46,12 @@ class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
       'percentage', // field label
       true // is required
     );
-    //$this->getElement('percentage')->setAttribute("id", "percentage");
     
     $this->addElement('link', 'addmore_link',' ', 'addmore', 'Add more');
-//    $this->addElement('link', 'remove_link',' ', 'remove', 'Remove');
 
     $this->addElement('hidden', 'contrib_count', '1');
-    //$this->getElement('contrib_count')->setAttribute("id", "count");
 
     $this->addButtons(array(
-      array(
-        'type' => 'text',
-        'name' => ts('Add More'),
-        'isDefault' => FALSE,
-      ),
       array(
         'type' => 'submit',
         'name' => ts('Save'),
@@ -77,26 +69,9 @@ class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
   echo "post pro";
     $values = $this->exportValues();
     $options = $this->getColorOptions();
-/*    CRM_Core_Session::setStatus(ts('You picked color "%1"', array(
-      1 => $options[$values['favorite_color']]
-    )));*/
+
     parent::postProcess();
   }
-  
-/*
-  function getColorOptions() {
-    $options = array(
-      '' => ts('- select -'),
-      '#f00' => ts('Red'),
-      '#0f0' => ts('Green'),
-      '#00f' => ts('Blue'),
-      '#f0f' => ts('Purple'),
-    );
-    foreach (array('1','2','3','4','5','6','7','8','9','a','b','c','d','e') as $f) {
-      $options["#{$f}{$f}{$f}"] = ts('Grey (%1)', array(1 => $f));
-    }
-    return $options;
-  }*/
 
   /**
    * Get the fields/elements defined in this form.
@@ -119,9 +94,3 @@ class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
   }
 }
 
-function wci__civicrm_buildForm( $formName, &$form )
-{
-echo "hi<br>";
-    //CRM_Core_Resources::singleton()->addScriptFile('wci', 'addmore.js');
-    CRM_Core_Resources::singleton()->addScriptFile('org.civicrm.wci', 'addmore.js');  
-}

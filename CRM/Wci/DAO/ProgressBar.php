@@ -147,6 +147,11 @@ class CRM_WCI_DAO_ProgressBar extends CRM_Core_DAO
           'type' => CRM_Utils_Type::T_FLOAT,
           'required' => false,
         ) ,
+        'goal_amount' => array(
+          'name' => 'goal_amount',
+          'type' => CRM_Utils_Type::T_FLOAT,
+          'required' => false,
+        ) ,
       );
     }
     return self::$_fields;
@@ -165,6 +170,7 @@ class CRM_WCI_DAO_ProgressBar extends CRM_Core_DAO
         'id' => 'progress_bar_id',
         'name' => 'name',
         'starting_amount' => 'starting_amount',
+        'goal_amount' => 'goal_amount',
       );
     }
     return self::$_fieldKeys;

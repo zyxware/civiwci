@@ -176,7 +176,8 @@ function wci_civicrm_navigationMenu( &$params ) {
               'parentID' => navId, 
               'navID' => $navId+4,
               'active' => 1)),           
-              )
+              ),
+              
   );
 }
 

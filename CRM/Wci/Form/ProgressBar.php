@@ -2,6 +2,7 @@
 
 require_once 'CRM/Core/Form.php';
 require_once 'wci-helper-functions.php';
+require_once 'CRM/Wci/BAO/ProgressBar.php';
 
 /**
  * Form controller class
@@ -11,6 +12,7 @@ require_once 'wci-helper-functions.php';
 class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
   
   function preProcess() {
+  
     CRM_Core_Resources::singleton()->addScriptFile('org.civicrm.wci', 'addmore.js');
     parent::preProcess();
   }
@@ -66,9 +68,33 @@ class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
   }
 
   function postProcess() {
-  echo "post pro";
-    $values = $this->exportValues();
-    $options = $this->getColorOptions();
+    $progressbar_id = 1;
+
+    $sql = "INSERT INTO civicrm_wci_progress_bar (name, starting_amount, goal_amount) 
+    VALUES ('" . $_REQUEST['progressbar_name'] . "','" . $_REQUEST['starting_amount'] . "','" . $_REQUEST['goal_amount'] . "')";
+
+    CRM_Core_DAO::singleValueQuery($sql);
+
+    $progressbar_id = CRM_Core_DAO::singleValueQuery('SELECT LAST_INSERT_ID()');
+    echo $progressbar_id;
+      
+    for($i = 1; $i <= (int)$_REQUEST['contrib_count']; $i++):
+      $page = 'contribution_page_' . (string)$i;
+      $perc = 'percentage_' . (string)$i;
+      echo $page;
+      echo "<br>";      
+      echo $perc;
+      echo "<br>";   
+      echo $_REQUEST[$page];
+
+      $sql = "INSERT INTO civicrm_wci_progress_bar_formula (contribution_page_id, progress_bar_id, percentage) 
+      VALUES ('" . $_REQUEST[$page] . "','" . $progressbar_id . "','" . $_REQUEST[$perc] . "')";
+      
+      CRM_Core_DAO::singleValueQuery($sql);
+
+      //print($sql);
+
+    endfor;
 
     parent::postProcess();
   }

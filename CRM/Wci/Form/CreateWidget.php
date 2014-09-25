@@ -1,6 +1,7 @@
 <?php
 
 require_once 'CRM/Core/Form.php';
+require_once 'wci-helper-functions.php';
 
 /**
  * Form controller class
@@ -89,7 +90,7 @@ class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
     $this->add('text', 'title', ts('Title'),true);
     $this->add('text', 'logo_image', ts('Logo image'));
     $this->add('text', 'image', ts('Image'));
-    $this->add('select', 'button_link_to', ts('Contribution button'), $this->getContributionPageOptions());
+    $this->add('select', 'button_link_to', ts('Contribution button'), getContributionPageOptions());
     $this->add('text', 'button_title', ts('Contribution button title'));
     $this->add('select', 'progress_bar', ts('Progress bar'), array('' => '- select -'));
     $this->addWysiwyg('description', ts('Description'), '');
@@ -120,6 +121,7 @@ class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
   }
 
   function postProcess() {
+
     $values = $this->exportValues();
     
     parent::postProcess();

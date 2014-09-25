@@ -169,7 +169,7 @@ function _wci_civix_civicrm_managed(&$entities) {
     $es = include $file;
     foreach ($es as $e) {
       if (empty($e['module'])) {
-        $e['module'] = 'civicrm-wci';
+        $e['module'] = 'org.civicrm.wci';
       }
       $entities[] = $e;
     }
@@ -198,7 +198,7 @@ function _wci_civix_civicrm_caseTypes(&$caseTypes) {
       // throw new CRM_Core_Exception($errorMessage);
     }
     $caseTypes[$name] = array(
-      'module' => 'civicrm-wci',
+      'module' => 'org.civicrm.wci',
       'name' => $name,
       'file' => $file,
     );

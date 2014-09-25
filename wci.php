@@ -179,3 +179,5 @@ function wci_civicrm_navigationMenu( &$params ) {
               )
   );
 }
+
+

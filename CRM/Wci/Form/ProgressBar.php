@@ -68,35 +68,30 @@ class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
   }
 
   function postProcess() {
-    $progressbar_id = 1;
 
     $sql = "INSERT INTO civicrm_wci_progress_bar (name, starting_amount, goal_amount) 
     VALUES ('" . $_REQUEST['progressbar_name'] . "','" . $_REQUEST['starting_amount'] . "','" . $_REQUEST['goal_amount'] . "')";
 
-    CRM_Core_DAO::singleValueQuery($sql);
+    CRM_Core_DAO::executeQuery($sql);
+    try {
+      $progressbar_id = CRM_Core_DAO::singleValueQuery('SELECT LAST_INSERT_ID()');
+      for($i = 1; $i <= (int)$_REQUEST['contrib_count']; $i++):
+        $page = 'contribution_page_' . (string)$i;
+        $perc = 'percentage_' . (string)$i;
 
-    $progressbar_id = CRM_Core_DAO::singleValueQuery('SELECT LAST_INSERT_ID()');
-    echo $progressbar_id;
-      
-    for($i = 1; $i <= (int)$_REQUEST['contrib_count']; $i++):
-      $page = 'contribution_page_' . (string)$i;
-      $perc = 'percentage_' . (string)$i;
-      echo $page;
-      echo "<br>";      
-      echo $perc;
-      echo "<br>";   
-      echo $_REQUEST[$page];
-
-      $sql = "INSERT INTO civicrm_wci_progress_bar_formula (contribution_page_id, progress_bar_id, percentage) 
-      VALUES ('" . $_REQUEST[$page] . "','" . $progressbar_id . "','" . $_REQUEST[$perc] . "')";
-      
-      CRM_Core_DAO::singleValueQuery($sql);
-
-      //print($sql);
-
-    endfor;
-
+        $sql = "INSERT INTO civicrm_wci_progress_bar_formula (contribution_page_id, progress_bar_id, percentage) 
+        VALUES ('" . $_REQUEST[$page] . "','" . $progressbar_id . "','" . $_REQUEST[$perc] . "')";
+        
+        CRM_Core_DAO::executeQuery($sql);
+      endfor;
+    }    
+    catch (Exception $e) {
+      //TODO
+      print_r($e);
+    }      
     parent::postProcess();
+    $elem = $this->getElement('contrib_count');
+    $elem->setValue('1');    
   }
 
   /**

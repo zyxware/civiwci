@@ -2,13 +2,38 @@
 
 cj(function ( $ ) { 
 
+$("#ProgressBar").validate({
+  rules: {
+    starting_amount: {
+      required: true,
+      number: true
+    },
+    progressbar_name: {
+      required: true
+    },
+    goal_amount: {
+      required: true,
+      number: true
+    },
+    contribution_page_1: {
+      required: true
+    },
+    percentage_1: {
+      required: true,
+      max: 100,
+      number: true
+    }
+  }
+});
+
+
+
     $('#addmore_link').on('click', function( e ) {
     e.preventDefault();
     var count = parseInt($('input[name=contrib_count]').val());
     count++;
 
-    var c_page_sel = $('select[name=contribution_page_1]').clone().attr('id', 'choices_' + $(this).index());
-    c_page_sel.attr("id", "contribution_page_" + count);
+    var c_page_sel = $('select[name=contribution_page_1]').clone().attr('id', "contribution_page_" + count);
     c_page_sel.attr("name", "contribution_page_" + count);
 
     var id_section = "crm-section-con-" + count;
@@ -27,10 +52,21 @@ cj(function ( $ ) {
 
     id_content = "content_per-" + count;
     $('#' + id_section).append("<div class=\"content\" id="+ id_content + ">");
-    $('#' + id_content).append('<input type="text" size="20" name="percentage_' + count +'" value="" />');
+    $('#' + id_content).append('<input type="text" size="20" id = percentage_'+ count + ' name="percentage_' + count +'" value="" />');
     $('#' + id_section).append("</div");
+
+    $( "#contribution_page_" + count).rules( "add", {
+      required: true
+    });
+    
+    $( "#percentage_" + count).rules( "add", {
+      required: true,
+      max: 100,
+      number: true
+    });
     
     $('input[name=contrib_count]').val(count);
+    
 });
 
   $('#remove_link').live('click', function( e ) {

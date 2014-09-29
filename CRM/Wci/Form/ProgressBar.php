@@ -71,9 +71,10 @@ class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
 
     $sql = "INSERT INTO civicrm_wci_progress_bar (name, starting_amount, goal_amount) 
     VALUES ('" . $_REQUEST['progressbar_name'] . "','" . $_REQUEST['starting_amount'] . "','" . $_REQUEST['goal_amount'] . "')";
-
-    CRM_Core_DAO::executeQuery($sql);
+    $errorScope = CRM_Core_TemporaryErrorScope::useException();
     try {
+      $transaction = new CRM_Core_Transaction();
+      CRM_Core_DAO::executeQuery($sql);
       $progressbar_id = CRM_Core_DAO::singleValueQuery('SELECT LAST_INSERT_ID()');
       for($i = 1; $i <= (int)$_REQUEST['contrib_count']; $i++):
         $page = 'contribution_page_' . (string)$i;
@@ -87,7 +88,8 @@ class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
     }    
     catch (Exception $e) {
       //TODO
-      print_r($e);
+      print_r($e->getMessage());
+      $transaction->rollback();
     }      
     parent::postProcess();
     $elem = $this->getElement('contrib_count');

@@ -118,65 +118,65 @@ function wci_civicrm_navigationMenu( &$params ) {
   $params[$navId] = $params[$helpID]; 
   // inserting WCI menu at the place of old help location
   $params[$helpID] = array (
-          'attributes' => array (
-          'label' => ts('WCI'),
-          'name' => 'WCI',
-          'url' => null,
-          'permission' => 'access CiviReport,access CiviContribute',
-          'operator' => 'OR',
-          'separator' => 0,
-          'parentID' => 0, 
-          'navID' => $navId,
-          'active' => 1),
-          'child' =>  array (
-              '1' => array (
-              'attributes' => array (
-              'label' => ts('New widget'),
-              'name' => 'new_widget',
-              'url' => 'civicrm/wci/widget/add',
-              'permission' => 'access CiviReport,access CiviContribute',
-              'operator' => 'OR',
-              'separator' => 1,
-              'parentID' => navId, 
-              'navID' => $navId+1,
-              'active' => 1)),
-              
-              '2' => array (
-              'attributes' => array (
-              'label' => ts('Manage widget'),
-              'name' => 'manage_widget',
-              'url' => 'civicrm/wci/widget',
-              'permission' => 'access CiviReport,access CiviContribute',
-              'operator' => 'OR',
-              'separator' => 1,
-              'parentID' => navId, 
-              'navID' => $navId+2,
-              'active' => 1)),
-              
-              '3' => array (
-              'attributes' => array (
-              'label' => ts('New Progress bar'),
-              'name' => 'new_progress_bar',
-              'url' => 'civicrm/wci/progress-bar/add',
-              'permission' => 'access CiviReport,access CiviContribute',
-              'operator' => 'OR',
-              'separator' => 1,
-              'parentID' => navId, 
-              'navID' => $navId+3,
-              'active' => 1)),
-              
-              '4' => array (
-              'attributes' => array (
-              'label' => ts('Manage Progress bar'),
-              'name' => 'manage_progress_bar',
-              'url' => 'civicrm/wci/progress-bar',
-              'permission' => 'access CiviReport,access CiviContribute',
-              'operator' => 'OR',
-              'separator' => 1,
-              'parentID' => navId, 
-              'navID' => $navId+4,
-              'active' => 1)),           
-              )
+    'attributes' => array (
+    'label' => ts('WCI'),
+    'name' => 'WCI',
+    'url' => null,
+    'permission' => 'access CiviReport,access CiviContribute',
+    'operator' => 'OR',
+    'separator' => 0,
+    'parentID' => 0, 
+    'navID' => $navId,
+    'active' => 1),
+    'child' =>  array (
+        '1' => array (
+        'attributes' => array (
+        'label' => ts('New widget'),
+        'name' => 'new_widget',
+        'url' => 'civicrm/wci/widget/add',
+        'permission' => 'access CiviReport,access CiviContribute',
+        'operator' => 'OR',
+        'separator' => 1,
+        'parentID' => navId, 
+        'navID' => $navId+1,
+        'active' => 1)),
+        
+        '2' => array (
+        'attributes' => array (
+        'label' => ts('Manage widget'),
+        'name' => 'manage_widget',
+        'url' => 'civicrm/wci/widget',
+        'permission' => 'access CiviReport,access CiviContribute',
+        'operator' => 'OR',
+        'separator' => 1,
+        'parentID' => navId, 
+        'navID' => $navId+2,
+        'active' => 1)),
+        
+        '3' => array (
+        'attributes' => array (
+        'label' => ts('New Progress bar'),
+        'name' => 'new_progress_bar',
+        'url' => 'civicrm/wci/progress-bar/add',
+        'permission' => 'access CiviReport,access CiviContribute',
+        'operator' => 'OR',
+        'separator' => 1,
+        'parentID' => navId, 
+        'navID' => $navId+3,
+        'active' => 1)),
+        
+        '4' => array (
+        'attributes' => array (
+        'label' => ts('Manage Progress bar'),
+        'name' => 'manage_progress_bar',
+        'url' => 'civicrm/wci/progress-bar',
+        'permission' => 'access CiviReport,access CiviContribute',
+        'operator' => 'OR',
+        'separator' => 1,
+        'parentID' => navId, 
+        'navID' => $navId+4,
+        'active' => 1)),           
+        ),
   );
 }
 

@@ -31,6 +31,7 @@
  * @copyright CiviCRM LLC (c) 2004-2013
  *
  */
+require_once 'CRM/Wci/DAO/ProgressBar.php';
 
 class CRM_WCI_BAO_ProgressBar extends CRM_WCI_DAO_ProgressBar {
 

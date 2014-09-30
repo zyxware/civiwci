@@ -2,33 +2,31 @@
 
 cj(function ( $ ) { 
 
-$("#ProgressBar").validate({
-  rules: {
-    starting_amount: {
-      required: true,
-      number: true
-    },
-    progressbar_name: {
-      required: true
-    },
-    goal_amount: {
-      required: true,
-      number: true
-    },
-    contribution_page_1: {
-      required: true
-    },
-    percentage_1: {
-      required: true,
-      max: 100,
-      number: true
+  $("#ProgressBar").validate({
+    rules: {
+      starting_amount: {
+        required: true,
+        number: true
+      },
+      progressbar_name: {
+        required: true
+      },
+      goal_amount: {
+        required: true,
+        number: true
+      },
+      contribution_page_1: {
+        required: true
+      },
+      percentage_1: {
+        required: true,
+        max: 100,
+        number: true
+      }
     }
-  }
-});
+  });
 
-
-
-    $('#addmore_link').on('click', function( e ) {
+  $('#addmore_link').on('click', function( e ) {
     e.preventDefault();
     var count = parseInt($('input[name=contrib_count]').val());
     count++;
@@ -67,7 +65,7 @@ $("#ProgressBar").validate({
     
     $('input[name=contrib_count]').val(count);
     
-});
+  });
 
   $('#remove_link').live('click', function( e ) {
     e.preventDefault();

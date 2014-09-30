@@ -18,4 +18,10 @@
     <title>TestBar</title>
     <access_arguments>access CiviCRM</access_arguments>
   </item>
+  <item>
+    <path>civicrm/wci/progress-bar</path>
+    <page_callback>CRM_Wci_Page_ProgressBarList</page_callback>
+    <title>ProgressBarList</title>
+    <access_arguments>access CiviCRM</access_arguments>
+  </item>
 </menu>

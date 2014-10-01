@@ -77,7 +77,8 @@ cj(function ( $ ) {
 
     $('#crm-section-con-'+ rem_name_ar[1] +'').remove();
     $('#crm-section-per-'+ rem_name_ar[1] +'').remove();
-
+    var count = parseInt($('input[name=contrib_count]').val());
+    count--;
+    $('input[name=contrib_count]').val(count);
   });
- 
 });

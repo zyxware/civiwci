@@ -123,12 +123,12 @@ class CRM_WCI_DAO_ProgressBarFormula extends CRM_Core_DAO
    */
   static function getReferenceColumns()
   {
-    if (!self::$_links) {
+    /*if (!self::$_links) {
       self::$_links = array(
         new CRM_Core_EntityReference(self::getTableName() , 'progress_bar_id', 'civicrm_wci_progress_bar', 'id') ,
         new CRM_Core_EntityReference(self::getTableName() , 'contribution_page_id', 'civicrm_contribution_page', 'id') ,
       );
-    }
+    }*/
     return self::$_links;
   }
   /**

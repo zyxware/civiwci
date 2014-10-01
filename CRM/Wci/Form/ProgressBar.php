@@ -13,16 +13,16 @@ require_once 'CRM/Wci/DAO/ProgressBarFormula.php';
 class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
   private $_id;  
   function preProcess() {
+    $this->_id = CRM_Utils_Request::retrieve('id', 'Positive', $this, FALSE, NULL, 'REQUEST');
     CRM_Core_Resources::singleton()->addScriptFile('org.civicrm.wci', 'addmore.js');
     parent::preProcess();
-
   }
-  function FillData() {
-    $_id = CRM_Utils_Request::retrieve('id', 'Positive',
-      $this, FALSE, NULL, 'REQUEST'
-    );
-    if (isset($_id)) {
-      $query = "SELECT * FROM civicrm_wci_progress_bar where id=" . $_id;
+  function fill_data() {
+//    $_id = CRM_Utils_Request::retrieve('id', 'Positive', $this, FALSE, NULL, 'REQUEST');
+    $count = 1;
+    if (isset($this->_id)) {  
+      /** Updating existing progress bar*/
+      $query = "SELECT * FROM civicrm_wci_progress_bar where id=" . $this->_id;
       $params = array();
       
       $dao = CRM_Core_DAO::executeQuery($query, $params, TRUE, 'CRM_WCI_DAO_ProgressBar');
@@ -38,25 +38,57 @@ class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
               'goal_amount' => $con_page[$dao->id]['goal_amount']));
       }
        
-      $query = "SELECT * FROM civicrm_wci_progress_bar_formula WHERE progress_bar_id =" . $_id;
+      $query = "SELECT * FROM civicrm_wci_progress_bar_formula WHERE progress_bar_id =" . $this->_id;
       $params = array();
-      echo $query . '<br>';
+
       $dao = CRM_Core_DAO::executeQuery($query, $params, TRUE, 'CRM_WCI_DAO_ProgressBarFormula');
 
-      $count = 1;
-      echo count($dao);
       while ($dao->fetch()) {
         $for_page[$dao->id] = array();
         CRM_Core_DAO::storeValues($dao, $for_page[$dao->id]);
+
+        $this->add(
+          'select', // field type
+          'contribution_page_'.$count, // field name
+          'Contribution page', // field label
+          getContributionPageOptions(), // list of options
+          true // is required
+        );
+        $this->add(
+          'text', // field type
+          'percentage_'.$count, // field name
+          'Percentage', // field label
+          true // is required
+        );
+        //save formula id 
+        $this->addElement('hidden', 'contrib_elem_'.$count , $for_page[$dao->id]['id']);
 
         $this->setDefaults(array(
               'contribution_page_'.$count => $for_page[$dao->id]['contribution_page_id']));
         $this->setDefaults(array(
               'percentage_'.$count => $for_page[$dao->id]['percentage']));
+
         $count++;
       }
-    }  
-  
+      $count--; // because last iteration increments it to the next
+    }  else {
+      /** New progress bar*/
+      $this->add(
+        'select', // field type
+        'contribution_page_1', // field name
+        'Contribution page', // field label
+        getContributionPageOptions(), // list of options
+        true // is required
+      );
+      $this->add(
+        'text', // field type
+        'percentage_1', // field name
+        'Percentage', // field label
+        true // is required
+      );
+    }
+    
+    $this->addElement('hidden', 'contrib_count', $count);
   }
   
   function buildQuickForm() {
@@ -79,7 +111,7 @@ class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
       'Goal amount', // field label
       true // is required
     );
-    $this->add(
+/*    $this->add(
       'select', // field type
       'contribution_page_1', // field name
       'Contribution page', // field label
@@ -91,13 +123,11 @@ class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
       'percentage_1', // field name
       'Percentage', // field label
       true // is required
-    );
+    );*/
     
-    $this->FillData();
+    $this->fill_data();
     
     $this->addElement('link', 'addmore_link',' ', 'addmore', 'Add more');
-
-    $this->addElement('hidden', 'contrib_count', '1');
 
     $this->addButtons(array(
       array(
@@ -114,12 +144,42 @@ class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
   }
 
   function postProcess() {
-    if (isset($_id)){
+    $errorScope = CRM_Core_TemporaryErrorScope::useException();
+    if (isset($this->_id)) {
+      try {
+        $sql = "UPDATE civicrm_wci_progress_bar SET name = '". $_REQUEST['progressbar_name'] . 
+          "', starting_amount = '" . $_REQUEST['starting_amount'] . 
+          "', goal_amount = '" . $_REQUEST['goal_amount'] . 
+          "' where id =".$this->_id;
+
+        $transaction = new CRM_Core_Transaction();
+        CRM_Core_DAO::executeQuery($sql);
+
+        for($i = 1; $i <= (int)$_REQUEST['contrib_count']; $i++):
+          $page = 'contribution_page_' . (string)$i;
+          $perc = 'percentage_' . (string)$i;
+          if (isset($_REQUEST['contrib_elem_'.$i])) {
+            $sql = "UPDATE civicrm_wci_progress_bar_formula SET contribution_page_id = '". $_REQUEST[$page] . "',
+              percentage = '". $_REQUEST[$perc] . "'
+              WHERE id = " . (int)$_REQUEST['contrib_elem_'.$i];
+          } else {
+            $sql = "INSERT INTO civicrm_wci_progress_bar_formula (contribution_page_id, progress_bar_id, percentage) 
+              VALUES ('" . $_REQUEST[$page] . "','" . $this->_id . "','" . $_REQUEST[$perc] . "')";
+          }
+
+          CRM_Core_DAO::executeQuery($sql);
+        endfor;
+        $transaction->commit();
+      }
+      catch (Exception $e) {
+        //TODO
+        print_r($e->getMessage());
+        $transaction->rollback();
+      }
     
     } else {
       $sql = "INSERT INTO civicrm_wci_progress_bar (name, starting_amount, goal_amount) 
       VALUES ('" . $_REQUEST['progressbar_name'] . "','" . $_REQUEST['starting_amount'] . "','" . $_REQUEST['goal_amount'] . "')";
-      $errorScope = CRM_Core_TemporaryErrorScope::useException();
       try {
         $transaction = new CRM_Core_Transaction();
         CRM_Core_DAO::executeQuery($sql);
@@ -133,6 +193,7 @@ class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
           
           CRM_Core_DAO::executeQuery($sql);
         endfor;
+        $transaction->commit();
       }    
       catch (Exception $e) {
         //TODO

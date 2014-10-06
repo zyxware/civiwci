@@ -25,7 +25,8 @@ class CRM_Wci_Page_ProgressBarList extends CRM_Core_Page {
       $controller->set('id', $id);
       $controller->process();
       return $controller->run();
-    } elseif ($action & CRM_Core_Action::DELETE) {
+    } 
+    elseif ($action & CRM_Core_Action::DELETE) {
       try {
         $transaction = new CRM_Core_Transaction();
         $sql = "DELETE FROM civicrm_wci_progress_bar_formula where progress_bar_id = " . $id;

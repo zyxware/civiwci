@@ -17,7 +17,7 @@ class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
     CRM_Core_Resources::singleton()->addScriptFile('org.civicrm.wci', 'addmore.js');
     parent::preProcess();
   }
-  function fill_data() {
+  function fillData() {
 //    $_id = CRM_Utils_Request::retrieve('id', 'Positive', $this, FALSE, NULL, 'REQUEST');
     $count = 1;
     if (isset($this->_id)) {  
@@ -71,7 +71,8 @@ class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
         $count++;
       }
       $count--; // because last iteration increments it to the next
-    }  else {
+    }  
+    else {
       /** New progress bar*/
       $this->add(
         'select', // field type
@@ -125,7 +126,7 @@ class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
       true // is required
     );*/
     
-    $this->fill_data();
+    $this->fillData();
     
     $this->addElement('link', 'addmore_link',' ', 'addmore', 'Add more');
 
@@ -162,7 +163,8 @@ class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
             $sql = "UPDATE civicrm_wci_progress_bar_formula SET contribution_page_id = '". $_REQUEST[$page] . "',
               percentage = '". $_REQUEST[$perc] . "'
               WHERE id = " . (int)$_REQUEST['contrib_elem_'.$i];
-          } else {
+          } 
+          else {
             $sql = "INSERT INTO civicrm_wci_progress_bar_formula (contribution_page_id, progress_bar_id, percentage) 
               VALUES ('" . $_REQUEST[$page] . "','" . $this->_id . "','" . $_REQUEST[$perc] . "')";
           }
@@ -177,7 +179,8 @@ class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
         $transaction->rollback();
       }
     
-    } else {
+    } 
+    else {
       $sql = "INSERT INTO civicrm_wci_progress_bar (name, starting_amount, goal_amount) 
       VALUES ('" . $_REQUEST['progressbar_name'] . "','" . $_REQUEST['starting_amount'] . "','" . $_REQUEST['goal_amount'] . "')";
       try {

@@ -123,12 +123,12 @@ class CRM_WCI_DAO_ProgressBarFormula extends CRM_Core_DAO
    */
   static function getReferenceColumns()
   {
-    /*if (!self::$_links) {
+    if (!self::$_links) {
       self::$_links = array(
         new CRM_Core_EntityReference(self::getTableName() , 'progress_bar_id', 'civicrm_wci_progress_bar', 'id') ,
         new CRM_Core_EntityReference(self::getTableName() , 'contribution_page_id', 'civicrm_contribution_page', 'id') ,
       );
-    }*/
+    }
     return self::$_links;
   }
   /**
@@ -225,7 +225,8 @@ class CRM_WCI_DAO_ProgressBarFormula extends CRM_Core_DAO
         if (CRM_Utils_Array::value('import', $field)) {
           if ($prefix) {
             self::$_import['wci_progress_bar_formula'] = & $fields[$name];
-          } else {
+          } 
+          else {
             self::$_import[$name] = & $fields[$name];
           }
         }
@@ -249,7 +250,8 @@ class CRM_WCI_DAO_ProgressBarFormula extends CRM_Core_DAO
         if (CRM_Utils_Array::value('export', $field)) {
           if ($prefix) {
             self::$_export['wci_progress_bar_formula'] = & $fields[$name];
-          } else {
+          } 
+          else {
             self::$_export[$name] = & $fields[$name];
           }
         }

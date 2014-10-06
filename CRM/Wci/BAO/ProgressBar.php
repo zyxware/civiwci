@@ -127,4 +127,66 @@ class CRM_WCI_BAO_ProgressBar extends CRM_WCI_DAO_ProgressBar {
     }
     return FALSE;
   }
+  
+  public static function getProgressbarPercentage($idPB) {
+    $bp = 0;
+    $query = "SELECT * FROM civicrm_wci_progress_bar where id=" . $idPB;
+    $params = array();
+    //echo $query."<br>";
+    $dao = CRM_Core_DAO::executeQuery($query, $params, TRUE, 'CRM_WCI_DAO_ProgressBar');
+
+    while ($dao->fetch()) {
+      $con_page[$dao->id] = array();
+      CRM_Core_DAO::storeValues($dao, $con_page[$dao->id]);
+      $con_page[$dao->id]['name'];
+      $sa = $con_page[$dao->id]['starting_amount'];
+      //echo "stat amount ".$sa.'<br>';
+      $ga = $con_page[$dao->id]['goal_amount'];
+      //echo "goal amt ".$ga.'<br>';
+    }
+     
+    $query = "SELECT * FROM civicrm_wci_progress_bar_formula WHERE progress_bar_id =" . $idPB;
+    $params = array();
+
+    //echo $query."<br>";
+    $daoPbf = CRM_Core_DAO::executeQuery($query, $params, TRUE, 'CRM_WCI_DAO_ProgressBarFormula');
+      while ($daoPbf->fetch()) {
+        $for_page[$daoPbf->id] = array();
+        CRM_Core_DAO::storeValues($daoPbf, $for_page[$daoPbf->id]);
+        //echo "contribution_page_id ".$for_page[$daoPbf->id]['contribution_page_id'].'<br>';
+        $px = $for_page[$daoPbf->id]['percentage'];
+        //echo "percentage ".$px.'<br>';
+        
+        $query = "SELECT * FROM civicrm_contribution where contribution_page_id =" . $for_page[$daoPbf->id]['contribution_page_id'];
+        $params = array();
+
+        //echo $query."<br>";
+        $daoCon = CRM_Core_DAO::executeQuery($query, $params, TRUE, 'CRM_Contribute_DAO_Contribution');
+
+        while ($daoCon->fetch()) {
+          $contributions[$daoCon->id] = array();
+          CRM_Core_DAO::storeValues($daoCon, $contributions[$daoCon->id]);
+          $bx = $contributions[$daoCon->id]['total_amount'];
+          //echo "total_amount".$bx ."<br>";
+          //echo "status".$contributions[$daoCon->id]['contribution_status_id'] ."<br>";
+          $bp += $bx * $px / 100;
+        }
+     }
+     $perc = (($sa + $bp) / $ga ) * 100;
+     //echo "percentate " .  . "<br>"; 
+     
+     return $perc;
+    /*
+    $pb = CRM_WCI_BAO_ProgressBar::retrieveByID(31);
+    $param = array('id' => '31');
+    array(
+        'progress_bar_id' => array(
+          'id' => 31));
+    $pb = CRM_WCI_BAO_ProgressBar::retrieve($param);
+    echo $pb->name . '<br>';
+    echo $pb->starting_amount. '<br>';
+    echo $pb->goal_amount. '<br>';
+    die;  
+    */     
+  }
 }

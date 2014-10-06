@@ -18,7 +18,6 @@ class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
     parent::preProcess();
   }
   function fillData() {
-//    $_id = CRM_Utils_Request::retrieve('id', 'Positive', $this, FALSE, NULL, 'REQUEST');
     $count = 1;
     if (isset($this->_id)) {  
       /** Updating existing progress bar*/

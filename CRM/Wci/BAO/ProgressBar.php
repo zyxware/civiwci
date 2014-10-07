@@ -176,17 +176,5 @@ class CRM_WCI_BAO_ProgressBar extends CRM_WCI_DAO_ProgressBar {
      //echo "percentate " .  . "<br>"; 
      
      return $perc;
-    /*
-    $pb = CRM_WCI_BAO_ProgressBar::retrieveByID(31);
-    $param = array('id' => '31');
-    array(
-        'progress_bar_id' => array(
-          'id' => 31));
-    $pb = CRM_WCI_BAO_ProgressBar::retrieve($param);
-    echo $pb->name . '<br>';
-    echo $pb->starting_amount. '<br>';
-    echo $pb->goal_amount. '<br>';
-    die;  
-    */     
   }
 }

@@ -225,7 +225,8 @@ class CRM_WCI_DAO_ProgressBarFormula extends CRM_Core_DAO
         if (CRM_Utils_Array::value('import', $field)) {
           if ($prefix) {
             self::$_import['wci_progress_bar_formula'] = & $fields[$name];
-          } else {
+          } 
+          else {
             self::$_import[$name] = & $fields[$name];
           }
         }
@@ -249,7 +250,8 @@ class CRM_WCI_DAO_ProgressBarFormula extends CRM_Core_DAO
         if (CRM_Utils_Array::value('export', $field)) {
           if ($prefix) {
             self::$_export['wci_progress_bar_formula'] = & $fields[$name];
-          } else {
+          } 
+          else {
             self::$_export[$name] = & $fields[$name];
           }
         }

@@ -3,7 +3,26 @@
 require_once 'CRM/Core/Form.php';
 require_once 'wci-helper-functions.php';
 require_once 'CRM/Wci/BAO/ProgressBar.php';
+?>
 
+<script type="text/javascript">
+cj(function ( $ ) { 
+  $(document).ready(function(){
+    $('#custom_template').attr("disabled",true);
+  }); 
+ 
+  $('#override').on('click', function( e ) {
+    if ($('#override').is(':checked') == true) {
+      $('#custom_template').attr("disabled",false);
+    }
+    else {
+      $('#custom_template').attr("disabled",true);
+    }
+  });
+});
+</script>
+
+<?php
 /**
  * Form controller class
  *
@@ -21,6 +40,8 @@ class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
   
   function preProcess() {
     parent::preProcess();
+    
+//    CRM_Core_Resources::singleton()->addScriptFile('org.civicrm.wci', 'tpl-state.js');
 
     $this->_id = CRM_Utils_Request::retrieve('id', 'Positive',
       $this, FALSE, NULL, 'REQUEST'
@@ -106,7 +127,8 @@ class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
     }
     $this->add('textarea', 'style_rules', ts('Additional Style Rules'));
     $this->add('checkbox', 'override', ts('Override default template'));
-    $this->addWysiwyg('custom_template', ts('Custom template'), '');
+    $this->add('textarea', 'custom_template', ts('Custom template'));
+    //$this->addWysiwyg('custom_template', ts('Custom template'), '');
     $this->addButtons(array(
       array(
         'type' => 'submit',
@@ -117,6 +139,13 @@ class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
 
     // export form elements
     $this->assign('elementNames', $this->getRenderableElementNames());
+    
+    $smarty = CRM_Core_Smarty::singleton();
+    /** Keep template in civicrm-wci/templates folder*/
+    $output = $smarty->fetch('Widget.tpl');
+    $elem = $this->getElement('custom_template');
+    $elem->setValue($output);
+    
     parent::buildQuickForm();
   }
 

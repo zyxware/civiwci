@@ -129,6 +129,27 @@ class CRM_WCI_BAO_ProgressBar extends CRM_WCI_DAO_ProgressBar {
   }
 
   /**
+   * Returns array of progressbars
+   * Fields : id, name, starting_amount, goal_amount
+   * @return progressbar array
+   * @access public
+   */  
+  public static function getProgressbarList() {
+    $query = "SELECT * FROM civicrm_wci_progress_bar";
+    $params = array();
+    $pbList = array();
+    
+    $dao = CRM_Core_DAO::executeQuery($query, $params, TRUE, 'CRM_WCI_DAO_ProgressBar');
+
+    while ($dao->fetch()) {
+      $pbList[$dao->id] = array();
+      CRM_Core_DAO::storeValues($dao, $pbList[$dao->id]);
+    }
+
+    return $pbList;
+  }
+  
+  /**
    * Returns percentage value of a progressbar
    *
    * @param integer progressbar id

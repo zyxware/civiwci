@@ -2,6 +2,7 @@
 
 require_once 'CRM/Core/Form.php';
 require_once 'wci-helper-functions.php';
+require_once 'CRM/Wci/BAO/ProgressBar.php';
 
 /**
  * Form controller class
@@ -30,47 +31,47 @@ class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
         FALSE,
         '#2786C2',
       ),
+      'color_title_bg' => array(ts('Widget title background color'),
+        'text',
+        FALSE,
+        '#FFFFFF',
+      ),
       'color_bar' => array(ts('Progress Bar Color'),
         'text',
         FALSE,
         '#FFFFFF',
       ),
-      'color_main_text' => array(ts('Additional Text Color'),
-        'text',
-        FALSE,
-        '#FFFFFF',
-      ),
-      'color_main' => array(ts('Background Color'),
+      'color_widget_bg' => array(ts('Widget background color'),
         'text',
         FALSE,
         '#96C0E7',
       ),
-      'color_main_bg' => array(ts('Background Color Top Area'),
-        'text',
-        FALSE,
-        '#B7E2FF',
-      ),
-      'color_bg' => array(ts('Border Color'),
+      'color_description' => array(ts('Widget description color'),
         'text',
         FALSE,
         '#96C0E7',
       ),
-      'color_about_link' => array(ts('Button Link Color'),
+      'color_border' => array(ts('Widget border color'),
         'text',
         FALSE,
-        '#556C82',
+        '#96C0E7',
       ),
-      'color_button' => array(ts('Button Background Color'),
+      'color_button' => array(ts('Widget button text color'),
         'text',
         FALSE,
-        '#FFFFFF',
+        '#96C0E7',
       ),
-      'color_homepage_link' => array(ts('Homepage Link Color'),
+      'color_button_bg' => array(ts('Widget button background color'),
         'text',
         FALSE,
-        '#FFFFFF',
+        '#96C0E7',
       ),
-    );
+      'color_button_bg' => array(ts('Widget button background color'),
+        'text',
+        FALSE,
+        '#96C0E7',
+      ),
+      );
   }
 
   function setDefaultValues() {
@@ -85,14 +86,13 @@ class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
   }
 
   function buildQuickForm() {
-    
     // add form elements
     $this->add('text', 'title', ts('Title'),true);
     $this->add('text', 'logo_image', ts('Logo image'));
     $this->add('text', 'image', ts('Image'));
     $this->add('select', 'button_link_to', ts('Contribution button'), getContributionPageOptions());
     $this->add('text', 'button_title', ts('Contribution button title'));
-    $this->add('select', 'progress_bar', ts('Progress bar'), array('' => '- select -'));
+    $this->add('select', 'progress_bar', ts('Progress bar'), $this->getProgressBars());
     $this->addWysiwyg('description', ts('Description'), '');
     $this->add('select', 'email_signup_group_id', ts('Newsletter signup'), $this->getGroupOptions());
     $this->add('select', 'size_variant', ts('Size variant'), $this->getSizeOptions());
@@ -123,10 +123,56 @@ class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
   function postProcess() {
 
     $values = $this->exportValues();
+
+    $override = 0;
+    if(isset($values['override'])){
+      $override = $values['override'];
+    }
     
+    $sql = "INSERT INTO civicrm_wci_widget (title, logo_image, image, 
+    button_title, button_link_to, progress_bar_id, description, 
+    email_signup_group_id, size_variant, color_title, color_title_bg, 
+    color_progress_bar, color_widget_bg, color_description, color_border, 
+    color_button, color_button_bg, style_rules, override, custom_template ) 
+    VALUES ('" . $values['title'] . "','" . $values['logo_image'] . "','" . 
+    $values['image'] . "','" . $values['button_title'] . "','" . 
+    $values['button_link_to'] . "','" . $values['progress_bar'] . "','" . 
+    base64_encode($values['description']) . "','" . 
+    $values['email_signup_group_id'] . "','" . 
+    $values['size_variant'] . "','" . $values['color_title'] . "','" . 
+    $values['color_title_bg'] . "','" . $values['color_bar'] . "','" . 
+    $values['color_widget_bg'] . "','" . $values['color_description'] . "','" .
+    $values['color_border'] . "','" . $values['color_button'] . "','" . 
+    $values['color_button_bg'] . "','" . $values['style_rules'] . "','" . 
+    $override . "','" . base64_encode($values['custom_template']) 
+      . "')";
+    $errorScope = CRM_Core_TemporaryErrorScope::useException();
+    try {
+      $transaction = new CRM_Core_Transaction();
+      CRM_Core_DAO::executeQuery($sql);
+
+      $transaction->commit();
+    }    
+    catch (Exception $e) {
+      //TODO
+      print_r($e->getMessage());
+      $transaction->rollback();
+    }
+      
     parent::postProcess();
   }
+  
+  function getProgressBars() {
+    $options = array(
+      '' => ts('- select -'),
+    );
+    $pbList = CRM_WCI_BAO_ProgressBar::getProgressbarList();
+    foreach ($pbList as $pb) {
+      $options[$pb['id']] = $pb['name'];
+    }
 
+    return $options;
+  }
   function getContributionPageOptions() {
     $options = array(
       '' => ts('- select -'),

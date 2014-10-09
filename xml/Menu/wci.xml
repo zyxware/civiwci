@@ -24,4 +24,10 @@
     <title>ProgressBarList</title>
     <access_arguments>access CiviCRM</access_arguments>
   </item>
+  <item>
+    <path>civicrm/wci/widget</path>
+    <page_callback>CRM_Wci_Page_WidgetList</page_callback>
+    <title>Widget List</title>
+    <access_arguments>access CiviCRM</access_arguments>
+  </item>
 </menu>

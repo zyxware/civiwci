@@ -145,7 +145,7 @@ function wci_civicrm_navigationMenu( &$params ) {
         'attributes' => array (
         'label' => ts('Manage widget'),
         'name' => 'manage_widget',
-        'url' => 'civicrm/wci/widget',
+        'url' => 'civicrm/wci/widget?reset=1',
         'permission' => 'access CiviReport,access CiviContribute',
         'operator' => 'OR',
         'separator' => 1,

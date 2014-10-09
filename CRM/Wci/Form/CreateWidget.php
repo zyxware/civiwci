@@ -2,7 +2,26 @@
 
 require_once 'CRM/Core/Form.php';
 require_once 'wci-helper-functions.php';
+require_once 'CRM/Wci/BAO/ProgressBar.php';
+?>
 
+<script type="text/javascript">
+cj(function ( $ ) {
+  function setState() {
+    if ($('#override').is(':checked') == true) {
+      $('#custom_template').attr("disabled",false);
+    }
+    else {
+      $('#custom_template').attr("disabled",true);
+    }  
+  }
+  $(document).ready(setState)
+  $('#override').click(setState);
+
+});
+</script>
+
+<?php
 /**
  * Form controller class
  *
@@ -20,57 +39,55 @@ class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
   
   function preProcess() {
     parent::preProcess();
-
-    $this->_id = CRM_Utils_Request::retrieve('id', 'Positive',
-      $this, FALSE, NULL, 'REQUEST'
-    );
+    $this->_id = CRM_Utils_Request::retrieve('id', 'Positive', $this, 
+          FALSE, NULL, 'REQUEST' );
 
     $this->_colorFields = array('color_title' => array(ts('Title Text Color'),
         'text',
         FALSE,
         '#2786C2',
       ),
+      'color_title_bg' => array(ts('Widget title background color'),
+        'text',
+        FALSE,
+        '#FFFFFF',
+      ),
       'color_bar' => array(ts('Progress Bar Color'),
         'text',
         FALSE,
         '#FFFFFF',
       ),
-      'color_main_text' => array(ts('Additional Text Color'),
-        'text',
-        FALSE,
-        '#FFFFFF',
-      ),
-      'color_main' => array(ts('Background Color'),
+      'color_widget_bg' => array(ts('Widget background color'),
         'text',
         FALSE,
         '#96C0E7',
       ),
-      'color_main_bg' => array(ts('Background Color Top Area'),
-        'text',
-        FALSE,
-        '#B7E2FF',
-      ),
-      'color_bg' => array(ts('Border Color'),
+      'color_description' => array(ts('Widget description color'),
         'text',
         FALSE,
         '#96C0E7',
       ),
-      'color_about_link' => array(ts('Button Link Color'),
+      'color_border' => array(ts('Widget border color'),
         'text',
         FALSE,
-        '#556C82',
+        '#96C0E7',
       ),
-      'color_button' => array(ts('Button Background Color'),
+      'color_button' => array(ts('Widget button text color'),
         'text',
         FALSE,
-        '#FFFFFF',
+        '#96C0E7',
       ),
-      'color_homepage_link' => array(ts('Homepage Link Color'),
+      'color_button_bg' => array(ts('Widget button background color'),
         'text',
         FALSE,
-        '#FFFFFF',
+        '#96C0E7',
       ),
-    );
+      'color_button_bg' => array(ts('Widget button background color'),
+        'text',
+        FALSE,
+        '#96C0E7',
+      ),
+      );
   }
 
   function setDefaultValues() {
@@ -85,14 +102,13 @@ class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
   }
 
   function buildQuickForm() {
-    
     // add form elements
     $this->add('text', 'title', ts('Title'),true);
     $this->add('text', 'logo_image', ts('Logo image'));
     $this->add('text', 'image', ts('Image'));
     $this->add('select', 'button_link_to', ts('Contribution button'), getContributionPageOptions());
     $this->add('text', 'button_title', ts('Contribution button title'));
-    $this->add('select', 'progress_bar', ts('Progress bar'), array('' => '- select -'));
+    $this->add('select', 'progress_bar', ts('Progress bar'), $this->getProgressBars());
     $this->addWysiwyg('description', ts('Description'), '');
     $this->add('select', 'email_signup_group_id', ts('Newsletter signup'), $this->getGroupOptions());
     $this->add('select', 'size_variant', ts('Size variant'), $this->getSizeOptions());
@@ -106,7 +122,8 @@ class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
     }
     $this->add('textarea', 'style_rules', ts('Additional Style Rules'));
     $this->add('checkbox', 'override', ts('Override default template'));
-    $this->addWysiwyg('custom_template', ts('Custom template'), '');
+    $this->add('textarea', 'custom_template', ts('Custom template'));
+    //$this->addWysiwyg('custom_template', ts('Custom template'), '');
     $this->addButtons(array(
       array(
         'type' => 'submit',
@@ -117,16 +134,161 @@ class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
 
     // export form elements
     $this->assign('elementNames', $this->getRenderableElementNames());
+
+    $smarty = CRM_Core_Smarty::singleton();
+    if (isset($this->_id)) {  
+      /** Updating existing widget*/
+
+      //$query = "SELECT * FROM civicrm_wci_widget where id=" . $this->_id;
+      $query = "SELECT pb.id as pbid, w.*  FROM civicrm_wci_widget w INNER JOIN civicrm_wci_progress_bar pb on pb.id = w.progress_bar_id 
+where w.id=" . $this->_id;
+      $params = array();
+      
+      $dao = CRM_Core_DAO::executeQuery($query, $params, TRUE, 'CRM_WCI_DAO_Widget');
+
+      while ($dao->fetch()) {
+        $wid_page[$dao->id] = array();
+        CRM_Core_DAO::storeValues($dao, $wid_page[$dao->id]);
+
+        $this->setDefaults(array(
+              'title' => $wid_page[$dao->id]['title']));
+        $this->setDefaults(array(
+              'logo_image' => $wid_page[$dao->id]['logo_image']));
+        $this->setDefaults(array(
+              'image' => $wid_page[$dao->id]['image']));
+        $this->setDefaults(array(
+              'button_link_to' => $wid_page[$dao->id]['button_link_to']));
+        $this->setDefaults(array(
+              'button_title' => $wid_page[$dao->id]['button_title']));
+
+        $this->setDefaults(array(
+              'progress_bar' => $dao->pbid));
+        $description = base64_decode($wid_page[$dao->id]['description']);
+        $this->setDefaults(array(
+              'description' => $description));
+        $this->setDefaults(array(
+              'email_signup_group_id' => $wid_page[$dao->id]['email_signup_group_id']));
+        $this->setDefaults(array(
+              'size_variant' => $wid_page[$dao->id]['size_variant']));
+        $this->setDefaults(array(
+              'color_title' => $wid_page[$dao->id]['color_title']));
+        $this->setDefaults(array(
+              'color_title_bg' => $wid_page[$dao->id]['color_title_bg']));
+        $this->setDefaults(array(
+              'color_bar' => $wid_page[$dao->id]['color_progress_bar']));
+        $this->setDefaults(array(
+              'color_widget_bg' => $wid_page[$dao->id]['color_widget_bg']));
+        $this->setDefaults(array(
+              'color_description' => $wid_page[$dao->id]['color_description']));
+        $this->setDefaults(array(
+              'color_border' => $wid_page[$dao->id]['color_border']));
+        $this->setDefaults(array(
+              'color_button' => $wid_page[$dao->id]['color_button']));
+        $this->setDefaults(array(
+              'color_button_bg' => $wid_page[$dao->id]['color_button_bg']));
+        $this->setDefaults(array(
+              'style_rules' => $wid_page[$dao->id]['style_rules']));
+        $this->setDefaults(array(
+              'override' => $wid_page[$dao->id]['override']));
+        $cust_templ = base64_decode($wid_page[$dao->id]['custom_template']);
+
+        $this->setDefaults(array(
+              'custom_template' => $cust_templ));
+      }
+    }
+    else {
+      /** Keep template in civicrm-wci/templates folder*/
+      $output = $smarty->fetch('Widget.tpl');
+      $output = file_get_contents('sites/all/modules/civicrm/extensions/civicrm-wci/templates/Widget.tpl');
+      $elem = $this->getElement('custom_template');
+      $elem->setValue($output); 
+    }
+    
     parent::buildQuickForm();
   }
 
   function postProcess() {
-
     $values = $this->exportValues();
-    
+
+    $override = 0;
+    $cust_tmpl = "";
+    $cust_tmpl_col = "";
+    $sql = "";
+    /** If override check is checked state then only save the custom_template to the
+        database. otherwise wci uses default tpl file.
+    */
+    if(isset($values['override'])){
+      $override = $values['override'];
+      $cust_tmpl = base64_encode(html_entity_decode($values['custom_template']));
+      $cust_tmpl_col = ", custom_template";
+    }
+    if (isset($this->_id)) {
+      $cust_tmpl_col = "'" . $cust_tmpl_col . "='";
+      $sql = "UPDATE civicrm_wci_widget SET title = '". $values['title'] 
+        . "', logo_image = '" . $values['logo_image'] . "', image = '" 
+        . $values['image'] . "', button_title = '" . $values['button_title'] 
+        . "', button_link_to = '" . $values['button_link_to'] 
+        . "', progress_bar_id = '" . $values['progress_bar'] 
+        . "', description = '" . base64_encode($values['description']) 
+        . "', email_signup_group_id = '" . $values['email_signup_group_id'] 
+        . "', size_variant = '" . $values['size_variant'] 
+        . "', color_title = '" . $values['color_title'] 
+        . "', color_title_bg = '" . $values['color_title_bg'] 
+        . "', color_progress_bar = '" . $values['color_bar'] 
+        . "', color_widget_bg = '" . $values['color_widget_bg'] 
+        . "', color_description = '" . $values['color_description'] 
+        . "', color_border = '" . $values['color_border'] 
+        . "', color_button = '" . $values['color_button'] 
+        . "', color_button_bg = '" . $values['color_button_bg'] 
+        . "', style_rules = '" . $values['style_rules'] . "', override = '" 
+        . $override . $cust_tmpl_col . $cust_tmpl . "'";
+    }
+    else {
+      $sql = "INSERT INTO civicrm_wci_widget (title, logo_image, image, 
+      button_title, button_link_to, progress_bar_id, description, 
+      email_signup_group_id, size_variant, color_title, color_title_bg, 
+      color_progress_bar, color_widget_bg, color_description, color_border, 
+      color_button, color_button_bg, style_rules, override" . $cust_tmpl_col ." ) 
+      VALUES ('" . $values['title'] . "','" . $values['logo_image'] . "','" . 
+      $values['image'] . "','" . $values['button_title'] . "','" . 
+      $values['button_link_to'] . "','" . $values['progress_bar'] . "','" . 
+      base64_encode($values['description']) . "','" . 
+      $values['email_signup_group_id'] . "','" . 
+      $values['size_variant'] . "','" . $values['color_title'] . "','" . 
+      $values['color_title_bg'] . "','" . $values['color_bar'] . "','" . 
+      $values['color_widget_bg'] . "','" . $values['color_description'] . "','" .
+      $values['color_border'] . "','" . $values['color_button'] . "','" . 
+      $values['color_button_bg'] . "','" . $values['style_rules'] . "','" . 
+      $override . "','" . $cust_tmpl
+        . "')";
+    }  
+    $errorScope = CRM_Core_TemporaryErrorScope::useException();
+    try {
+      $transaction = new CRM_Core_Transaction();
+      CRM_Core_DAO::executeQuery($sql);
+
+      $transaction->commit();
+    }    
+    catch (Exception $e) {
+      //TODO
+      print_r($e->getMessage());
+      $transaction->rollback();
+    }
+      
     parent::postProcess();
   }
+  
+  function getProgressBars() {
+    $options = array(
+      '' => ts('- select -'),
+    );
+    $pbList = CRM_WCI_BAO_ProgressBar::getProgressbarList();
+    foreach ($pbList as $pb) {
+      $options[$pb['id']] = $pb['name'];
+    }
 
+    return $options;
+  }
   function getContributionPageOptions() {
     $options = array(
       '' => ts('- select -'),

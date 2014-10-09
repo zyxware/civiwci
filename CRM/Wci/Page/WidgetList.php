@@ -1,9 +1,9 @@
 <?php
 
 require_once 'CRM/Core/Page.php';
-require_once 'CRM/Wci/DAO/ProgressBar.php';
+require_once 'CRM/Wci/DAO/Widget.php';
 
-class CRM_Wci_Page_ProgressBarList extends CRM_Core_Page {
+class CRM_Wci_Page_WidgetList extends CRM_Core_Page {
   private static $_actionLinks;
   function run() {
     // get the requested action
@@ -18,8 +18,8 @@ class CRM_Wci_Page_ProgressBarList extends CRM_Core_Page {
     );
 
     if ($action & CRM_Core_Action::UPDATE) {
-      $controller = new CRM_Core_Controller_Simple('CRM_Wci_Form_ProgressBar',
-        'Edit Progressbar',
+      $controller = new CRM_Core_Controller_Simple('CRM_Wci_Form_CreateWidget',
+        'Edit Widget',
         CRM_Core_Action::UPDATE
       );
       $controller->set('id', $id);
@@ -29,10 +29,8 @@ class CRM_Wci_Page_ProgressBarList extends CRM_Core_Page {
     elseif ($action & CRM_Core_Action::DELETE) {
       try {
         $transaction = new CRM_Core_Transaction();
-        $sql = "DELETE FROM civicrm_wci_progress_bar_formula where progress_bar_id = " . $id;
-        CRM_Core_DAO::executeQuery($sql);
         
-        $sql = "DELETE FROM civicrm_wci_progress_bar where id = " . $id;
+        $sql = "DELETE FROM civicrm_wci_widget where id = " . $id;
         CRM_Core_DAO::executeQuery($sql);
         $transaction->commit();
       }
@@ -41,40 +39,42 @@ class CRM_Wci_Page_ProgressBarList extends CRM_Core_Page {
         print_r($e->getMessage());
         $transaction->rollback();      
       } 
-    }
-    // Example: Set the page-title dynamically; alternatively, declare a static title in xml/Menu/*.xml
-    CRM_Utils_System::setTitle(ts('ProgressBarList'));
-
-    $query = "SELECT * FROM civicrm_wci_progress_bar";
+    }  
+  
+    CRM_Utils_System::setTitle(ts('Widget List'));
+    $query = "SELECT * FROM civicrm_wci_widget";
     $params = array();
     
-    $dao = CRM_Core_DAO::executeQuery($query, $params, TRUE, 'CRM_WCI_DAO_ProgressBar');
+    $dao = CRM_Core_DAO::executeQuery($query, $params, TRUE, 'CRM_WCI_DAO_Widget');
 
     while ($dao->fetch()) {
-      $con_page[$dao->id] = array();
-      CRM_Core_DAO::storeValues($dao, $con_page[$dao->id]);
+      $wid_page[$dao->id] = array();
+      CRM_Core_DAO::storeValues($dao, $wid_page[$dao->id]);
+      $description = base64_decode($wid_page[$dao->id]['description']);
+      $wid_page[$dao->id]['description'] = strip_tags($description);
      
       $action = array_sum(array_keys($this->actionLinks())); 
       //build the normal action links.
-      $con_page[$dao->id]['action'] = CRM_Core_Action::formLink(self::actionLinks(),
+      $wid_page[$dao->id]['action'] = CRM_Core_Action::formLink(self::actionLinks(),
         $action,
         array('id' => $dao->id),
         ts('more'),
         TRUE
       );
     }
-
-    if (isset($con_page)) {
-      $this->assign('rows', $con_page);
+   
+    if (isset($wid_page)) {
+      $this->assign('rows', $wid_page);
     }
-    return parent::run();
+    
+    parent::run();
   }
   
   function &actionLinks() {
     // check if variable _actionsLinks is populated
     if (!isset(self::$_actionLinks)) {
       // helper variable for nicer formatting
-      $deleteExtra = ts('Are you sure you want to delete this Progressbar page?');
+      $deleteExtra = ts('Are you sure you want to delete this Widget?');
 
       self::$_actionLinks = array(
         CRM_Core_Action::UPDATE => array(

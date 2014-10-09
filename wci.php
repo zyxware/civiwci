@@ -137,7 +137,7 @@ function wci_civicrm_navigationMenu( &$params ) {
         'permission' => 'access CiviReport,access CiviContribute',
         'operator' => 'OR',
         'separator' => 1,
-        'parentID' => navId, 
+        'parentID' => $navId, 
         'navID' => $navId+1,
         'active' => 1)),
         
@@ -149,7 +149,7 @@ function wci_civicrm_navigationMenu( &$params ) {
         'permission' => 'access CiviReport,access CiviContribute',
         'operator' => 'OR',
         'separator' => 1,
-        'parentID' => navId, 
+        'parentID' => $navId, 
         'navID' => $navId+2,
         'active' => 1)),
         
@@ -161,7 +161,7 @@ function wci_civicrm_navigationMenu( &$params ) {
         'permission' => 'access CiviReport,access CiviContribute',
         'operator' => 'OR',
         'separator' => 1,
-        'parentID' => navId, 
+        'parentID' => $navId, 
         'navID' => $navId+3,
         'active' => 1)),
         
@@ -173,7 +173,7 @@ function wci_civicrm_navigationMenu( &$params ) {
         'permission' => 'access CiviReport,access CiviContribute',
         'operator' => 'OR',
         'separator' => 1,
-        'parentID' => navId, 
+        'parentID' => $navId, 
         'navID' => $navId+4,
         'active' => 1)),           
         ),

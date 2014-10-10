@@ -122,8 +122,8 @@ class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
     }
     $this->add('textarea', 'style_rules', ts('Additional Style Rules'));
     $this->add('checkbox', 'override', ts('Override default template'));
-    $this->add('textarea', 'custom_template', ts('Custom template'));
-    //$this->addWysiwyg('custom_template', ts('Custom template'), '');
+    $this->add('textarea', 'custom_template', ts('Custom template:<br><SMALL><font color="red">Please customize the smarty v2 template only if you know what you are doing</font></SMALL>'));
+
     $this->addButtons(array(
       array(
         'type' => 'submit',
@@ -139,7 +139,6 @@ class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
     if (isset($this->_id)) {  
       /** Updating existing widget*/
 
-      //$query = "SELECT * FROM civicrm_wci_widget where id=" . $this->_id;
       $query = "SELECT pb.id as pbid, w.*  FROM civicrm_wci_widget w INNER JOIN civicrm_wci_progress_bar pb on pb.id = w.progress_bar_id 
 where w.id=" . $this->_id;
       $params = array();
@@ -198,12 +197,10 @@ where w.id=" . $this->_id;
     }
     else {
       /** Keep template in civicrm-wci/templates folder*/
-      $output = $smarty->fetch('Widget.tpl');
       $output = file_get_contents('sites/all/modules/civicrm/extensions/civicrm-wci/templates/Widget.tpl');
       $elem = $this->getElement('custom_template');
       $elem->setValue($output); 
     }
-    
     parent::buildQuickForm();
   }
 

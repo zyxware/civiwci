@@ -197,7 +197,7 @@ where w.id=" . $this->_id;
     }
     else {
       /** Keep template in civicrm-wci/templates folder*/
-      $output = file_get_contents('sites/all/modules/civicrm/extensions/civicrm-wci/templates/Widget.tpl');
+      $output = file_get_contents('templates/CRM/Wci/Page/Widget.tpl',FILE_USE_INCLUDE_PATH);
       $elem = $this->getElement('custom_template');
       $elem->setValue($output); 
     }

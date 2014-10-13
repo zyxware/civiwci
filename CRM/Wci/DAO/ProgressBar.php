@@ -29,9 +29,7 @@
  * @package CRM
  * @copyright CiviCRM LLC (c) 2004-2013
  */
-require_once 'CRM/Core/DAO.php';
-require_once 'CRM/Utils/Type.php';
-class CRM_WCI_DAO_ProgressBar extends CRM_Core_DAO
+class CRM_Wci_DAO_ProgressBar extends CRM_Core_DAO
 {
   /**
    * static instance to hold the table name

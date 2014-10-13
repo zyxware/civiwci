@@ -32,7 +32,7 @@
  *
  */
 
-class CRM_WCI_BAO_Widget extends CRM_WCI_DAO_Widget {
+class CRM_Wci_BAO_Widget extends CRM_Wci_DAO_Widget {
 
   /**
    * class constructor
@@ -49,7 +49,7 @@ class CRM_WCI_BAO_Widget extends CRM_WCI_DAO_Widget {
    *
    * @param array   $params      (reference ) an assoc array of name/value pairs
    *
-   * @return object CRM_WCI_BAO_Widget object
+   * @return object CRM_Wci_BAO_Widget object
    * @access public
    * @static
    */
@@ -60,7 +60,7 @@ class CRM_WCI_BAO_Widget extends CRM_WCI_DAO_Widget {
       CRM_Core_Error::fatal('Not enough data to create a widget.');
     }
 
-    $widget = new CRM_WCI_BAO_Widget();
+    $widget = new CRM_Wci_BAO_Widget();
     $widget->copyValues($params);
 
     $widget->save();
@@ -73,12 +73,12 @@ class CRM_WCI_BAO_Widget extends CRM_WCI_DAO_Widget {
    * names of civicrm_wci_widget.
    *
    * @param array $params
-   * @return array of CRM_WCI_BAO_Widget objects
+   * @return array of CRM_Wci_BAO_Widget objects
    */
   static function retrieve(array $params) {
     $result = array();
 
-    $widget = new CRM_WCI_BAO_Widget();
+    $widget = new CRM_Wci_BAO_Widget();
     $widget->copyValues($params);
     $widget->find();
 
@@ -95,7 +95,7 @@ class CRM_WCI_BAO_Widget extends CRM_WCI_DAO_Widget {
    * Wrapper method for retrieve
    *
    * @param mixed $id Int or int-like string representing widget ID
-   * @return CRM_WCI_BAO_Widget
+   * @return CRM_Wci_BAO_Widget
    */
   static function retrieveByID($id) {
     if (!is_int($id) && !ctype_digit($id)) {

@@ -33,7 +33,7 @@
  */
 require_once 'CRM/Wci/DAO/ProgressBar.php';
 
-class CRM_WCI_BAO_ProgressBar extends CRM_WCI_DAO_ProgressBar {
+class CRM_Wci_BAO_ProgressBar extends CRM_Wci_DAO_ProgressBar {
 
   /**
    * class constructor
@@ -50,7 +50,7 @@ class CRM_WCI_BAO_ProgressBar extends CRM_WCI_DAO_ProgressBar {
    *
    * @param array   $params      (reference ) an assoc array of name/value pairs
    *
-   * @return object CRM_WCI_BAO_ProgressBar object
+   * @return object CRM_Wci_BAO_ProgressBar object
    * @access public
    * @static
    */
@@ -61,7 +61,7 @@ class CRM_WCI_BAO_ProgressBar extends CRM_WCI_DAO_ProgressBar {
       CRM_Core_Error::fatal('Not enough data to create a progress bar.');
     }
 
-    $progress_bar = new CRM_WCI_BAO_ProgressBar();
+    $progress_bar = new CRM_Wci_BAO_ProgressBar();
     $progress_bar->copyValues($params);
 
     $progress_bar->save();
@@ -74,12 +74,12 @@ class CRM_WCI_BAO_ProgressBar extends CRM_WCI_DAO_ProgressBar {
    * names of civicrm_wci_widget.
    *
    * @param array $params
-   * @return array of CRM_WCI_BAO_ProgressBar objects
+   * @return array of CRM_Wci_BAO_ProgressBar objects
    */
   static function retrieve(array $params) {
     $result = array();
 
-    $progress_bar = new CRM_WCI_BAO_ProgressBar();
+    $progress_bar = new CRM_Wci_BAO_ProgressBar();
     $progress_bar->copyValues($params);
     $progress_bar->find();
 
@@ -96,7 +96,7 @@ class CRM_WCI_BAO_ProgressBar extends CRM_WCI_DAO_ProgressBar {
    * Wrapper method for retrieve
    *
    * @param mixed $id Int or int-like string representing widget ID
-   * @return CRM_WCI_BAO_ProgressBar
+   * @return CRM_Wci_BAO_ProgressBar
    */
   static function retrieveByID($id) {
     if (!is_int($id) && !ctype_digit($id)) {
@@ -139,7 +139,7 @@ class CRM_WCI_BAO_ProgressBar extends CRM_WCI_DAO_ProgressBar {
     $params = array();
     $pbList = array();
     
-    $dao = CRM_Core_DAO::executeQuery($query, $params, TRUE, 'CRM_WCI_DAO_ProgressBar');
+    $dao = CRM_Core_DAO::executeQuery($query, $params, TRUE, 'CRM_Wci_DAO_ProgressBar');
 
     while ($dao->fetch()) {
       $pbList[$dao->id] = array();
@@ -161,7 +161,7 @@ class CRM_WCI_BAO_ProgressBar extends CRM_WCI_DAO_ProgressBar {
     $bp = 0;
     $query = "SELECT * FROM civicrm_wci_progress_bar where id=" . $idPB;
     $params = array();
-    $dao = CRM_Core_DAO::executeQuery($query, $params, TRUE, 'CRM_WCI_DAO_ProgressBar');
+    $dao = CRM_Core_DAO::executeQuery($query, $params, TRUE, 'CRM_Wci_DAO_ProgressBar');
 
     while ($dao->fetch()) {
       $con_page[$dao->id] = array();
@@ -174,7 +174,7 @@ class CRM_WCI_BAO_ProgressBar extends CRM_WCI_DAO_ProgressBar {
     $query = "SELECT * FROM civicrm_wci_progress_bar_formula WHERE progress_bar_id =" . $idPB;
     $params = array();
 
-    $daoPbf = CRM_Core_DAO::executeQuery($query, $params, TRUE, 'CRM_WCI_DAO_ProgressBarFormula');
+    $daoPbf = CRM_Core_DAO::executeQuery($query, $params, TRUE, 'CRM_Wci_DAO_ProgressBarFormula');
       while ($daoPbf->fetch()) {
         $for_page[$daoPbf->id] = array();
         CRM_Core_DAO::storeValues($daoPbf, $for_page[$daoPbf->id]);

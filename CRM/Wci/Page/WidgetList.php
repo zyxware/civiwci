@@ -45,7 +45,7 @@ class CRM_Wci_Page_WidgetList extends CRM_Core_Page {
     $query = "SELECT * FROM civicrm_wci_widget";
     $params = array();
     
-    $dao = CRM_Core_DAO::executeQuery($query, $params, TRUE, 'CRM_WCI_DAO_Widget');
+    $dao = CRM_Core_DAO::executeQuery($query, $params, TRUE, 'CRM_Wci_DAO_Widget');
 
     while ($dao->fetch()) {
       $wid_page[$dao->id] = array();

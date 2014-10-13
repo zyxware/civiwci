@@ -143,7 +143,7 @@ class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
 where w.id=" . $this->_id;
       $params = array();
       
-      $dao = CRM_Core_DAO::executeQuery($query, $params, TRUE, 'CRM_WCI_DAO_Widget');
+      $dao = CRM_Core_DAO::executeQuery($query, $params, TRUE, 'CRM_Wci_DAO_Widget');
 
       while ($dao->fetch()) {
         $wid_page[$dao->id] = array();
@@ -279,7 +279,7 @@ where w.id=" . $this->_id;
     $options = array(
       '' => ts('- select -'),
     );
-    $pbList = CRM_WCI_BAO_ProgressBar::getProgressbarList();
+    $pbList = CRM_Wci_BAO_ProgressBar::getProgressbarList();
     foreach ($pbList as $pb) {
       $options[$pb['id']] = $pb['name'];
     }

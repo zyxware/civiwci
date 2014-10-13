@@ -48,7 +48,7 @@ class CRM_Wci_Page_ProgressBarList extends CRM_Core_Page {
     $query = "SELECT * FROM civicrm_wci_progress_bar";
     $params = array();
     
-    $dao = CRM_Core_DAO::executeQuery($query, $params, TRUE, 'CRM_WCI_DAO_ProgressBar');
+    $dao = CRM_Core_DAO::executeQuery($query, $params, TRUE, 'CRM_Wci_DAO_ProgressBar');
 
     while ($dao->fetch()) {
       $con_page[$dao->id] = array();

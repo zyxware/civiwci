@@ -32,7 +32,7 @@
  *
  */
 
-class CRM_WCI_BAO_ProgressBarFormula extends CRM_WCI_DAO_ProgressBarFormula {
+class CRM_Wci_BAO_ProgressBarFormula extends CRM_Wci_DAO_ProgressBarFormula {
 
   /**
    * class constructor
@@ -49,7 +49,7 @@ class CRM_WCI_BAO_ProgressBarFormula extends CRM_WCI_DAO_ProgressBarFormula {
    *
    * @param array   $params      (reference ) an assoc array of name/value pairs
    *
-   * @return object CRM_WCI_BAO_ProgressBarFormula object
+   * @return object CRM_Wci_BAO_ProgressBarFormula object
    * @access public
    * @static
    */
@@ -60,7 +60,7 @@ class CRM_WCI_BAO_ProgressBarFormula extends CRM_WCI_DAO_ProgressBarFormula {
       CRM_Core_Error::fatal('Not enough data to create a progress bar formula entry.');
     }
 
-    $progress_bar_formula = new CRM_WCI_BAO_ProgressBarFormula();
+    $progress_bar_formula = new CRM_Wci_BAO_ProgressBarFormula();
     $progress_bar_formula->copyValues($params);
 
     $progress_bar_formula->save();
@@ -73,12 +73,12 @@ class CRM_WCI_BAO_ProgressBarFormula extends CRM_WCI_DAO_ProgressBarFormula {
    * names of civicrm_wci_widget.
    *
    * @param array $params
-   * @return array of CRM_WCI_BAO_ProgressBarFormula objects
+   * @return array of CRM_Wci_BAO_ProgressBarFormula objects
    */
   static function retrieve(array $params) {
     $result = array();
 
-    $progress_bar_formula = new CRM_WCI_BAO_ProgressBarFormula();
+    $progress_bar_formula = new CRM_Wci_BAO_ProgressBarFormula();
     $progress_bar_formula->copyValues($params);
     $progress_bar_formula->find();
 
@@ -95,7 +95,7 @@ class CRM_WCI_BAO_ProgressBarFormula extends CRM_WCI_DAO_ProgressBarFormula {
    * Wrapper method for retrieve
    *
    * @param mixed $id Int or int-like string representing widget ID
-   * @return CRM_WCI_BAO_ProgressBarFormula
+   * @return CRM_Wci_BAO_ProgressBarFormula
    */
   static function retrieveByID($id) {
     if (!is_int($id) && !ctype_digit($id)) {

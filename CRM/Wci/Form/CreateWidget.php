@@ -214,15 +214,17 @@ where w.id=" . $this->_id;
     $sql = "";
     $coma = "";
     $equals = "";
+    $quote = "";
     /** If override check is checked state then only save the custom_template to the
         database. otherwise wci uses default tpl file.
     */
     if(isset($values['override'])){
       $override = $values['override'];
       $cust_tmpl = base64_encode(html_entity_decode($values['custom_template']));
-      $cust_tmpl_col = ", custom_template";
-      $coma = "','";
-      $equals = "='";
+      $cust_tmpl_col = "custom_template";
+      $coma = ",";
+      $equals = " = ";
+      $quote = "'";
     }
     if (isset($this->_id)) {
       $sql = "UPDATE civicrm_wci_widget SET title = '". $values['title'] 
@@ -242,14 +244,14 @@ where w.id=" . $this->_id;
         . "', color_button = '" . $values['color_button'] 
         . "', color_button_bg = '" . $values['color_button_bg'] 
         . "', style_rules = '" . $values['style_rules'] . "', override = '" 
-        . $override . $cust_tmpl_col . $cust_tmpl . "' where id =" . $this->_id ;
+        . $override . $quote . $coma . $cust_tmpl_col . $equals . $quote . $cust_tmpl . "' where id =" . $this->_id ;
     }
     else {
       $sql = "INSERT INTO civicrm_wci_widget (title, logo_image, image, 
       button_title, button_link_to, progress_bar_id, description, 
       email_signup_group_id, size_variant, color_title, color_title_bg, 
       color_progress_bar, color_widget_bg, color_description, color_border, 
-      color_button, color_button_bg, style_rules, override" . $cust_tmpl_col ." ) 
+      color_button, color_button_bg, style_rules, override" . $coma . $cust_tmpl_col ." ) 
       VALUES ('" . $values['title'] . "','" . $values['logo_image'] . "','" . 
       $values['image'] . "','" . $values['button_title'] . "','" . 
       $values['button_link_to'] . "','" . $values['progress_bar'] . "','" . 
@@ -260,10 +262,10 @@ where w.id=" . $this->_id;
       $values['color_widget_bg'] . "','" . $values['color_description'] . "','" .
       $values['color_border'] . "','" . $values['color_button'] . "','" . 
       $values['color_button_bg'] . "','" . $values['style_rules'] . "','" . 
-      $override . $coma . $cust_tmpl
+      $override . $quote . $coma . $quote . $cust_tmpl
         . "')";
     }
-    echo $sql;
+
     $errorScope = CRM_Core_TemporaryErrorScope::useException();
     try {
       $transaction = new CRM_Core_Transaction();

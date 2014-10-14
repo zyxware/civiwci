@@ -126,4 +126,32 @@ class CRM_Wci_BAO_Widget extends CRM_Wci_DAO_Widget {
     }
     return FALSE;
   }
+  public static function getWidgetData($widgetId) {
+  
+    $query = "SELECT * FROM civicrm_wci_widget where id=".$widgetId;
+    $params = array();
+    
+    $dao = CRM_Core_DAO::executeQuery($query, $params, TRUE, 'CRM_Wci_DAO_Widget');
+
+    $data = array();
+    while ($dao->fetch()) {
+      $data["title"] = $dao->title;
+      $data["logo_image"] = $dao->logo_image;
+      $data["image"] = $dao->image;
+      $data["button_title"] = $dao->button_title;
+      $data["progress_bar_id"] = $dao->button_link_to;
+      $data["description"] = strip_tags(base64_decode($dao->description));
+      $data["size_variant"] = $dao->size_variant;
+      $data["color_title"] = $dao->color_title;
+      $data["color_title_bg"] = $dao->color_title_bg;
+      $data["color_progress_bar"] = $dao->color_progress_bar;
+      $data["color_widget_bg"] = $dao->color_widget_bg;
+      $data["color_description"] = $dao->color_description;
+      $data["color_border"] = $dao->color_border;
+      $data["color_button"] = $dao->color_button;
+      $data["color_button_bg"] = $dao->color_button_bg;
+    }
+
+    return $data;
+  }
 }

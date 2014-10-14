@@ -156,7 +156,7 @@
   {$form.style_rules.value}
 {literal}
 </style>
-</literal>
+{/literal}
 
 <div id="crm_wid_{$widgetId}" class="crm-wci-widget {$form.size_variant.value}">
     <h5 id="crm_wid_{$widgetId}_title">
@@ -165,7 +165,7 @@
           <img src="{$form.logo_image.value}" alt={ts}Logo{/ts}>
         </span>
       {/if}
-      {$form.title.value}
+      {$form.title}
     </h5>
     <div class="crm-amounts">
         <div id="crm_wid_{$widgetId}_amt_hi" class="crm-amount-high"></div>
@@ -183,6 +183,6 @@
     <div id="crm_wid_{$widgetId}_campaign" class="crm-campaign">
     </div>
     <div class="crm-wci-button-wrapper" id="crm_wid_{$widgetId}_button">
-        <a href='{crmURL p="civicrm/contribute/transact" q="reset=1&id=$form.button_link_to.value" h=0 a=1 fe=1}' class="crm-wci-button"><span class="crm-wci-button-inner" id="crm_wid_{$widgetId}_btn_txt">{$form.button_title.value}</span></a>
+        <a href='{crmURL p="civicrm/contribute/transact" q="reset=1&id=$form.button_link_to.value" h=0 a=1 fe=1}' class="crm-wci-button"><span class="crm-wci-button-inner" id="crm_wid_{$widgetId}_btn_txt">{$form.button_title}</span></a>
     </div>
 </div>

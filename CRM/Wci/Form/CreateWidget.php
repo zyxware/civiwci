@@ -13,11 +13,23 @@ cj(function ( $ ) {
     }
     else {
       $('#custom_template').attr("disabled",true);
-    }  
+    }
+    if( $('#title').val() != "") {
+      $('#embd_code').parent().parent().parent().show();    
+    } else {
+      $('#embd_code').parent().parent().parent().hide();
+    }
+//    $('#embd_code').attr("disabled",true);
   }
   $(document).ready(setState)
   $('#override').click(setState);
 
+/*  
+  $("input[name='_qf_CreateWidget_savenprev']").on('click', function( e ) {
+    e.preventDefault();
+    alert( document.title );
+
+  });*/
 });
 </script>
 
@@ -75,7 +87,7 @@ class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
       'color_button' => array(ts('Widget button text color'),
         'text',
         FALSE,
-        '#96C0E7',
+        '#000000',
       ),
       'color_button_bg' => array(ts('Widget button background color'),
         'text',
@@ -124,18 +136,24 @@ class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
     $this->add('checkbox', 'override', ts('Override default template'));
     $this->add('textarea', 'custom_template', ts('Custom template:<br><SMALL><font color="red">Please customize the smarty v2 template only if you know what you are doing</font></SMALL>'));
 
+    $this->addElement('submit','preview','name="Save and Preview" id="preview"');
     $this->addButtons(array(
       array(
         'type' => 'submit',
         'name' => ts('Save'),
         'isDefault' => TRUE,
       ),
+        array(
+          'type' => 'savenprev',
+          'name' => ts('Save & Preview'),
+        ),
     ));
-
+    
+    $this->add('textarea', 'embd_code', ts('Code to embed:'));
+    
     // export form elements
     $this->assign('elementNames', $this->getRenderableElementNames());
 
-    $smarty = CRM_Core_Smarty::singleton();
     if (isset($this->_id)) {  
       /** Updating existing widget*/
 
@@ -195,6 +213,9 @@ where w.id=" . $this->_id;
               'custom_template' => $cust_templ));
         }
       }
+      $emb_code = "<script src=\"http://code.jquery.com/jquery-1.9.1.min.js\"></script>
+<script type=\"text/javascript\" src=\"http://localhost/F3/sites/all/modules/civicrm/extensions/civicrm-wci/extern/wciwidget.php?widgetId=" . $this->_id . "\"></script>";
+      $this->getElement('embd_code')->setValue($emb_code);
     }
     else {
       /** Keep template in civicrm-wci/templates folder*/

@@ -14,6 +14,25 @@
   </div>
 {/foreach}
 
+{if $form.title.value != ""}
+  {php} 
+    if(isset($_REQUEST['id'])) {
+      $wid_id = $_REQUEST['id'];
+      $data = CRM_Wci_BAO_Widget::getWidgetData($wid_id);
+      $template = CRM_Core_Smarty::singleton();
+      $template->assign('wciform', $data);
+      $template->template_dir[] = $_SERVER['DOCUMENT_ROOT'] . "/F3/sites/all/modules/civicrm/extensions/civicrm-wci/templates/CRM/Wci/Page";
+      $wcidata = $template->fetch('wciwidget.tpl');
+    }
+  {/php}
+
+  <div class="crm-section">
+    <div class="content">
+    {include file="CRM/Wci/Page/wciwidget.tpl"}
+    </div>
+  </div>
+{/if}
+
 {* FIELD EXAMPLE: OPTION 2 (MANUAL LAYOUT)
 
   <div>
@@ -22,6 +41,8 @@
   </div>
 
 {* FOOTER *}
+
 <div class="crm-submit-buttons">
 {include file="CRM/common/formButtons.tpl" location="bottom"}
 </div>
+

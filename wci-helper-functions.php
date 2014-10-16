@@ -12,3 +12,19 @@
     
     return $options;
   }
+  
+  function getExtensionRootPath() {
+    return '//' . $_SERVER['SERVER_NAME'] . str_replace($_SERVER['DOCUMENT_ROOT'], '', __DIR__);
+  }
+  
+  function getWciWidgetControllerPath() {
+    $widget_controller_path = getExtensionRootPath() . '/extern/wciwidget.php';
+    
+    return $widget_controller_path;
+  }
+  
+  function getWciWidgetTemplatePath() {
+    $widget_tpl_path = getExtensionRootPath() . '/templates/CRM/Wci/Page';
+    
+    return $widget_tpl_path;
+  }

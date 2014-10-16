@@ -213,8 +213,16 @@ where w.id=" . $this->_id;
               'custom_template' => $cust_templ));
         }
       }
+      $widget_controller_path = getWciWidgetControllerPath();
+      
       $emb_code = "<script src=\"http://code.jquery.com/jquery-1.9.1.min.js\"></script>
-<script type=\"text/javascript\" src=\"http://localhost/F3/sites/all/modules/civicrm/extensions/civicrm-wci/extern/wciwidget.php?widgetId=" . $this->_id . "\"></script>";
+<script type=\"text/javascript\" src=\"" . $widget_controller_path . "?widgetId=" . $this->_id . "\"></script>
+$( document ).ready(function() {
+$('#widgetwci').html(wciwidgetcode);
+});
+</script>
+<div id='widgetwci'>
+</div>";
       $this->getElement('embd_code')->setValue($emb_code);
     }
     else {

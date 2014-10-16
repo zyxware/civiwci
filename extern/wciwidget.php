@@ -38,6 +38,7 @@
 */  
 
 require_once '../../../civicrm.config.php';
+require_once '../wci-helper-functions.php';
 require_once 'CRM/Core/Config.php';
 require_once 'CRM/Contribute/BAO/Widget.php';
 require_once 'CRM/Utils/Request.php';
@@ -59,7 +60,7 @@ if (isset($embed) && (true == $embed)) {
   $data = CRM_Wci_BAO_Widget::getWidgetData($widgetId);
   $template->assign('wciform', $data);
 
-  $template->template_dir[] = $_SERVER['DOCUMENT_ROOT'] . "/F3/sites/all/modules/civicrm/extensions/civicrm-wci/templates/CRM/Wci/Page";
+  $template->template_dir[] = getWciWidgetTemplatePath();
   $wcidata = $template->fetch('wciwidget.tpl');
   $output = 'var wciwidgetcode =  ' . json_encode($wcidata) . ';';
   echo $output;

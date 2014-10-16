@@ -21,7 +21,7 @@
       $data = CRM_Wci_BAO_Widget::getWidgetData($wid_id);
       $template = CRM_Core_Smarty::singleton();
       $template->assign('wciform', $data);
-      $template->template_dir[] = $_SERVER['DOCUMENT_ROOT'] . "/F3/sites/all/modules/civicrm/extensions/civicrm-wci/templates/CRM/Wci/Page";
+      $template->template_dir[] = getWciWidgetTemplatePath();
       $wcidata = $template->fetch('wciwidget.tpl');
     }
   {/php}

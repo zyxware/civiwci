@@ -170,7 +170,7 @@ class CRM_Wci_BAO_ProgressBar extends CRM_Wci_DAO_ProgressBar {
       $sa = $con_page[$dao->id]['starting_amount'];
       $ga = $con_page[$dao->id]['goal_amount'];
     }
-     
+ 
     $query = "SELECT * FROM civicrm_wci_progress_bar_formula WHERE progress_bar_id =" . $idPB;
     $params = array();
 

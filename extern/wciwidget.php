@@ -57,7 +57,7 @@ if (isset($embed) && (true == $embed)) {
 
 } else {
   $data = CRM_Wci_BAO_Widget::getWidgetData($widgetId);
-  $template->assign('form', $data);
+  $template->assign('wciform', $data);
 
   $template->template_dir[] = $_SERVER['DOCUMENT_ROOT'] . "/F3/sites/all/modules/civicrm/extensions/civicrm-wci/templates/CRM/Wci/Page";
   $wcidata = $template->fetch('wciwidget.tpl');

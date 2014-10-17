@@ -24,7 +24,7 @@
   }
   
   function getWciWidgetTemplatePath() {
-    $widget_tpl_path = getExtensionRootPath() . '/templates/CRM/Wci/Page';
+    $widget_tpl_path = __DIR__ . '/templates/CRM/Wci/Page';
     
     return $widget_tpl_path;
   }

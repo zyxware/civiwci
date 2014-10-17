@@ -183,6 +183,6 @@
     <div id="crm_wid_{$widgetId}_campaign" class="crm-campaign">
     </div>
     <div class="crm-wci-button-wrapper" id="crm_wid_{$widgetId}_button">
-        <a href='{crmURL p="civicrm/contribute/transact" q="reset=1&id=$wciform.button_link_to" h=0 a=1 fe=1}' class="crm-wci-button"><span class="crm-wci-button-inner" id="crm_wid_{$widgetId}_btn_txt">{$wciform.button_title}</span></a>
+        <a href='{crmURL p="civicrm/contribute/transact" q="reset=1&id=$cpageId" h=0 a=1 fe=1}' class="crm-wci-button"><span class="crm-wci-button-inner" id="crm_wid_{$widgetId}_btn_txt">{$wciform.button_title}</span></a>
     </div>
 </div>

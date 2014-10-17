@@ -59,6 +59,7 @@ if (isset($embed) && (true == $embed)) {
 } else {
   $data = CRM_Wci_BAO_Widget::getWidgetData($widgetId);
   $template->assign('wciform', $data);
+  $template->assign('cpageId', $data['button_link_to']);
 
   $template->template_dir[] = getWciWidgetTemplatePath();
   $wcidata = $template->fetch('wciwidget.tpl');

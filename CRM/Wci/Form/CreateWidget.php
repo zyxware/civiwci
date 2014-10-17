@@ -144,7 +144,7 @@ class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
         'isDefault' => TRUE,
       ),
         array(
-          'type' => 'savenprev',
+          'type' => 'next',
           'name' => ts('Save & Preview'),
         ),
     ));
@@ -256,6 +256,7 @@ $('#widgetwci').html(wciwidgetcode);
       $equals = " = ";
       $quote = "'";
     }
+    
     if (isset($this->_id)) {
       $sql = "UPDATE civicrm_wci_widget SET title = '". $values['title'] 
         . "', logo_image = '" . $values['logo_image'] . "', image = '" 
@@ -300,15 +301,21 @@ $('#widgetwci').html(wciwidgetcode);
     try {
       $transaction = new CRM_Core_Transaction();
       CRM_Core_DAO::executeQuery($sql);
-
       $transaction->commit();
+      
+      if(isset($_REQUEST['_qf_CreateWidget_next'])) {
+        $widget_id = CRM_Core_DAO::singleValueQuery('SELECT LAST_INSERT_ID()');
+        CRM_Utils_System::redirect('civicrm/wci/widget?action=update&reset=1&id=' . $widget_id);
+      } else {
+        CRM_Utils_System::redirect('civicrm/wci/widget?reset=1');
+      }
     }    
     catch (Exception $e) {
       //TODO
       print_r($e->getMessage());
       $transaction->rollback();
     }
-      
+     
     parent::postProcess();
   }
   

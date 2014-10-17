@@ -15,9 +15,9 @@ cj(function ( $ ) {
       $('#custom_template').attr("disabled",true);
     }
     if( $('#title').val() != "") {
-      $('#embd_code').parent().parent().parent().show();    
+      $('#embd_code').parents('.crm-section').show();    
     } else {
-      $('#embd_code').parent().parent().parent().hide();
+      $('#embd_code').parents('.crm-section').hide();
     }
 //    $('#embd_code').attr("disabled",true);
   }

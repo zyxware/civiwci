@@ -14,7 +14,7 @@
   }
   
   function getExtensionRootPath() {
-    return '//' . $_SERVER['SERVER_NAME'] . str_replace($_SERVER['DOCUMENT_ROOT'], '', __DIR__);
+    return 'http://' . $_SERVER['SERVER_NAME'] . str_replace($_SERVER['DOCUMENT_ROOT'], '', __DIR__);
   }
   
   function getWciWidgetControllerPath() {

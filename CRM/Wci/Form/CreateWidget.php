@@ -217,6 +217,7 @@ where w.id=" . $this->_id;
       
       $emb_code = "<script src=\"http://code.jquery.com/jquery-1.9.1.min.js\"></script>
 <script type=\"text/javascript\" src=\"" . $widget_controller_path . "?widgetId=" . $this->_id . "\"></script>
+<script>
 $( document ).ready(function() {
 $('#widgetwci').html(wciwidgetcode);
 });

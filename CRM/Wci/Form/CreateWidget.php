@@ -149,7 +149,7 @@ class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
         ),
     ));
     
-    $this->add('textarea', 'embd_code', ts('Code to embed:'));
+    // $this->add('textarea', 'embd_code', ts('Code to embed:'));
     
     // export form elements
     $this->assign('elementNames', $this->getRenderableElementNames());
@@ -213,18 +213,18 @@ where w.id=" . $this->_id;
               'custom_template' => $cust_templ));
         }
       }
-      $widget_controller_path = getWciWidgetControllerPath();
-      
-      $emb_code = "<script src=\"http://code.jquery.com/jquery-1.9.1.min.js\"></script>
-<script type=\"text/javascript\" src=\"" . $widget_controller_path . "?widgetId=" . $this->_id . "\"></script>
-<script>
-$( document ).ready(function() {
-$('#widgetwci').html(wciwidgetcode);
-});
-</script>
-<div id='widgetwci'>
-</div>";
-      $this->getElement('embd_code')->setValue($emb_code);
+      // $widget_controller_path = getWciWidgetControllerPath();
+      // 
+      // $emb_code = "<script src=\"http://code.jquery.com/jquery-1.9.1.min.js\"></script>
+// <script type=\"text/javascript\" src=\"" . $widget_controller_path . "?widgetId=" . $this->_id . "\"></script>
+// <script>
+// $( document ).ready(function() {
+// $('#widgetwci').html(wciwidgetcode);
+// });
+// </script>
+// <div id='widgetwci'>
+// </div>";
+      // $this->getElement('embd_code')->setValue($emb_code);
     }
     else {
       /** Keep template in civicrm-wci/templates folder*/

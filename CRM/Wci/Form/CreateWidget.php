@@ -304,10 +304,11 @@ where w.id=" . $this->_id;
       $transaction->commit();
       
       if(isset($_REQUEST['_qf_CreateWidget_next'])) {
-        $widget_id = CRM_Core_DAO::singleValueQuery('SELECT LAST_INSERT_ID()');
-        CRM_Utils_System::redirect('civicrm/wci/widget?action=update&reset=1&id=' . $widget_id);
+        (isset($this->_id)) ? $widget_id = $this->_id : 
+              $widget_id = CRM_Core_DAO::singleValueQuery('SELECT LAST_INSERT_ID()');
+        CRM_Utils_System::redirect('?action=update&reset=1&id=' . $widget_id);
       } else {
-        CRM_Utils_System::redirect('civicrm/wci/widget?reset=1');
+        CRM_Utils_System::redirect('?reset=1');
       }
     }    
     catch (Exception $e) {

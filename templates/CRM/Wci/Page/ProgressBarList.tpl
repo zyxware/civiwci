@@ -102,7 +102,7 @@
       {else}
       <div class="messages status no-popup">
              <div class="icon inform-icon"></div> &nbsp;
-             {ts 1=$newPageURL}No contribution pages have been created yet. Click <a accesskey="N" href='%1'>here</a> to create a new contribution page.{/ts}
+             {ts 1=$newPageURL}No Progressbars have been created yet. Click <a accesskey="N" href='%1'>here</a> to create a new Progressbar.{/ts}
       </div>
         {/if}
     {/if}

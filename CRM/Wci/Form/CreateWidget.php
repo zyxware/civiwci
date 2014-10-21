@@ -211,6 +211,10 @@ where w.id=" . $this->_id;
           $cust_templ = base64_decode($wid_page[$dao->id]['custom_template']);
           $this->setDefaults(array(
               'custom_template' => $cust_templ));
+        } else {
+          $output = file_get_contents('templates/CRM/Wci/Page/wciwidget.tpl',FILE_USE_INCLUDE_PATH);
+          $elem = $this->getElement('custom_template');
+          $elem->setValue($output);
         }
       }
       // $widget_controller_path = getWciWidgetControllerPath();
@@ -230,7 +234,7 @@ where w.id=" . $this->_id;
       /** Keep template in civicrm-wci/templates folder*/
       $output = file_get_contents('templates/CRM/Wci/Page/wciwidget.tpl',FILE_USE_INCLUDE_PATH);
       $elem = $this->getElement('custom_template');
-      $elem->setValue($output); 
+      $elem->setValue($output);
     }
     parent::buildQuickForm();
   }

@@ -58,11 +58,17 @@ if (isset($embed) && (true == $embed)) {
 
 } else {
   $data = CRM_Wci_BAO_Widget::getWidgetData($widgetId);
+
   $template->assign('wciform', $data);
   $template->assign('cpageId', $data['button_link_to']);
 
-  $template->template_dir[] = getWciWidgetTemplatePath();
-  $wcidata = $template->fetch('wciwidget.tpl');
+  if ($data["override"] == '0') {
+    $template->template_dir[] = getWciWidgetTemplatePath();
+    $wcidata = $template->fetch('wciwidget.tpl');
+  } else {
+
+        $wcidata = $template->fetch('string:' . base64_decode($data['custom_template']));
+  }
   $output = 'var wciwidgetcode =  ' . json_encode($wcidata) . ';';
   echo $output;
 

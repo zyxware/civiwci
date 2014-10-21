@@ -51,17 +51,22 @@ $embed = CRM_Utils_Request::retrieve('embed', 'Positive', CRM_Core_DAO::$_nullOb
 
 if (isset($format)) {
   $jsonvar .= $cpageId;
+} else {
+  $data = CRM_Wci_BAO_Widget::getWidgetData($widgetId);
+
+  $template->assign('wciform', $data);
+  $template->assign('cpageId', $data['button_link_to']);
+
+  if ($data["override"] == '0') {
+    $template->template_dir[] = getWciWidgetTemplatePath();
+    $wcidata = $template->fetch('wciwidget.tpl');
+  } else {
+
+        $wcidata = $template->fetch('string:' . base64_decode($data['custom_template']));
+  }
+  $output = 'var wciwidgetcode =  ' . json_encode($wcidata) . ';';
+  echo $output;
+
 }
-
-$data = "";
-$data = CRM_Wci_BAO_Widget::getWidgetData($widgetId);
-$template->assign('wciform', $data);
-$template->assign('cpageId', $data['button_link_to']);
-$template->assign('embed', $embed);
-
-$template->template_dir[] = getWciWidgetTemplatePath();
-$wcidata = $template->fetch('wciwidget.tpl');
-$output = 'var wciwidgetcode =  ' . json_encode($wcidata) . ';';
-echo $output;
 
 CRM_Utils_System::civiExit();

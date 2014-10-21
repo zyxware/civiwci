@@ -21,8 +21,13 @@
       $data = CRM_Wci_BAO_Widget::getWidgetData($wid_id);
       $template = CRM_Core_Smarty::singleton();
       $template->assign('wciform', $data);
-      $template->template_dir[] = getWciWidgetTemplatePath();
-      $wcidata = $template->fetch('wciwidget.tpl');
+      if($data["override"] == 0) {
+        $template->template_dir[] = getWciWidgetTemplatePath();
+        $wcidata = $template->fetch('wciwidget.tpl');
+      } else {
+      echo "hi";
+        $wcidata = $template->fetch('string:' . base64_decode($wid_page[$dao->id]['custom_template']));
+      }
       $widget_controller_path = getWciWidgetControllerPath();
     }
   {/php}
@@ -50,7 +55,17 @@
   </div>
   <div class="crm-section">
     <div class="content">
-    {include file="CRM/Wci/Page/wciwidget.tpl"}
+   {* {include file="CRM/Wci/Page/wciwidget.tpl"} *}
+
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="{php}echo $widget_controller_path;{/php}?widgetId={php}echo $wid_id;{/php}"></script>
+<script>
+  $( document ).ready(function()  {ldelim} 
+    $('#widgetwci').html(wciwidgetcode);
+   {rdelim} );
+</script>
+<div id='widgetwci'></div>
+
     </div>
   </div>
 {/if}

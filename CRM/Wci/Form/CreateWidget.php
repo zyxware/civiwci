@@ -211,6 +211,10 @@ where w.id=" . $this->_id;
           $cust_templ = base64_decode($wid_page[$dao->id]['custom_template']);
           $this->setDefaults(array(
               'custom_template' => $cust_templ));
+        } else {
+          $output = file_get_contents('templates/CRM/Wci/Page/wciwidget.tpl',FILE_USE_INCLUDE_PATH);
+          $elem = $this->getElement('custom_template');
+          $elem->setValue($output);
         }
       }
       // $widget_controller_path = getWciWidgetControllerPath();
@@ -228,9 +232,9 @@ where w.id=" . $this->_id;
     }
     else {
       /** Keep template in civicrm-wci/templates folder*/
-      $output = file_get_contents('templates/CRM/Wci/Page/Widget.tpl',FILE_USE_INCLUDE_PATH);
+      $output = file_get_contents('templates/CRM/Wci/Page/wciwidget.tpl',FILE_USE_INCLUDE_PATH);
       $elem = $this->getElement('custom_template');
-      $elem->setValue($output); 
+      $elem->setValue($output);
     }
     parent::buildQuickForm();
   }
@@ -304,10 +308,11 @@ where w.id=" . $this->_id;
       $transaction->commit();
       
       if(isset($_REQUEST['_qf_CreateWidget_next'])) {
-        $widget_id = CRM_Core_DAO::singleValueQuery('SELECT LAST_INSERT_ID()');
-        CRM_Utils_System::redirect('civicrm/wci/widget?action=update&reset=1&id=' . $widget_id);
+        (isset($this->_id)) ? $widget_id = $this->_id : 
+              $widget_id = CRM_Core_DAO::singleValueQuery('SELECT LAST_INSERT_ID()');
+        CRM_Utils_System::redirect('?action=update&reset=1&id=' . $widget_id);
       } else {
-        CRM_Utils_System::redirect('civicrm/wci/widget?reset=1');
+        CRM_Utils_System::redirect('?reset=1');
       }
     }    
     catch (Exception $e) {

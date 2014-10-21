@@ -348,7 +348,10 @@ where w.id=" . $this->_id;
       '' => ts('- select -'),
     );
     
-    $result = civicrm_api3('group', 'get');    
+    $result = civicrm_api3('group', 'get', array(
+      'group_type' => '2'
+    ));
+    
     foreach ($result['values'] as $group) {
       $options[$group['id']] = $group['title'];
     }

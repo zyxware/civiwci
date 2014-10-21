@@ -185,4 +185,19 @@
     <div class="crm-wci-button-wrapper" id="crm_wid_{$widgetId}_button">
         <a href='{crmURL p="civicrm/contribute/transact" q="reset=1&id=$cpageId" h=0 a=1 fe=1}' class="crm-wci-button"><span class="crm-wci-button-inner" id="crm_wid_{$widgetId}_btn_txt">{$wciform.button_title}</span></a>
     </div>
+    {$wciform.embed}
+    {if $wciform.email_signup_group_id}
+      {if $wciform.embed == 1}
+        <form method="get" action="http://{php}echo $_SERVER['SERVER_NAME'];{/php}/civicrm/mailing/subscribe"
+      {/if}
+        <p style="text-align:center;">
+          <input type="text" id="frmEmail" name="email-Primary" size="10">
+        </p>
+        <p style="text-align: center; margin-top: 10px;">
+          <input type="submit" name="_qf_Edit_next" value="Subscribe Me">
+        </p>
+      {if $wciform.embed == 1}
+        </form>
+      {/if}
+    {/if}
 </div>

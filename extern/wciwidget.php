@@ -54,18 +54,14 @@ if (isset($format)) {
 }
 
 $data = "";
-if (isset($embed) && (true == $embed)) {
+$data = CRM_Wci_BAO_Widget::getWidgetData($widgetId);
+$template->assign('wciform', $data);
+$template->assign('cpageId', $data['button_link_to']);
+$template->assign('embed', $embed);
 
-} else {
-  $data = CRM_Wci_BAO_Widget::getWidgetData($widgetId);
-  $template->assign('wciform', $data);
-  $template->assign('cpageId', $data['button_link_to']);
-
-  $template->template_dir[] = getWciWidgetTemplatePath();
-  $wcidata = $template->fetch('wciwidget.tpl');
-  $output = 'var wciwidgetcode =  ' . json_encode($wcidata) . ';';
-  echo $output;
-
-}
+$template->template_dir[] = getWciWidgetTemplatePath();
+$wcidata = $template->fetch('wciwidget.tpl');
+$output = 'var wciwidgetcode =  ' . json_encode($wcidata) . ';';
+echo $output;
 
 CRM_Utils_System::civiExit();

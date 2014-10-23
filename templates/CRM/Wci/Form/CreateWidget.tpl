@@ -25,7 +25,6 @@
         $template->template_dir[] = getWciWidgetTemplatePath();
         $wcidata = $template->fetch('wciwidget.tpl');
       } else {
-      echo "hi";
         $wcidata = $template->fetch('string:' . base64_decode($wid_page[$dao->id]['custom_template']));
       }
       $widget_controller_path = getWciWidgetControllerPath();

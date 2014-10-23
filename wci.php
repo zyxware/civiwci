@@ -119,7 +119,7 @@ function wci_civicrm_navigationMenu( &$params ) {
   // inserting WCI menu at the place of old help location
   $params[$helpID] = array (
     'attributes' => array (
-    'label' => ts('WCI'),
+    'label' => ts('Widgets and Progress Bars'),
     'name' => 'WCI',
     'url' => null,
     'permission' => 'access CiviReport,access CiviContribute',

@@ -3,30 +3,7 @@
 require_once 'CRM/Core/Form.php';
 require_once 'wci-helper-functions.php';
 require_once 'CRM/Wci/BAO/ProgressBar.php';
-?>
 
-<script type="text/javascript">
-cj(function ( $ ) {
-  function setState() {
-    if ($('#override').is(':checked') == true) {
-      $('#custom_template').attr("disabled",false);
-    }
-    else {
-      $('#custom_template').attr("disabled",true);
-    }
-    if( $('#title').val() != "") {
-      $('#embd_code').parents('.crm-section').show();    
-    } else {
-      $('#embd_code').parents('.crm-section').hide();
-    }
-  }
-  $(document).ready(setState)
-  $('#override').click(setState);
-
-});
-</script>
-
-<?php
 /**
  * Form controller class
  *
@@ -43,6 +20,7 @@ class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
   protected $_id;
   
   function preProcess() {
+    CRM_Core_Resources::singleton()->addScriptFile('org.civicrm.wci', 'createwidget.js');
     parent::preProcess();
     $this->_id = CRM_Utils_Request::retrieve('id', 'Positive', $this, 
           FALSE, NULL, 'REQUEST' );

@@ -19,17 +19,10 @@ cj(function ( $ ) {
     } else {
       $('#embd_code').parents('.crm-section').hide();
     }
-//    $('#embd_code').attr("disabled",true);
   }
   $(document).ready(setState)
   $('#override').click(setState);
 
-/*  
-  $("input[name='_qf_CreateWidget_savenprev']").on('click', function( e ) {
-    e.preventDefault();
-    alert( document.title );
-
-  });*/
 });
 </script>
 
@@ -104,12 +97,12 @@ class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
 
   function setDefaultValues() {
     $defaults = array();
-    
-    $defaults['size_variant'] = 'normal';
-    foreach ($this->_colorFields as $name => $val) {
-      $defaults[$name] = $val[3];
+    if (!isset($this->_id)) {
+      $defaults['size_variant'] = 'normal';
+      foreach ($this->_colorFields as $name => $val) {
+        $defaults[$name] = $val[3];
+      }
     }
-
     return $defaults;
   }
 
@@ -148,8 +141,6 @@ class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
           'name' => ts('Save & Preview'),
         ),
     ));
-    
-    // $this->add('textarea', 'embd_code', ts('Code to embed:'));
     
     // export form elements
     $this->assign('elementNames', $this->getRenderableElementNames());
@@ -217,18 +208,6 @@ where w.id=" . $this->_id;
           $elem->setValue($output);
         }
       }
-      // $widget_controller_path = getWciWidgetControllerPath();
-      // 
-      // $emb_code = "<script src=\"http://code.jquery.com/jquery-1.9.1.min.js\"></script>
-// <script type=\"text/javascript\" src=\"" . $widget_controller_path . "?widgetId=" . $this->_id . "\"></script>
-// <script>
-// $( document ).ready(function() {
-// $('#widgetwci').html(wciwidgetcode);
-// });
-// </script>
-// <div id='widgetwci'>
-// </div>";
-      // $this->getElement('embd_code')->setValue($emb_code);
     }
     else {
       /** Keep template in civicrm-wci/templates folder*/

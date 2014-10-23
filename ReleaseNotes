@@ -1,0 +1,22 @@
+Release Notes for civicrm-wci CiciCRM extension. Alpha - II
+===========================================================
+
+Alpha - II. 10/23/2014
+------------------------------------------
+1. Newsletter signup feature 
+2. Added preview button
+3. Widget properties specified the creation form applied to widget
+
+Alpha - I. 10/16/2014
+------------------------------------------
+1. Create Progressbar
+2. Edit Progressbar
+3. Delete Progressbar
+4. List Progressbar
+5. Create Widget
+6. List widgets
+7. Delete widget
+8. Edit widget
+9. Preview progressbar in create widget form
+10. Embed progessbar external clients
+

@@ -3,37 +3,7 @@
 require_once 'CRM/Core/Form.php';
 require_once 'wci-helper-functions.php';
 require_once 'CRM/Wci/BAO/ProgressBar.php';
-?>
 
-<script type="text/javascript">
-cj(function ( $ ) {
-  function setState() {
-    if ($('#override').is(':checked') == true) {
-      $('#custom_template').attr("disabled",false);
-    }
-    else {
-      $('#custom_template').attr("disabled",true);
-    }
-    if( $('#title').val() != "") {
-      $('#embd_code').parents('.crm-section').show();    
-    } else {
-      $('#embd_code').parents('.crm-section').hide();
-    }
-//    $('#embd_code').attr("disabled",true);
-  }
-  $(document).ready(setState)
-  $('#override').click(setState);
-
-/*  
-  $("input[name='_qf_CreateWidget_savenprev']").on('click', function( e ) {
-    e.preventDefault();
-    alert( document.title );
-
-  });*/
-});
-</script>
-
-<?php
 /**
  * Form controller class
  *
@@ -50,6 +20,7 @@ class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
   protected $_id;
   
   function preProcess() {
+    CRM_Core_Resources::singleton()->addScriptFile('org.civicrm.wci', 'createwidget.js');
     parent::preProcess();
     $this->_id = CRM_Utils_Request::retrieve('id', 'Positive', $this, 
           FALSE, NULL, 'REQUEST' );
@@ -104,12 +75,12 @@ class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
 
   function setDefaultValues() {
     $defaults = array();
-    
-    $defaults['size_variant'] = 'normal';
-    foreach ($this->_colorFields as $name => $val) {
-      $defaults[$name] = $val[3];
+    if (!isset($this->_id)) {
+      $defaults['size_variant'] = 'normal';
+      foreach ($this->_colorFields as $name => $val) {
+        $defaults[$name] = $val[3];
+      }
     }
-
     return $defaults;
   }
 
@@ -148,8 +119,6 @@ class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
           'name' => ts('Save & Preview'),
         ),
     ));
-    
-    // $this->add('textarea', 'embd_code', ts('Code to embed:'));
     
     // export form elements
     $this->assign('elementNames', $this->getRenderableElementNames());
@@ -217,18 +186,6 @@ where w.id=" . $this->_id;
           $elem->setValue($output);
         }
       }
-      // $widget_controller_path = getWciWidgetControllerPath();
-      // 
-      // $emb_code = "<script src=\"http://code.jquery.com/jquery-1.9.1.min.js\"></script>
-// <script type=\"text/javascript\" src=\"" . $widget_controller_path . "?widgetId=" . $this->_id . "\"></script>
-// <script>
-// $( document ).ready(function() {
-// $('#widgetwci').html(wciwidgetcode);
-// });
-// </script>
-// <div id='widgetwci'>
-// </div>";
-      // $this->getElement('embd_code')->setValue($emb_code);
     }
     else {
       /** Keep template in civicrm-wci/templates folder*/
@@ -260,7 +217,7 @@ where w.id=" . $this->_id;
       $equals = " = ";
       $quote = "'";
     }
-    
+
     if (isset($this->_id)) {
       $sql = "UPDATE civicrm_wci_widget SET title = '". $values['title'] 
         . "', logo_image = '" . $values['logo_image'] . "', image = '" 
@@ -304,7 +261,9 @@ where w.id=" . $this->_id;
     $errorScope = CRM_Core_TemporaryErrorScope::useException();
     try {
       $transaction = new CRM_Core_Transaction();
+      CRM_Core_DAO::executeQuery("SET foreign_key_checks = 0;");
       CRM_Core_DAO::executeQuery($sql);
+      CRM_Core_DAO::executeQuery("SET foreign_key_checks = 1;");
       $transaction->commit();
       
       if(isset($_REQUEST['_qf_CreateWidget_next'])) {
@@ -312,7 +271,7 @@ where w.id=" . $this->_id;
               $widget_id = CRM_Core_DAO::singleValueQuery('SELECT LAST_INSERT_ID()');
         CRM_Utils_System::redirect('?action=update&reset=1&id=' . $widget_id);
       } else {
-        CRM_Utils_System::redirect('?reset=1');
+        CRM_Utils_System::redirect('./?reset=1');
       }
     }    
     catch (Exception $e) {

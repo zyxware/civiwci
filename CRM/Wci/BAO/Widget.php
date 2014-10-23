@@ -157,6 +157,7 @@ class CRM_Wci_BAO_Widget extends CRM_Wci_DAO_Widget {
       $data["custom_template"] = $dao->custom_template;
       $data["widgetId"] = $widgetId;
       $data["override"] = $dao->override;
+      $data["color_bar"] = $dao->color_progress_bar;
     }
     return $data;
   }

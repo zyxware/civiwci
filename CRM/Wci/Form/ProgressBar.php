@@ -171,7 +171,7 @@ class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
           CRM_Core_DAO::executeQuery($sql);
         endfor;
         $transaction->commit();
-        CRM_Utils_System::redirect('civicrm/wci/progress-bar?reset=1');
+        CRM_Utils_System::redirect('progress-bar?reset=1');
       }
       catch (Exception $e) {
         //TODO

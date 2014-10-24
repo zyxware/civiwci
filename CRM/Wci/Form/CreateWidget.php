@@ -48,7 +48,7 @@ class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
       'color_description' => array(ts('Widget description color'),
         'text',
         FALSE,
-        '#96C0E7',
+        '#000000',
       ),
       'color_border' => array(ts('Widget border color'),
         'text',
@@ -125,14 +125,17 @@ class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
 
     if (isset($this->_id)) {  
       /** Updating existing widget*/
+      
+      /*$query = "SELECT pb.id as pbid, w.*  FROM civicrm_wci_widget w INNER JOIN civicrm_wci_progress_bar pb on pb.id = w.progress_bar_id 
+where w.id=" . $this->_id;*/
 
-      $query = "SELECT pb.id as pbid, w.*  FROM civicrm_wci_widget w INNER JOIN civicrm_wci_progress_bar pb on pb.id = w.progress_bar_id 
-where w.id=" . $this->_id;
+      $query = "SELECT * FROM civicrm_wci_widget WHERE id=" . $this->_id;
       $params = array();
       
       $dao = CRM_Core_DAO::executeQuery($query, $params, TRUE, 'CRM_Wci_DAO_Widget');
 
       while ($dao->fetch()) {
+
         $wid_page[$dao->id] = array();
         CRM_Core_DAO::storeValues($dao, $wid_page[$dao->id]);
 
@@ -148,14 +151,14 @@ where w.id=" . $this->_id;
               'button_title' => $wid_page[$dao->id]['button_title']));
 
         $this->setDefaults(array(
-              'progress_bar' => $dao->pbid));
+              'progress_bar' => $dao->progress_bar_id/*$dao->pbid*/));
         $description = base64_decode($wid_page[$dao->id]['description']);
         $this->setDefaults(array(
               'description' => $description));
         $this->setDefaults(array(
               'email_signup_group_id' => $wid_page[$dao->id]['email_signup_group_id']));
         $this->setDefaults(array(
-              'size_variant' => $wid_page[$dao->id]['size_variant']));
+              'size_variant' => $dao->size_variant));
         $this->setDefaults(array(
               'color_title' => $wid_page[$dao->id]['color_title']));
         $this->setDefaults(array(

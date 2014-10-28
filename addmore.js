@@ -75,7 +75,7 @@ cj(function ( $ ) {
     
   });
 
-  $('#remove_link').live('click', function( e ) {
+  $(document).on('click', '#remove_link', function( e ) {
     e.preventDefault();
     
     var rem_name = e.target.name;

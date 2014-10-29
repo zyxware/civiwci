@@ -11,7 +11,6 @@
         border:1px solid #96C0E7;
         background-color: {/literal}{$wciform.color_widget_bg}{literal}; /* background color */
         border-color:{/literal}{$wciform.color_border}{literal}; /* border color */
-        background:  {/literal}{if $wciform.image}url('{$wciform.image}'){/if}{literal}; /* background image */
     }
     
     .crm-wci-widget.thin {
@@ -149,6 +148,11 @@
       {/if}
       {$wciform.title}
     </h5>
+    {if $wciform.image}
+    <div style="text-align: center;">
+    <img src='{$wciform.image}' style="margin: 0 auto;"/>
+    </div>
+    {/if}
     <div class="crm-amounts">
         <div id="crm_wid_{$wciform.widgetId}_amt_hi" class="crm-amount-high"></div>
         <div id="crm_wid_{$wciform.widgetId}_amt_low" class="crm-amount-low"></div>

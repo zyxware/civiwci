@@ -193,7 +193,7 @@ class CRM_Wci_BAO_ProgressBar extends CRM_Wci_DAO_ProgressBar {
           $bp += $bx * $px / 100;
         }
      }
-     $perc = (($sa + $bp) / $ga ) * 100;
+     (0 == $ga) ? $perc = 0: $perc = (($sa + $bp) / $ga ) * 100;
      
      return $perc;
   }

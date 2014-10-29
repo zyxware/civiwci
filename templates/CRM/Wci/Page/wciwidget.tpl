@@ -169,17 +169,13 @@
     </div>
     {$wciform.embed}
     {if $wciform.email_signup_group_id}
-      {if $wciform.embed == 1}
         <form method="get" action="http://{php}echo $_SERVER['SERVER_NAME'];{/php}/civicrm/mailing/subscribe"
-      {/if}
         <p style="text-align:center;">
           <input type="text" id="frmEmail" name="email-Primary" size="10">
         </p>
         <p style="text-align: center; margin-top: 10px;">
           <input type="submit" name="_qf_Edit_next" value="Subscribe Me">
         </p>
-      {if $wciform.embed == 1}
         </form>
-      {/if}
     {/if}
 </div>

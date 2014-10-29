@@ -76,7 +76,7 @@
       {else}
       <div class="messages status no-popup">
              <div class="icon inform-icon"></div> &nbsp;
-             {ts 1=$newPageURL}No wci widgets have been created yet. Click <a accesskey="N" href='%1'>here</a> to create a new wci widget.{/ts}
+             {ts 1=$newPageURL}No wci widgets have been created yet. Click <a accesskey="N" href='widget/add'>here</a> to create a new wci widget.{/ts}
       </div>
         {/if}
     {/if}

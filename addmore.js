@@ -1,7 +1,15 @@
 // Updated to wait until the document is loaded. addmore_link
 
 cj(function ( $ ) { 
-
+  $(document).ready(function(){
+    var count = parseInt($('input[name=contrib_count]').val());
+    for ( var i = 2; i <= count; i++ ) {
+      $('#' + "contribution_page_" + i).after(
+      '<a id=\"remove_link\" class=\"form-link\" href=\"remove\" name=\"remove_link-' + i + '\"> Remove</a>');
+      $('#' + "contribution_page_" + i).parent().parent().attr("id", "crm-section-con-" + i);
+      $('#' + "percentage_" + i).parent().parent().attr("id", 'crm-section-per-' + i);
+    }
+  });
   $("#ProgressBar").validate({
     rules: {
       starting_amount: {
@@ -67,14 +75,13 @@ cj(function ( $ ) {
     
   });
 
-  $('#remove_link').live('click', function( e ) {
+  $(document).on('click', '#remove_link', function( e ) {
     e.preventDefault();
     
     var rem_name = e.target.name;
     //assuming that - is the delimiter. second string will be the count
     var rem_name_ar = rem_name.split('-');
     var contri_page = "\"#percentage_" + rem_name_ar[1] + "\"";
-
     $('#crm-section-con-'+ rem_name_ar[1] +'').remove();
     $('#crm-section-per-'+ rem_name_ar[1] +'').remove();
     var count = parseInt($('input[name=contrib_count]').val());

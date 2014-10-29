@@ -56,6 +56,9 @@ if (isset($format)) {
 
   $template->assign('wciform', $data);
   $template->assign('cpageId', $data['button_link_to']);
+  if(!empty($data['email_signup_group_id'])) {
+    $template->assign('emailSignupGroupFormURL', getEmailSignupFormUrl());
+  }
 
   if ($data["override"] == '0') {
     $template->template_dir[] = getWciWidgetTemplatePath();

@@ -38,7 +38,9 @@
     <div class="content">
       <div class="resizable-textarea">
         <span>{literal}
-          <textarea name="embd_code" id="embd_code" class="form-textarea textarea-processed"><script type="text/javascript">
+          <textarea name="embd_code" id="embd_code" class="form-textarea textarea-processed">
+<script type="text/javascript" src="{/literal}{php}echo $widget_controller_path;{/php}{literal}?widgetId={/literal}{php}echo $wid_id;{/php}{literal}"></script>
+<script type="text/javascript">
 // Cleanup functions for the document ready method
 if ( document.addEventListener ) {
     DOMContentLoaded = function() {

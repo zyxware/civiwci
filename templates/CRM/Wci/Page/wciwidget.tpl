@@ -25,7 +25,7 @@
       width: 250px;
     }
     
-    .crm-wci-widget h5 {
+    h5 {
         font-size:14px;
         padding:3px;
         margin: 0px;
@@ -38,22 +38,22 @@
         background-color: {/literal}{$wciform.color_title_bg}{literal};
     } /* title */
 
-    .crm-wci-widget .crm-amounts {
+    .crm-amounts {
         height:1em;
         margin:.8em 0px;
         font-size:13px;
     }
-    .crm-wci-widget .crm-amount-low {
+    .crm-amount-low {
         float:left;
     }
-    .crm-wci-widget .crm-amount-high {
+    .crm-amount-high {
         float:right;
     }
-    .crm-wci-widget .crm-percentage {
+    .crm-percentage {
         margin:0px 30%;
         text-align:center;
     }
-    .crm-wci-widget .crm-amount-bar { /* progress bar */
+    .crm-amount-bar { /* progress bar */
         background-color:#FFF;
         width:100%;
         display:block;
@@ -68,7 +68,7 @@
         background-color:{/literal}{$wciform.color_bar}{literal};
         border-color:#CECECE;
     }
-    .crm-wci-widget .crm-amount-fill {
+    .crm-amount-fill {
         background-color:#2786C2;
         height:1em;
         display:block;
@@ -79,27 +79,27 @@
         text-align:left;
         width: {/literal}{$wciform.pb_percentage}{literal}%; /* progress bar percentage */
     }
-    .crm-wci-widget .crm-amount-raised-wrapper {
+    .crm-amount-raised-wrapper {
         margin-bottom:.8em;
     }
-    .crm-wci-widget .crm-amount-raised {
+    .crm-amount-raised {
         font-weight:bold;
         color:#000;
     }
 
-    .crm-wci-widget .crm-logo {
+    .crm-logo {
         text-align:center;
     }
 
-    .crm-wci-widget .crm-comments,
-    .crm-wci-widget .crm-donors,
-    .crm-wci-widget .crm-campaign {
+    .crm-comments,
+    .crm-donors,
+    .crm-campaign {
         font-size:11px;
         margin-bottom:.8em;
         color:{/literal}{$wciform.color_description}{literal} /* other color*/
     }
 
-    .crm-wci-widget .crm-wci-button {
+    .crm-wci-button {
         display:block;
         background-color:#CECECE;
         -moz-border-radius:       4px;
@@ -114,22 +114,28 @@
         font-size:13px;
     }
 
-    .crm-wci-widget .crm-home-url {
+    .crm-home-url {
         text-decoration:none;
         border:0px;
         color:{/literal}{$wciform.color_homepage_link}{literal} /* home page link color*/
     }
 
-    .crm-wci-widget a.crm-wci-button { /* button color */
+    a.crm-wci-button { /* button color */
         background-color:{/literal}{$wciform.color_button_bg}{literal};
     }
 
-    .crm-wci-widget .crm-wci-button-inner { /* button text color */
+    .crm-wci-button-inner { /* button text color */
         padding:2px;
         display:block;
         color:{/literal}{$wciform.color_button}{literal};
     }
-
+    #crm_wci_image_container {
+      text-align: center;
+      padding: 10px 20px;
+    }
+    #crm_wci_image {
+      margin: auto;
+    }
 </style>
 
 <style>
@@ -149,9 +155,9 @@
       {$wciform.title}
     </h5>
     {if $wciform.image}
-    <div style="text-align: center;">
-    <img src='{$wciform.image}' style="margin: 0 auto;"/>
-    </div>
+      <div id="crm_wci_image_container">
+        <img id="crm_wci_image" src='{$wciform.image}'/>
+      </div>
     {/if}
     <div class="crm-amounts">
         <div id="crm_wid_{$wciform.widgetId}_amt_hi" class="crm-amount-high"></div>
@@ -173,12 +179,13 @@
     </div>
     {$wciform.embed}
     {if $wciform.email_signup_group_id}
-        <form method="get" action="http://{php}echo $_SERVER['SERVER_NAME'];{/php}/civicrm/mailing/subscribe"
+        <form method="post" action="{$emailSignupGroupFormURL}" name="Subscribe">
         <p style="text-align:center;">
-          <input type="text" id="frmEmail" name="email-Primary" size="10">
+          <input type="text" id="frmEmail" name="email" size="10">
         </p>
+        <input id="mark_x_2" name="mark_x_2" type="hidden" value="1">
         <p style="text-align: center; margin-top: 10px;">
-          <input type="submit" name="_qf_Edit_next" value="Subscribe Me">
+          <input type="submit" name="_qf_Subscribe_next" value="Subscribe Me">
         </p>
         </form>
     {/if}

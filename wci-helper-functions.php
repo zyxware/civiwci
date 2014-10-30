@@ -28,7 +28,3 @@
     
     return $widget_tpl_path;
   }
-  
-  function getEmailSignupFormUrl() {
-    return 'http://' . $_SERVER['SERVER_NAME'] . str_replace($_SERVER['PHP_SELF'], '', str_replace($_SERVER['DOCUMENT_ROOT'], '', $_SERVER['SCRIPT_FILENAME'])) . '/civicrm/mailing/subscribe';
-  }

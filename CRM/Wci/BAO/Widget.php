@@ -158,6 +158,7 @@ class CRM_Wci_BAO_Widget extends CRM_Wci_DAO_Widget {
       $data["widgetId"] = $widgetId;
       $data["override"] = $dao->override;
       $data["color_bar"] = $dao->color_progress_bar;
+      $data["emailSignupGroupFormURL"] = CRM_Utils_System::baseCMSURL() . 'civicrm/mailing/subscribe';
     }
     return $data;
   }

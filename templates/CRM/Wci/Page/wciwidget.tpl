@@ -182,6 +182,9 @@
       {if $embed eq 1 }
         <form method="get" action="{$wciform.emailSignupGroupFormURL}" name="Subscribe">
       {/if}
+        <p style="text-align:center; margin: 0;">
+          Get the monthly newsletter
+        </p>
         <p style="text-align:center;">
           <input type="text" id="frmEmail" name="email" size="10">
         </p>

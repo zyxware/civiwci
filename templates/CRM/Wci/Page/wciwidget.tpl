@@ -179,7 +179,7 @@
     </div>
     {$wciform.embed}
     {if $wciform.email_signup_group_id}
-        <form method="post" action="{$emailSignupGroupFormURL}" name="Subscribe">
+        <form method="get" action="{$wciform.emailSignupGroupFormURL}" name="Subscribe">
         <p style="text-align:center;">
           <input type="text" id="frmEmail" name="email" size="10">
         </p>

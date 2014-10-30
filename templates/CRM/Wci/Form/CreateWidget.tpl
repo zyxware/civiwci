@@ -38,8 +38,8 @@
     <div class="content">
       <div class="resizable-textarea">
         <span>{literal}
-          <textarea name="embd_code" id="embd_code" class="form-textarea textarea-processed">
-<script type="text/javascript" src="{/literal}{php}echo $widget_controller_path;{/php}{literal}?widgetId={/literal}{php}echo $wid_id;{/php}{literal}"></script>
+          <textarea rows="5" name="embd_code" id="embd_code" class="form-textarea textarea-processed">
+<script type="text/javascript" src="{/literal}{php}echo $widget_controller_path;{/php}{literal}?widgetId={/literal}{php}echo $wid_id;{/php}{literal}&embed=1"></script>
 <script type="text/javascript">
 // Cleanup functions for the document ready method
 if ( document.addEventListener ) {
@@ -93,7 +93,7 @@ function onReady( ) {
    {* {include file="CRM/Wci/Page/wciwidget.tpl"} *}
 
 <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="{php}echo $widget_controller_path;{/php}?widgetId={php}echo $wid_id;{/php}"></script>
+<script type="text/javascript" src="{php}echo $widget_controller_path;{/php}?widgetId={php}echo $wid_id;{/php}&embed=0"></script>
 <script>
   $( document ).ready(function()  {ldelim} 
     $('#widgetwci').html(wciwidgetcode);

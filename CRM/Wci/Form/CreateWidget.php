@@ -103,9 +103,9 @@ class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
         $val[2]
       );
     }
-    $this->add('textarea', 'style_rules', ts('Additional Style Rules'));
+    $this->add('textarea', 'style_rules', ts('Additional Style Rules'))->setRows(5);
     $this->add('checkbox', 'override', ts('Override default template'));
-    $this->add('textarea', 'custom_template', ts('Custom template:<br><SMALL><font color="red">Please customize the smarty v2 template only if you know what you are doing</font></SMALL>'));
+    $this->add('textarea', 'custom_template', ts('Custom template:<br><SMALL><font color="red">Please customize the smarty v2 template only if you know what you are doing</font></SMALL>'))->setRows(10);
 
     $this->addElement('submit','preview','name="Save and Preview" id="preview"');
     $this->addButtons(array(

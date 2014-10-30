@@ -72,10 +72,10 @@
         background-color:#2786C2;
         height:1em;
         display:block;
-        -moz-border-radius:   4px 0px 0px 4px;
-        -webkit-border-radius:   4px 0px 0px 4px;
-        -khtml-border-radius:   4px 0px 0px 4px;
-        border-radius:      4px 0px 0px 4px;
+        -moz-border-radius:   4px;
+        -webkit-border-radius:   4px;
+        -khtml-border-radius:   4px;
+        border-radius:      4px;
         text-align:left;
         width: {/literal}{$wciform.pb_percentage}{literal}%; /* progress bar percentage */
     }
@@ -177,16 +177,23 @@
     <div class="crm-wci-button-wrapper" id="crm_wid_{$wciform.widgetId}_button">
         <a href='{crmURL p="civicrm/contribute/transact" q="reset=1&id=$cpageId" h=0 a=1 fe=1}' class="crm-wci-button"><span class="crm-wci-button-inner" id="crm_wid_{$wciform.widgetId}_btn_txt">{$wciform.button_title}</span></a>
     </div>
-    {$wciform.embed}
+    
     {if $wciform.email_signup_group_id}
+      {if $embed eq 1 }
         <form method="get" action="{$wciform.emailSignupGroupFormURL}" name="Subscribe">
+      {/if}
         <p style="text-align:center;">
           <input type="text" id="frmEmail" name="email" size="10">
         </p>
-        <input id="mark_x_2" name="mark_x_2" type="hidden" value="1">
         <p style="text-align: center; margin-top: 10px;">
-          <input type="submit" name="_qf_Subscribe_next" value="Subscribe Me">
+          {if $embed eq 1 }
+            <input type="submit" name="_qf_Subscribe_next" value="Subscribe Me">
+          {else}
+            <input type="button" name="_qf_Subscribe_next" value="Subscribe Me">
+          {/if}
         </p>
+      {if $embed eq 1 }
         </form>
+      {/if}
     {/if}
 </div>

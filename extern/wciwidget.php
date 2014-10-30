@@ -56,6 +56,7 @@ if (isset($format)) {
 
   $template->assign('wciform', $data);
   $template->assign('cpageId', $data['button_link_to']);
+  $template->assign('embed', $embed);
 
   if ($data["override"] == '0') {
     $template->template_dir[] = getWciWidgetTemplatePath();

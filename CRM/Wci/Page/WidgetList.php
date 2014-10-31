@@ -78,7 +78,7 @@ class CRM_Wci_Page_WidgetList extends CRM_Core_Page {
 
       self::$_actionLinks = array(
         CRM_Core_Action::UPDATE => array(
-          'name' => ts('Update'),
+          'name' => ts('Edit'),
           'url' => CRM_Utils_System::currentPath(),
           'qs' => 'action=update&reset=1&id=%%id%%',
           'title' => ts('Update'),

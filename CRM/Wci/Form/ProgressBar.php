@@ -19,7 +19,7 @@ class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
   }
   function fillData() {
     $count = 1;
-    if (isset($this->_id)) {  
+    if (isset($this->_id)) {
       /** Updating existing progress bar*/
       $query = "SELECT * FROM civicrm_wci_progress_bar where id=" . $this->_id;
       $params = array();
@@ -69,6 +69,7 @@ class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
 
         $count++;
       }
+      CRM_Utils_System::setTitle(ts('Edit Progress Bar'));
       $count--; // because last iteration increments it to the next
     }  
     else {
@@ -86,6 +87,7 @@ class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
         'Percentage', // field label
         true // is required
       );
+      CRM_Utils_System::setTitle(ts('Create Progress Bar'));
     }
     
     $this->addElement('hidden', 'contrib_count', $count);
@@ -126,7 +128,7 @@ class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
 
     // export form elements
     $this->assign('elementNames', $this->getRenderableElementNames());
-
+    
     parent::buildQuickForm();
   }
 

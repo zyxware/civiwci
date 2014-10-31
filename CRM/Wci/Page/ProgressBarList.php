@@ -43,7 +43,7 @@ class CRM_Wci_Page_ProgressBarList extends CRM_Core_Page {
       } 
     }
     // Example: Set the page-title dynamically; alternatively, declare a static title in xml/Menu/*.xml
-    CRM_Utils_System::setTitle(ts('ProgressBarList'));
+    CRM_Utils_System::setTitle(ts('Progress Bar List'));
 
     $query = "SELECT * FROM civicrm_wci_progress_bar";
     $params = array();
@@ -78,7 +78,7 @@ class CRM_Wci_Page_ProgressBarList extends CRM_Core_Page {
 
       self::$_actionLinks = array(
         CRM_Core_Action::UPDATE => array(
-          'name' => ts('Update'),
+          'name' => ts('Edit'),
           'url' => CRM_Utils_System::currentPath(),
           'qs' => 'action=update&reset=1&id=%%id%%',
           'title' => ts('Update'),

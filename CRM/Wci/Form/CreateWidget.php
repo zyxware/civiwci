@@ -30,7 +30,7 @@ class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
         FALSE,
         '#2786C2',
       ),
-      'color_title_bg' => array(ts('Widget title background color'),
+      'color_title_bg' => array(ts('Title background color'),
         'text',
         FALSE,
         '#FFFFFF',
@@ -40,32 +40,32 @@ class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
         FALSE,
         '#FFFFFF',
       ),
-      'color_widget_bg' => array(ts('Widget background color'),
+      'color_widget_bg' => array(ts('Background color'),
         'text',
         FALSE,
         '#96C0E7',
       ),
-      'color_description' => array(ts('Widget description color'),
+      'color_description' => array(ts('Description color'),
         'text',
         FALSE,
         '#000000',
       ),
-      'color_border' => array(ts('Widget border color'),
+      'color_border' => array(ts('Border color'),
         'text',
         FALSE,
         '#96C0E7',
       ),
-      'color_button' => array(ts('Widget button text color'),
+      'color_button' => array(ts('Button text color'),
         'text',
         FALSE,
         '#000000',
       ),
-      'color_button_bg' => array(ts('Widget button background color'),
+      'color_button_bg' => array(ts('Button background color'),
         'text',
         FALSE,
         '#96C0E7',
       ),
-      'color_button_bg' => array(ts('Widget button background color'),
+      'color_button_bg' => array(ts('Button background color'),
         'text',
         FALSE,
         '#96C0E7',
@@ -189,8 +189,10 @@ where w.id=" . $this->_id;*/
           $elem->setValue($output);
         }
       }
+      CRM_Utils_System::setTitle(ts('Edit Widget'));
     }
     else {
+      CRM_Utils_System::setTitle(ts('Create Widget'));
       /** Keep template in civicrm-wci/templates folder*/
       $output = file_get_contents('templates/CRM/Wci/Page/wciwidget.tpl',FILE_USE_INCLUDE_PATH);
       $elem = $this->getElement('custom_template');

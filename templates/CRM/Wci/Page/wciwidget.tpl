@@ -180,7 +180,7 @@
     {$wciform.embed}
     {if $wciform.email_signup_group_id}
         <form method="get" action="{$wciform.emailSignupGroupFormURL}" name="Subscribe">
-        <p style="text-align:center;">
+        <p style="text-align:left;">email id:
           <input type="text" id="frmEmail" name="email" size="10">
         </p>
         <input id="mark_x_2" name="mark_x_2" type="hidden" value="1">

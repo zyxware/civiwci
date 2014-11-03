@@ -187,9 +187,7 @@
         <p style="text-align:center; margin: 0;">
           Get the monthly newsletter
         </p>
-        <p style="text-align:left;">email id:
-          <input type="text" id="frmEmail" name="email" size="10">
-        </p>
+          <input type="text" id="frmEmail" name="email" size="10" placeholder="Email id" style="margin: 0 11%; width: 75%;">
         <p style="text-align: center; margin-top: 10px;">
           {if $embed eq 1 }
             <input type="submit" name="_qf_Subscribe_next" value="Subscribe Me">

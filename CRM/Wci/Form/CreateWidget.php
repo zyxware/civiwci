@@ -140,7 +140,7 @@ where w.id=" . $this->_id;*/
         CRM_Core_DAO::storeValues($dao, $wid_page[$dao->id]);
 
         $this->setDefaults(array(
-              'title' => base64_decode($wid_page[$dao->id]['title'])));
+              'title' => $wid_page[$dao->id]['title']));
         $this->setDefaults(array(
               'logo_image' => $wid_page[$dao->id]['logo_image']));
         $this->setDefaults(array(

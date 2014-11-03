@@ -146,6 +146,7 @@
 {/literal}
 
 <div id="crm_wid_{$wciform.widgetId}" class="crm-wci-widget {$wciform.size_variant}">
+  {if $wciform.title}
     <h5 id="crm_wid_{$wciform.widgetId}_title">
       {if $wciform.logo_image}
         <span class="crm-logo">
@@ -154,6 +155,7 @@
       {/if}
       {$wciform.title}
     </h5>
+  {/if}
     {if $wciform.image}
       <div id="crm_wci_image_container">
         <img id="crm_wci_image" src='{$wciform.image}'/>

@@ -272,7 +272,6 @@ where w.id=" . $this->_id;*/
       $transaction->commit();
       
       if(isset($_REQUEST['_qf_CreateWidget_next'])) {
-      echo "before";
         (isset($this->_id)) ? $widget_id = $this->_id : 
               $widget_id = CRM_Core_DAO::singleValueQuery('SELECT LAST_INSERT_ID()');
         CRM_Utils_System::redirect('?action=update&reset=1&id=' . $widget_id);

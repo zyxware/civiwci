@@ -135,7 +135,7 @@ class CRM_Wci_BAO_Widget extends CRM_Wci_DAO_Widget {
 
     $data = array();
     while ($dao->fetch()) {
-      $data["title"] = $dao->title;
+      $data["title"] = base64_decode($dao->title);
       $data["logo_image"] = $dao->logo_image;
       $data["image"] = $dao->image;
       $data["button_title"] = $dao->button_title;

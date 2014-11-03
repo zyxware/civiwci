@@ -7,7 +7,7 @@ cj(function ( $ ) {
     else {
       $('#custom_template').attr("disabled",true);
     }
-    if( $('#title').val() != "") {
+    if( $('#progress_bar').val() != "") {
       $('#embd_code').parents('.crm-section').show();    
     } else {
       $('#embd_code').parents('.crm-section').hide();

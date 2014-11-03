@@ -146,6 +146,7 @@
 {/literal}
 
 <div id="crm_wid_{$wciform.widgetId}" class="crm-wci-widget {$wciform.size_variant}">
+  {if $wciform.title}
     <h5 id="crm_wid_{$wciform.widgetId}_title">
       {if $wciform.logo_image}
         <span class="crm-logo">
@@ -154,15 +155,16 @@
       {/if}
       {$wciform.title}
     </h5>
+  {/if}
     {if $wciform.image}
       <div id="crm_wci_image_container">
         <img id="crm_wci_image" src='{$wciform.image}'/>
       </div>
     {/if}
     <div class="crm-amounts">
-        <div id="crm_wid_{$wciform.widgetId}_amt_hi" class="crm-amount-high"></div>
-        <div id="crm_wid_{$wciform.widgetId}_amt_low" class="crm-amount-low"></div>
-        <div id="crm_wid_{$wciform.widgetId}_percentage" class="crm-percentage"></div>
+        <div id="crm_wid_{$wciform.widgetId}_amt_hi" class="crm-amount-high">${$wciform.goal_amount}</div>
+        <div id="crm_wid_{$wciform.widgetId}_amt_low" class="crm-amount-low">${$wciform.starting_amount}</div>
+        <div id="crm_wid_{$wciform.widgetId}_percentage" class="crm-percentage">{$wciform.pb_percentage}%</div>
     </div>
     <div class="crm-amount-bar">
         <div class="crm-amount-fill" id="crm_wid_{$wciform.widgetId}_amt_fill"></div>

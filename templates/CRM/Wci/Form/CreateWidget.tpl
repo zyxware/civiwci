@@ -14,7 +14,7 @@
   </div>
 {/foreach}
 
-{if $form.title.value != ""}
+{* {if $form.title.value != ""} *}
   {php} 
     if(isset($_REQUEST['id'])) {
       $wid_id = $_REQUEST['id'];
@@ -103,7 +103,7 @@ function onReady( ) {
 
     </div>
   </div>
-{/if}
+{* {/if} *}
 
 {* FIELD EXAMPLE: OPTION 2 (MANUAL LAYOUT)
 

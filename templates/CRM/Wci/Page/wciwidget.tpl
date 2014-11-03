@@ -185,7 +185,7 @@
         <p style="text-align:center; margin: 0;">
           Get the monthly newsletter
         </p>
-        <p style="text-align:center;">
+        <p style="text-align:left;">email id:
           <input type="text" id="frmEmail" name="email" size="10">
         </p>
         <p style="text-align: center; margin-top: 10px;">

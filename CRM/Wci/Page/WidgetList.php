@@ -50,6 +50,7 @@ class CRM_Wci_Page_WidgetList extends CRM_Core_Page {
     while ($dao->fetch()) {
       $wid_page[$dao->id] = array();
       CRM_Core_DAO::storeValues($dao, $wid_page[$dao->id]);
+      $wid_page[$dao->id]['title'] = base64_decode($wid_page[$dao->id]['title']);
       $description = base64_decode($wid_page[$dao->id]['description']);
       $wid_page[$dao->id]['description'] = strip_tags($description);
      
@@ -78,7 +79,7 @@ class CRM_Wci_Page_WidgetList extends CRM_Core_Page {
 
       self::$_actionLinks = array(
         CRM_Core_Action::UPDATE => array(
-          'name' => ts('Update'),
+          'name' => ts('Edit'),
           'url' => CRM_Utils_System::currentPath(),
           'qs' => 'action=update&reset=1&id=%%id%%',
           'title' => ts('Update'),

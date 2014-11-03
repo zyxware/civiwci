@@ -30,7 +30,7 @@ class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
         FALSE,
         '#2786C2',
       ),
-      'color_title_bg' => array(ts('Widget title background color'),
+      'color_title_bg' => array(ts('Title background color'),
         'text',
         FALSE,
         '#FFFFFF',
@@ -40,32 +40,32 @@ class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
         FALSE,
         '#FFFFFF',
       ),
-      'color_widget_bg' => array(ts('Widget background color'),
+      'color_widget_bg' => array(ts('Background color'),
         'text',
         FALSE,
         '#96C0E7',
       ),
-      'color_description' => array(ts('Widget description color'),
+      'color_description' => array(ts('Description color'),
         'text',
         FALSE,
         '#000000',
       ),
-      'color_border' => array(ts('Widget border color'),
+      'color_border' => array(ts('Border color'),
         'text',
         FALSE,
         '#96C0E7',
       ),
-      'color_button' => array(ts('Widget button text color'),
+      'color_button' => array(ts('Button text color'),
         'text',
         FALSE,
         '#000000',
       ),
-      'color_button_bg' => array(ts('Widget button background color'),
+      'color_button_bg' => array(ts('Button background color'),
         'text',
         FALSE,
         '#96C0E7',
       ),
-      'color_button_bg' => array(ts('Widget button background color'),
+      'color_button_bg' => array(ts('Button background color'),
         'text',
         FALSE,
         '#96C0E7',
@@ -140,7 +140,7 @@ where w.id=" . $this->_id;*/
         CRM_Core_DAO::storeValues($dao, $wid_page[$dao->id]);
 
         $this->setDefaults(array(
-              'title' => $wid_page[$dao->id]['title']));
+              'title' => base64_decode($wid_page[$dao->id]['title'])));
         $this->setDefaults(array(
               'logo_image' => $wid_page[$dao->id]['logo_image']));
         $this->setDefaults(array(
@@ -176,7 +176,7 @@ where w.id=" . $this->_id;*/
         $this->setDefaults(array(
               'color_button_bg' => $wid_page[$dao->id]['color_button_bg']));
         $this->setDefaults(array(
-              'style_rules' => $wid_page[$dao->id]['style_rules']));
+              'style_rules' => base64_decode($wid_page[$dao->id]['style_rules'])));
         $this->setDefaults(array(
               'override' => $wid_page[$dao->id]['override']));
         if(true == $wid_page[$dao->id]['override']) {
@@ -189,8 +189,10 @@ where w.id=" . $this->_id;*/
           $elem->setValue($output);
         }
       }
+      CRM_Utils_System::setTitle(ts('Edit Widget'));
     }
     else {
+      CRM_Utils_System::setTitle(ts('Create Widget'));
       /** Keep template in civicrm-wci/templates folder*/
       $output = file_get_contents('templates/CRM/Wci/Page/wciwidget.tpl',FILE_USE_INCLUDE_PATH);
       $elem = $this->getElement('custom_template');
@@ -222,7 +224,7 @@ where w.id=" . $this->_id;*/
     }
 
     if (isset($this->_id)) {
-      $sql = "UPDATE civicrm_wci_widget SET title = '". $values['title'] 
+      $sql = "UPDATE civicrm_wci_widget SET title = '". base64_encode($values['title']) 
         . "', logo_image = '" . $values['logo_image'] . "', image = '" 
         . $values['image'] . "', button_title = '" . $values['button_title'] 
         . "', button_link_to = '" . $values['button_link_to'] 
@@ -238,7 +240,7 @@ where w.id=" . $this->_id;*/
         . "', color_border = '" . $values['color_border'] 
         . "', color_button = '" . $values['color_button'] 
         . "', color_button_bg = '" . $values['color_button_bg'] 
-        . "', style_rules = '" . $values['style_rules'] . "', override = '" 
+        . "', style_rules = '" . base64_encode($values['style_rules']) . "', override = '" 
         . $override . $quote . $coma . $cust_tmpl_col . $equals . $quote . $cust_tmpl . "' where id =" . $this->_id ;
     }
     else {
@@ -247,7 +249,7 @@ where w.id=" . $this->_id;*/
       email_signup_group_id, size_variant, color_title, color_title_bg, 
       color_progress_bar, color_widget_bg, color_description, color_border, 
       color_button, color_button_bg, style_rules, override" . $coma . $cust_tmpl_col ." ) 
-      VALUES ('" . $values['title'] . "','" . $values['logo_image'] . "','" . 
+      VALUES ('" . base64_encode($values['title']) . "','" . $values['logo_image'] . "','" . 
       $values['image'] . "','" . $values['button_title'] . "','" . 
       $values['button_link_to'] . "','" . $values['progress_bar'] . "','" . 
       base64_encode($values['description']) . "','" . 
@@ -256,7 +258,7 @@ where w.id=" . $this->_id;*/
       $values['color_title_bg'] . "','" . $values['color_bar'] . "','" . 
       $values['color_widget_bg'] . "','" . $values['color_description'] . "','" .
       $values['color_border'] . "','" . $values['color_button'] . "','" . 
-      $values['color_button_bg'] . "','" . $values['style_rules'] . "','" . 
+      $values['color_button_bg'] . "','" . base64_encode($values['style_rules']) . "','" . 
       $override . $quote . $coma . $quote . $cust_tmpl
         . "')";
     }
@@ -270,6 +272,7 @@ where w.id=" . $this->_id;*/
       $transaction->commit();
       
       if(isset($_REQUEST['_qf_CreateWidget_next'])) {
+      echo "before";
         (isset($this->_id)) ? $widget_id = $this->_id : 
               $widget_id = CRM_Core_DAO::singleValueQuery('SELECT LAST_INSERT_ID()');
         CRM_Utils_System::redirect('?action=update&reset=1&id=' . $widget_id);

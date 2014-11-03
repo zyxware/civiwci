@@ -131,7 +131,7 @@ function wci_civicrm_navigationMenu( &$params ) {
     'child' =>  array (
         '1' => array (
         'attributes' => array (
-        'label' => ts('New widget'),
+        'label' => ts('New Widget'),
         'name' => 'new_widget',
         'url' => 'civicrm/wci/widget/add',
         'permission' => 'access CiviReport,access CiviContribute',
@@ -143,7 +143,7 @@ function wci_civicrm_navigationMenu( &$params ) {
         
         '2' => array (
         'attributes' => array (
-        'label' => ts('Manage widget'),
+        'label' => ts('Manage Widget'),
         'name' => 'manage_widget',
         'url' => 'civicrm/wci/widget?reset=1',
         'permission' => 'access CiviReport,access CiviContribute',
@@ -155,7 +155,7 @@ function wci_civicrm_navigationMenu( &$params ) {
         
         '3' => array (
         'attributes' => array (
-        'label' => ts('New Progress bar'),
+        'label' => ts('New Progress Bar'),
         'name' => 'new_progress_bar',
         'url' => 'civicrm/wci/progress-bar/add',
         'permission' => 'access CiviReport,access CiviContribute',
@@ -167,7 +167,7 @@ function wci_civicrm_navigationMenu( &$params ) {
         
         '4' => array (
         'attributes' => array (
-        'label' => ts('Manage Progress bar'),
+        'label' => ts('Manage Progress Bar'),
         'name' => 'manage_progress_bar',
         'url' => 'civicrm/wci/progress-bar?reset=1',
         'permission' => 'access CiviReport,access CiviContribute',

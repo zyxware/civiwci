@@ -199,4 +199,18 @@ class CRM_Wci_BAO_ProgressBar extends CRM_Wci_DAO_ProgressBar {
      } 
      return $perc;
   }
+  public static function getProgressbarData($pbId) {
+  
+    $query = "SELECT * FROM civicrm_wci_progress_bar where id=".$pbId;
+    $params = array();
+    
+    $dao = CRM_Core_DAO::executeQuery($query, $params, TRUE, 'CRM_Wci_DAO_Widget');
+
+    $pbData = array();
+    while ($dao->fetch()) {
+      $pbData["starting_amount"] = $dao->starting_amount;
+      $pbData["goal_amount"] = $dao->goal_amount;
+    }
+    return $pbData;
+  }
 }

@@ -52,7 +52,9 @@ $embed = CRM_Utils_Request::retrieve('embed', 'Positive', CRM_Core_DAO::$_nullOb
 if (isset($format)) {
   $jsonvar .= $cpageId;
 } else {
-  $data = CRM_Wci_BAO_Widget::getWidgetData($widgetId);
+  $widData = CRM_Wci_BAO_Widget::getWidgetData($widgetId);
+  $pbData = CRM_Wci_BAO_ProgressBar::getProgressbarData($widData["progress_bar_id"]);
+  $data = array_merge($widData, $pbData);
 
   $template->assign('wciform', $data);
   $template->assign('cpageId', $data['button_link_to']);

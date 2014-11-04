@@ -100,19 +100,19 @@ class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
       'progressbar_name', // field name
       'Name', // field label
       true // is required
-    );
+    )->setSize(35);
     $this->add(
       'text', // field type
       'starting_amount', // field name
       'Starting amount', // field label
       true // is required
-    );
+    )->setSize(35);
     $this->add(
       'text', // field type
       'goal_amount', // field name
       'Goal amount', // field label
       true // is required
-    );
+    )->setSize(35);
     
     $this->fillData();
     

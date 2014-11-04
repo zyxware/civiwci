@@ -33,17 +33,17 @@ class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
       'color_title_bg' => array(ts('Title background color'),
         'text',
         FALSE,
-        '#FFFFFF',
+        '#BF0F0F',
       ),
       'color_bar' => array(ts('Progress Bar Color'),
         'text',
         FALSE,
-        '#FFFFFF',
+        '#BF0F0F',
       ),
       'color_widget_bg' => array(ts('Background color'),
         'text',
         FALSE,
-        '#96C0E7',
+        '#FFFFFF',
       ),
       'color_description' => array(ts('Description color'),
         'text',
@@ -53,7 +53,7 @@ class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
       'color_border' => array(ts('Border color'),
         'text',
         FALSE,
-        '#96C0E7',
+        '#BF0F0F',
       ),
       'color_button' => array(ts('Button text color'),
         'text',
@@ -63,12 +63,7 @@ class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
       'color_button_bg' => array(ts('Button background color'),
         'text',
         FALSE,
-        '#96C0E7',
-      ),
-      'color_button_bg' => array(ts('Button background color'),
-        'text',
-        FALSE,
-        '#96C0E7',
+        '#BF0F0F',
       ),
       );
   }
@@ -86,17 +81,18 @@ class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
 
   function buildQuickForm() {
     // add form elements
-    $this->add('text', 'title', ts('Title'),true);
-    $this->add('text', 'logo_image', ts('Logo image'));
-    $this->add('text', 'image', ts('Image'));
+    $this->add('text', 'title', ts('Title'),true)->setSize(45);
+    $this->add('text', 'logo_image', ts('Logo image'))->setSize(45);
+    $this->add('text', 'image', ts('Image'))->setSize(45);
     $this->add('select', 'button_link_to', ts('Contribution button'), getContributionPageOptions());
-    $this->add('text', 'button_title', ts('Contribution button title'));
+    $this->add('text', 'button_title', ts('Contribution button title'))->setSize(45);
     $this->add('select', 'progress_bar', ts('Progress bar'), $this->getProgressBars());
     $this->addWysiwyg('description', ts('Description'), '');
     $this->add('select', 'email_signup_group_id', ts('Newsletter signup'), $this->getGroupOptions());
     $this->add('select', 'size_variant', ts('Size variant'), $this->getSizeOptions());
+    // $fieldset = $this->addElement('fieldset')->setLabel('Advanced Settings');
     foreach ($this->_colorFields as $name => $val) {
-      $this->add($val[1],
+      $this->addElement($val[1],
         $name,
         $val[0],
         $name,

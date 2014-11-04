@@ -8,9 +8,8 @@
         -webkit-border-radius:   4px;
         -khtml-border-radius:   4px;
         border-radius:      4px;
-        border:1px solid #96C0E7;
+        border: 4px solid {/literal}{$wciform.color_border}{literal};
         background-color: {/literal}{$wciform.color_widget_bg}{literal}; /* background color */
-        border-color:{/literal}{$wciform.color_border}{literal}; /* border color */
     }
     
     .crm-wci-widget.thin {
@@ -65,11 +64,11 @@
         margin-bottom:.8em;
         text-align:left;
         
-        background-color:{/literal}{$wciform.color_bar}{literal};
+        background-color: #FFFFFF;
         border-color:#CECECE;
     }
     .crm-amount-fill {
-        background-color:#2786C2;
+        background-color:{/literal}{$wciform.color_bar}{literal};
         height:1em;
         display:block;
         -moz-border-radius:   4px;
@@ -133,8 +132,18 @@
       text-align: center;
       padding: 10px 20px;
     }
-    #crm_wci_image {
-      margin: auto;
+    .thin #crm_wci_image {
+      width: 100px;
+    }
+    .normal #crm_wci_image {
+      width: 150px;
+    }
+    .wide #crm_wci_image {
+      width: 200px;
+    }
+    #newsletter_msg, #newsletter_mail, #newsletter_submit {
+      text-align: center;
+      margin: 0 auto;
     }
 </style>
 
@@ -176,25 +185,33 @@
     </div>
     <div id="crm_wid_{$wciform.widgetId}_campaign" class="crm-campaign">
     </div>
+    {if $wciform.button_title}
     <div class="crm-wci-button-wrapper" id="crm_wid_{$wciform.widgetId}_button">
         <a href='{crmURL p="civicrm/contribute/transact" q="reset=1&id=$cpageId" h=0 a=1 fe=1}' class="crm-wci-button"><span class="crm-wci-button-inner" id="crm_wid_{$wciform.widgetId}_btn_txt">{$wciform.button_title}</span></a>
     </div>
-    
+    {/if}
     {if $wciform.email_signup_group_id}
       {if $embed eq 1 }
-        <form method="get" action="{$wciform.emailSignupGroupFormURL}" name="Subscribe">
+        <form action="{$wciform.emailSignupGroupFormURL}" method="post">
       {/if}
-        <p style="text-align:center; margin: 0;">
+        <p id="newsletter_msg">
           Get the monthly newsletter
         </p>
-          <input type="text" id="frmEmail" name="email" size="10" placeholder="Email id" style="margin: 0 11%; width: 75%;">
-        <p style="text-align: center; margin-top: 10px;">
+        <p id="newsletter_mail">
+          <input id="frmEmail" type="text" name="email-Primary" size="18" maxlength="80" placeholder="email address">
+        </p>
+        <p id="newsletter_submit">
           {if $embed eq 1 }
-            <input type="submit" name="_qf_Subscribe_next" value="Subscribe Me">
+            <input type="submit" name="_qf_Edit_next" value="Subscribe me">
           {else}
-            <input type="button" name="_qf_Subscribe_next" value="Subscribe Me">
+            <input type="button" name="_qf_Edit_next" value="Subscribe me">
           {/if}
         </p>
+        <div>
+          <input name="postURL" type="hidden" value="">
+          <input type="hidden" name="group[{$wciform.email_signup_group_id}]" value="1">
+          <input name="_qf_default" type="hidden" value="Edit:cancel">
+        </div>
       {if $embed eq 1 }
         </form>
       {/if}

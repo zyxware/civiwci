@@ -46,7 +46,10 @@ require_once 'CRM/Utils/Request.php';
 $config = CRM_Core_Config::singleton();
 $template = CRM_Core_Smarty::singleton();
 
-$widgetId = civicrm_api3('setting', 'getValue', array('group' => 'extensions', 'name' => 'default_wci_widget'));
+$widgetId = CRM_Utils_Request::retrieve('widgetId', 'Positive', CRM_Core_DAO::$_nullObject);
+if(empty($widgetId)) {
+  $widgetId = civicrm_api3('setting', 'getValue', array('group' => 'wci', 'name' => 'default_wci_widget'));
+}
 $embed = CRM_Utils_Request::retrieve('embed', 'Positive', CRM_Core_DAO::$_nullObject);
 
 if (isset($format)) {

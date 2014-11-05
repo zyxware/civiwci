@@ -1,8 +1,8 @@
 <?php
 return array(
   'default_wci_widget' => array(
-    'group_name' => 'extensions',
-    'group' => 'extensions',
+    'group_name' => 'Wci Preference',
+    'group' => 'wci',
     'name' => 'default_wci_widget',
     'type' => 'Integer',
     'default' => 0,
@@ -13,8 +13,8 @@ return array(
     'help_text' => 'Sets default widget id',
   ),
   'default_wci_profile' => array(
-    'group_name' => 'extensions',
-    'group' => 'extensions',
+    'group_name' => 'Wci Preference',
+    'group' => 'wci',
     'name' => 'default_wci_profile',
     'type' => 'Integer',
     'default' => 0,

@@ -238,9 +238,10 @@ where w.id=" . $this->_id;*/
     if(isset($values['hide_pbcap'])){
         $hide_pbcap = $values['hide_pbcap'];
     }
+    $title = str_replace("'", "''", $values['title']);
     
     if (isset($this->_id)) {
-      $sql = "UPDATE civicrm_wci_widget SET title = '". base64_encode($values['title']) 
+      $sql = "UPDATE civicrm_wci_widget SET title = '". $title
         . "', logo_image = '" . $values['logo_image'] . "', image = '" 
         . $values['image'] . "', button_title = '" . $values['button_title'] 
         . "', button_link_to = '" . $values['button_link_to'] 
@@ -268,7 +269,7 @@ where w.id=" . $this->_id;*/
       email_signup_group_id, size_variant, color_title, color_title_bg, 
       color_progress_bar, color_widget_bg, color_description, color_border, 
       color_button, color_button_bg, hide_title, hide_border, hide_pbcap, style_rules, override" . $coma . $cust_tmpl_col ." ) 
-      VALUES ('" . base64_encode($values['title']) . "','" . $values['logo_image'] . "','" . 
+      VALUES ('" . $title . "','" . $values['logo_image'] . "','" . 
       $values['image'] . "','" . $values['button_title'] . "','" . 
       $values['button_link_to'] . "','" . $values['progress_bar'] . "','" . 
       base64_encode($values['description']) . "','" . 
@@ -277,8 +278,8 @@ where w.id=" . $this->_id;*/
       $values['color_title_bg'] . "','" . $values['color_bar'] . "','" . 
       $values['color_widget_bg'] . "','" . $values['color_description'] . "','" .
       $values['color_border'] . "','" . $values['color_button'] . "','" . 
-      $values['color_button_bg'] . "','" . $values['hide_title'] . "','" .
-      $values['hide_border'] . "','" . $values['hide_pbcap'] . "','"
+      $values['color_button_bg'] . "','" . $hide_title . "','" .
+      $hide_border . "','" . $hide_pbcap . "','"
       . base64_encode($values['style_rules']) . "','" . 
       $override . $quote . $coma . $quote . $cust_tmpl
         . "')";

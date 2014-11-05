@@ -91,6 +91,9 @@ class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
     $this->add('select', 'email_signup_group_id', ts('Newsletter signup'), $this->getGroupOptions());
     $this->add('select', 'size_variant', ts('Size variant'), $this->getSizeOptions());
     // $fieldset = $this->addElement('fieldset')->setLabel('Advanced Settings');
+    $this->add('checkbox', 'hide_title', ts('Hide Title'));
+    $this->add('checkbox', 'hide_border', ts('Hide border'));
+    $this->add('checkbox', 'hide_pbcap', ts('Hide progress bar caption'));
     foreach ($this->_colorFields as $name => $val) {
       $this->addElement($val[1],
         $name,
@@ -175,6 +178,12 @@ where w.id=" . $this->_id;*/
               'style_rules' => base64_decode($wid_page[$dao->id]['style_rules'])));
         $this->setDefaults(array(
               'override' => $wid_page[$dao->id]['override']));
+        $this->setDefaults(array(
+              'hide_title' => $wid_page[$dao->id]['hide_title']));
+        $this->setDefaults(array(
+              'hide_border' => $wid_page[$dao->id]['hide_border']));
+        $this->setDefaults(array(
+              'hide_pbcap' => $wid_page[$dao->id]['hide_pbcap']));
         if(true == $wid_page[$dao->id]['override']) {
           $cust_templ = base64_decode($wid_page[$dao->id]['custom_template']);
           $this->setDefaults(array(
@@ -199,8 +208,10 @@ where w.id=" . $this->_id;*/
 
   function postProcess() {
     $values = $this->exportValues();
-
     $override = 0;
+    $hide_title = 0;
+    $hide_border = 0;
+    $hide_pbcap = 0;
     $cust_tmpl = "";
     $cust_tmpl_col = "";
     $sql = "";
@@ -218,7 +229,16 @@ where w.id=" . $this->_id;*/
       $equals = " = ";
       $quote = "'";
     }
-
+    if(isset($values['hide_title'])){
+        $hide_title = $values['hide_title'];
+    }
+    if(isset($values['hide_border'])){
+        $hide_border = $values['hide_border'];
+    }
+    if(isset($values['hide_pbcap'])){
+        $hide_pbcap = $values['hide_pbcap'];
+    }
+    
     if (isset($this->_id)) {
       $sql = "UPDATE civicrm_wci_widget SET title = '". base64_encode($values['title']) 
         . "', logo_image = '" . $values['logo_image'] . "', image = '" 
@@ -235,7 +255,10 @@ where w.id=" . $this->_id;*/
         . "', color_description = '" . $values['color_description'] 
         . "', color_border = '" . $values['color_border'] 
         . "', color_button = '" . $values['color_button'] 
-        . "', color_button_bg = '" . $values['color_button_bg'] 
+        . "', color_button_bg = '" . $values['color_button_bg']
+        . "', hide_title = '" . $hide_title
+        . "', hide_border = '" . $hide_border
+        . "', hide_pbcap = '" . $hide_pbcap
         . "', style_rules = '" . base64_encode($values['style_rules']) . "', override = '" 
         . $override . $quote . $coma . $cust_tmpl_col . $equals . $quote . $cust_tmpl . "' where id =" . $this->_id ;
     }
@@ -244,7 +267,7 @@ where w.id=" . $this->_id;*/
       button_title, button_link_to, progress_bar_id, description, 
       email_signup_group_id, size_variant, color_title, color_title_bg, 
       color_progress_bar, color_widget_bg, color_description, color_border, 
-      color_button, color_button_bg, style_rules, override" . $coma . $cust_tmpl_col ." ) 
+      color_button, color_button_bg, hide_title, hide_border, hide_pbcap, style_rules, override" . $coma . $cust_tmpl_col ." ) 
       VALUES ('" . base64_encode($values['title']) . "','" . $values['logo_image'] . "','" . 
       $values['image'] . "','" . $values['button_title'] . "','" . 
       $values['button_link_to'] . "','" . $values['progress_bar'] . "','" . 
@@ -254,7 +277,9 @@ where w.id=" . $this->_id;*/
       $values['color_title_bg'] . "','" . $values['color_bar'] . "','" . 
       $values['color_widget_bg'] . "','" . $values['color_description'] . "','" .
       $values['color_border'] . "','" . $values['color_button'] . "','" . 
-      $values['color_button_bg'] . "','" . base64_encode($values['style_rules']) . "','" . 
+      $values['color_button_bg'] . "','" . $values['hide_title'] . "','" .
+      $values['hide_border'] . "','" . $values['hide_pbcap'] . "','"
+      . base64_encode($values['style_rules']) . "','" . 
       $override . $quote . $coma . $quote . $cust_tmpl
         . "')";
     }

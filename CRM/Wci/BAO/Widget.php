@@ -157,6 +157,9 @@ class CRM_Wci_BAO_Widget extends CRM_Wci_DAO_Widget {
       $data["custom_template"] = $dao->custom_template;
       $data["widgetId"] = $widgetId;
       $data["override"] = $dao->override;
+      $data["hide_title"] = $dao->hide_title;
+      $data["hide_border"] = $dao->hide_border;
+      $data["hide_pbcap"] = $dao->hide_pbcap;
       $data["color_bar"] = $dao->color_progress_bar;
       $data["emailSignupGroupFormURL"] = CRM_Utils_System::baseCMSURL() . '/civicrm/profile/create?reset=1&amp;gid=15';
     }

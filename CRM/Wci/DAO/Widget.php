@@ -204,6 +204,24 @@ class CRM_Wci_DAO_Widget extends CRM_Core_DAO
    */
   public $override;
   /**
+   * Flag to Hide title
+   *
+   * @var boolean
+   */
+  public $hide_title;
+  /**
+   * Flag to Hide widget border
+   *
+   * @var boolean
+   */
+  public $hide_border;
+  /**
+   * Flag to Hide pb caption
+   *
+   * @var boolean
+   */
+  public $hide_pbcap;
+  /**
    * Custom template
    *
    * @var string
@@ -374,6 +392,24 @@ class CRM_Wci_DAO_Widget extends CRM_Core_DAO
           'type' => CRM_Utils_Type::T_BOOLEAN,
           'title' => ts('Override default template', array('domain' => 'org.civicrm.wci')) ,
           'required' => false,
+        ) , 
+        'hide_title' => array(
+          'name' => 'hide_title',
+          'type' => CRM_Utils_Type::T_BOOLEAN,
+          'title' => ts('Hide title, if 1.', array('domain' => 'org.civicrm.wci')) ,
+          'required' => false,
+        ) ,
+        'hide_border' => array(
+          'name' => 'hide_border',
+          'type' => CRM_Utils_Type::T_BOOLEAN,
+          'title' => ts('Hide widget border, if 1.', array('domain' => 'org.civicrm.wci')) ,
+          'required' => false,
+        ) ,
+        'hide_pbcap' => array(
+          'name' => 'hide_pbcap',
+          'type' => CRM_Utils_Type::T_BOOLEAN,
+          'title' => ts('Hide pb caption, if 1.', array('domain' => 'org.civicrm.wci')) ,
+          'required' => false,
         ) ,
         'custom_template' => array(
           'name' => 'custom_template',
@@ -416,6 +452,9 @@ class CRM_Wci_DAO_Widget extends CRM_Core_DAO
         'color_button_bg' => 'color_button_bg',
         'style_rules' => 'style_rules',
         'override' => 'override',
+        'hide_title' => 'hide_title',
+        'hide_border' => 'hide_border',
+        'hide_pbcap' => 'hide_pbcap',
         'custom_template' => 'custom_template',
       );
     }

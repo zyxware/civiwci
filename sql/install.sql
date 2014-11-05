@@ -41,6 +41,9 @@ CREATE TABLE IF NOT EXISTS civicrm_wci_widget (
   style_rules text DEFAULT NULL COMMENT 'Additional style rules.',
   override tinyint(4) NOT NULL DEFAULT '0' COMMENT 'Override default template, if 1.',
   custom_template text DEFAULT NULL COMMENT 'Widget custom template.',
+  hide_title tinyint(4) NOT NULL DEFAULT '0' COMMENT 'Hide title, if 1.',
+  hide_border tinyint(4) NOT NULL DEFAULT '0' COMMENT 'Hide widget border, if 1.',
+  hide_pbcap tinyint(4) NOT NULL DEFAULT '0' COMMENT 'Hide pb caption, if 1.',
   PRIMARY KEY (`id`),
   UNIQUE KEY `unique_wci_title` (`title`),
   CONSTRAINT FK_civicrm_wci_widget_progress_bar_id FOREIGN KEY (`progress_bar_id`) REFERENCES `civicrm_wci_progress_bar`(`id`) ON DELETE SET NULL

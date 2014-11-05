@@ -175,9 +175,20 @@ function wci_civicrm_navigationMenu( &$params ) {
         'separator' => 1,
         'parentID' => $navId, 
         'navID' => $navId+4,
-        'active' => 1)),           
+        'active' => 1)),
+        
+        '5' => array (
+        'attributes' => array (
+        'label' => ts('Wci Settings'),
+        'name' => 'manage_progress_bar',
+        'url' => 'civicrm/wci/settings?reset=1',
+        'permission' => 'access CiviReport,access CiviContribute',
+        'operator' => 'OR',
+        'separator' => 1,
+        'parentID' => $navId, 
+        'navID' => $navId+5,
+        'active' => 1)),
         ),
   );
 }
-
 

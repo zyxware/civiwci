@@ -157,12 +157,11 @@ class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
         }
         
         $transaction->commit();
-
+        CRM_Core_Session::setStatus(ts('Progress bar created successfuly'), '', 'success');
         CRM_Utils_System::redirect('progress-bar?reset=1');
       }
       catch (Exception $e) {
-        //TODO
-        print_r($e->getMessage());
+        CRM_Core_Session::setStatus(ts('Failed to create progress bar'), '', 'error');
         $transaction->rollback();
       }
     

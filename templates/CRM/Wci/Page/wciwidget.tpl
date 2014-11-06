@@ -4,17 +4,17 @@
         font-size:12px;
         font-family:Helvetica, Arial, sans;
         padding:6px;
-        -moz-border-radius:       4px;
-        -webkit-border-radius:   4px;
-        -khtml-border-radius:   4px;
-        border-radius:      4px;
-
+        -moz-border-radius: 12px;
+        -webkit-border-radius: 12px;
+        -khtml-border-radius: 12px;
+        border-radius: 12px;
         {/literal}{if (0 == $wciform.hide_border)}{literal}
           border: 4px solid {/literal}{$wciform.color_border}{literal};
         {if (1 == $wciform.hide_border)}
           border: None;
         {/literal}{/if}{literal}
         background-color: {/literal}{$wciform.color_widget_bg}{literal}; /* background color */
+        box-shadow: 3px 3px 6px;
     }
     
     .crm-wci-widget.thin {
@@ -176,8 +176,8 @@
     {/if}
     {if (false == $wciform.hide_pbcap)}
     <div class="crm-amounts">
-        <div id="crm_wid_{$wciform.widgetId}_amt_hi" class="crm-amount-high">{$wciform.goal_amount}</div>
-        <div id="crm_wid_{$wciform.widgetId}_amt_low" class="crm-amount-low">{$wciform.starting_amount}</div>
+        <div id="crm_wid_{$wciform.widgetId}_amt_hi" class="crm-amount-high">${$wciform.goal_amount}</div>
+        <div id="crm_wid_{$wciform.widgetId}_amt_low" class="crm-amount-low">${$wciform.starting_amount}</div>
         <div id="crm_wid_{$wciform.widgetId}_percentage" class="crm-percentage">{$wciform.pb_percentage}%</div>
     </div>
     {/if}

@@ -28,12 +28,12 @@ class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
     $this->_colorFields = array('color_title' => array(ts('Title Text Color'),
         'text',
         FALSE,
-        '#2786C2',
+        '#BF0F0F',
       ),
       'color_title_bg' => array(ts('Title background color'),
         'text',
         FALSE,
-        '#BF0F0F',
+        '#FFFFFF',
       ),
       'color_bar' => array(ts('Progress Bar Color'),
         'text',
@@ -292,7 +292,7 @@ where w.id=" . $this->_id;*/
       CRM_Core_DAO::executeQuery($sql);
       CRM_Core_DAO::executeQuery("SET foreign_key_checks = 1;");
       $transaction->commit();
-      
+      CRM_Core_Session::setStatus(ts('Widget created successfuly'), '', 'success');
       if(isset($_REQUEST['_qf_CreateWidget_next'])) {
         (isset($this->_id)) ? $widget_id = $this->_id : 
               $widget_id = CRM_Core_DAO::singleValueQuery('SELECT LAST_INSERT_ID()');
@@ -302,8 +302,7 @@ where w.id=" . $this->_id;*/
       }
     }    
     catch (Exception $e) {
-      //TODO
-      print_r($e->getMessage());
+      CRM_Core_Session::setStatus(ts('Failed to create widget'), '', 'error');
       $transaction->rollback();
     }
      

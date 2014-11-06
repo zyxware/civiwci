@@ -50,8 +50,8 @@
             Add this widget to any web page by copying and pasting the code below.
           </div>
           <textarea rows="8" cols="40" name="widget_code" id="widget_code"><script type="text/javascript" src="{php}echo $widget_controller_path;{/php}?widgetId={php}echo $wid_id;{/php}&embed=1"></script>
-  <script type="text/javascript" src="{php}echo $extension_root_path;{/php}/extern/wciembed.js"></script>
-  <div id='widgetwci'></div></textarea>
+<script type="text/javascript" src="{php}echo $extension_root_path;{/php}/extern/wciembed.js"></script>
+<div id='widgetwci'></div></textarea>
           <br>
           <strong>
             <a href="#" onclick="CreateWidget.widget_code.select(); return false;">» Select Code</a>

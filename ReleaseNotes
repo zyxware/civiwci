@@ -1,5 +1,12 @@
-Release Notes for civicrm-wci CiciCRM extension. Alpha - III
+Release Notes for civicrm-wci CiciCRM extension. Beta - I
 ===========================================================
+
+Beta - I
+------------------------------------------
+1. Fixed UT Bugs
+2. Decoupled widget id from widget
+3. Show and hide checkboxes
+
 Alpha - III. 10/30/2014
 ------------------------------------------
 1. Fixed UT Bugs

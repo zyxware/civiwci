@@ -67,7 +67,7 @@ if (isset($format)) {
     $template->template_dir[] = getWciWidgetTemplatePath();
     $wcidata = $template->fetch('wciwidget.tpl');
   } else {
-    $wcidata = $template->fetch('string:' . base64_decode($data['custom_template']));
+    $wcidata = $template->fetch('string:' . html_entity_decode($data['custom_template']));
   }
   $output = 'var wciwidgetcode =  ' . json_encode($wcidata) . ';';
   echo $output;

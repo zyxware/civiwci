@@ -179,7 +179,7 @@ function wci_civicrm_navigationMenu( &$params ) {
         
         '5' => array (
         'attributes' => array (
-        'label' => ts('Wci Settings'),
+        'label' => ts('Widget Settings'),
         'name' => 'manage_progress_bar',
         'url' => 'civicrm/wci/settings?reset=1',
         'permission' => 'access CiviReport,access CiviContribute',

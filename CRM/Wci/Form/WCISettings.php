@@ -35,8 +35,8 @@ class CRM_Wci_Form_WCISettings extends CRM_Core_Form {
       ),
     ));
 
-    $widgetId = civicrm_api3('setting', 'getValue', array('group' => 'extensions', 'name' => 'default_wci_widget'));
-    $defProf = civicrm_api3('setting', 'getValue', array('group' => 'extensions', 'name' => 'default_wci_profile'));
+    $widgetId = civicrm_api3('setting', 'getValue', array('group' => 'Wci Preference', 'name' => 'default_wci_widget'));
+    $defProf = civicrm_api3('setting', 'getValue', array('group' => 'Wci Preference', 'name' => 'default_wci_profile'));
 
     $this->setDefaults(array(
               'default_widget' => $widgetId));

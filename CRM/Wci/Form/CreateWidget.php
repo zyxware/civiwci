@@ -292,7 +292,7 @@ where w.id=" . $this->_id;*/
       CRM_Core_DAO::executeQuery($sql);
       CRM_Core_DAO::executeQuery("SET foreign_key_checks = 1;");
       $transaction->commit();
-      
+      CRM_Core_Session::setStatus(ts('Widget created successfuly'), '', 'success');
       if(isset($_REQUEST['_qf_CreateWidget_next'])) {
         (isset($this->_id)) ? $widget_id = $this->_id : 
               $widget_id = CRM_Core_DAO::singleValueQuery('SELECT LAST_INSERT_ID()');
@@ -302,8 +302,7 @@ where w.id=" . $this->_id;*/
       }
     }    
     catch (Exception $e) {
-      //TODO
-      print_r($e->getMessage());
+      CRM_Core_Session::setStatus(ts('Failed to create widget'), '', 'error');
       $transaction->rollback();
     }
      

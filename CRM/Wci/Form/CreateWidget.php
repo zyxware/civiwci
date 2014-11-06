@@ -151,7 +151,7 @@ where w.id=" . $this->_id;*/
 
         $this->setDefaults(array(
               'progress_bar' => $dao->progress_bar_id/*$dao->pbid*/));
-        $description = base64_decode($wid_page[$dao->id]['description']);
+        $description = $wid_page[$dao->id]['description'];
         $this->setDefaults(array(
               'description' => $description));
         $this->setDefaults(array(
@@ -175,7 +175,7 @@ where w.id=" . $this->_id;*/
         $this->setDefaults(array(
               'color_button_bg' => $wid_page[$dao->id]['color_button_bg']));
         $this->setDefaults(array(
-              'style_rules' => base64_decode($wid_page[$dao->id]['style_rules'])));
+              'style_rules' => $wid_page[$dao->id]['style_rules']));
         $this->setDefaults(array(
               'override' => $wid_page[$dao->id]['override']));
         $this->setDefaults(array(
@@ -185,7 +185,7 @@ where w.id=" . $this->_id;*/
         $this->setDefaults(array(
               'hide_pbcap' => $wid_page[$dao->id]['hide_pbcap']));
         if(true == $wid_page[$dao->id]['override']) {
-          $cust_templ = base64_decode($wid_page[$dao->id]['custom_template']);
+          $cust_templ =  html_entity_decode($wid_page[$dao->id]['custom_template']);
           $this->setDefaults(array(
               'custom_template' => $cust_templ));
         } else {
@@ -223,7 +223,7 @@ where w.id=" . $this->_id;*/
     */
     if(isset($values['override'])){
       $override = $values['override'];
-      $cust_tmpl = base64_encode(html_entity_decode($values['custom_template']));
+      $cust_tmpl = str_replace("'", "''", $values['custom_template']);
       $cust_tmpl_col = "custom_template";
       $coma = ",";
       $equals = " = ";
@@ -246,7 +246,7 @@ where w.id=" . $this->_id;*/
         . $values['image'] . "', button_title = '" . $values['button_title'] 
         . "', button_link_to = '" . $values['button_link_to'] 
         . "', progress_bar_id = '" . $values['progress_bar'] 
-        . "', description = '" . base64_encode($values['description']) 
+        . "', description = '" . str_replace("'", "''", $values['description']) 
         . "', email_signup_group_id = '" . $values['email_signup_group_id'] 
         . "', size_variant = '" . $values['size_variant'] 
         . "', color_title = '" . $values['color_title'] 
@@ -260,7 +260,7 @@ where w.id=" . $this->_id;*/
         . "', hide_title = '" . $hide_title
         . "', hide_border = '" . $hide_border
         . "', hide_pbcap = '" . $hide_pbcap
-        . "', style_rules = '" . base64_encode($values['style_rules']) . "', override = '" 
+        . "', style_rules = '" . str_replace("'", "''", $values['style_rules']) . "', override = '" 
         . $override . $quote . $coma . $cust_tmpl_col . $equals . $quote . $cust_tmpl . "' where id =" . $this->_id ;
     }
     else {
@@ -272,7 +272,7 @@ where w.id=" . $this->_id;*/
       VALUES ('" . $title . "','" . $values['logo_image'] . "','" . 
       $values['image'] . "','" . $values['button_title'] . "','" . 
       $values['button_link_to'] . "','" . $values['progress_bar'] . "','" . 
-      base64_encode($values['description']) . "','" . 
+      str_replace("'", "''", $values['description']) . "','" . 
       $values['email_signup_group_id'] . "','" . 
       $values['size_variant'] . "','" . $values['color_title'] . "','" . 
       $values['color_title_bg'] . "','" . $values['color_bar'] . "','" . 
@@ -280,7 +280,7 @@ where w.id=" . $this->_id;*/
       $values['color_border'] . "','" . $values['color_button'] . "','" . 
       $values['color_button_bg'] . "','" . $hide_title . "','" .
       $hide_border . "','" . $hide_pbcap . "','"
-      . base64_encode($values['style_rules']) . "','" . 
+      . str_replace("'", "''", $values['style_rules']) . "','" . 
       $override . $quote . $coma . $quote . $cust_tmpl
         . "')";
     }

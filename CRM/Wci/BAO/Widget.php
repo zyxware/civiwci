@@ -141,7 +141,7 @@ class CRM_Wci_BAO_Widget extends CRM_Wci_DAO_Widget {
       $data["button_title"] = $dao->button_title;
       $data["button_link_to"] = $dao->button_link_to;
       $data["progress_bar_id"] = $dao->progress_bar_id;
-      $data["description"] = strip_tags(base64_decode($dao->description));
+      $data["description"] = $dao->description;
       $data["email_signup_group_id"] = $dao->email_signup_group_id;
       $data["size_variant"] = $dao->size_variant;
       $data["color_title"] = $dao->color_title;

@@ -163,6 +163,10 @@ class CRM_Wci_BAO_Widget extends CRM_Wci_DAO_Widget {
       $data["color_bar"] = $dao->color_progress_bar;
       $defProf = civicrm_api3('setting', 'getValue', array('group' => 'Wci Preference', 'name' => 'default_wci_profile'));
       $data["emailSignupGroupFormURL"] = CRM_Utils_System::baseCMSURL() . '/civicrm/profile/create?reset=1&amp;gid=' . $defProf;
+      $data["color_btn_newsletter"] = $dao->color_btn_newsletter;
+      $data["color_btn_newsletter_bg"] = $dao->color_btn_newsletter_bg;
+      $data["newsletter_text"] = $dao->newsletter_text;
+      $data["color_newsletter_text"] = $dao->color_newsletter_text;
     }
     return $data;
   }

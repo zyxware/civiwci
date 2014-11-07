@@ -43,14 +43,14 @@ cj(function ( $ ) {
     c_page_sel.attr("name", "contribution_page_" + count);
 
     var id_section = "crm-section-con-" + count;
-    var sect_tag = "<div class=\"crm-section\" id=" + id_section + "> <div class=\"label\"><label>Contribution Page</label>";
+    var sect_tag = "<div class=\"crm-section\" id=" + id_section + "> <hr width='50%' size='1'> <div class=\"label\"><label>Contribution Page</label>";
     $('#addmore_link').parent().parent().before(sect_tag);
 
     var id_content = "content_con-" + count;
     $('#' + id_section).append("<div class=\"content\" id="+ id_content + ">");
     $('#' + id_content).append(c_page_sel);
     $('#' + id_content).append('<a id=\"remove_link\" class=\"form-link\" href=\"remove\" name=\"remove_link-' + count + '\"> Remove</a>');
-    $('#' + id_section).append("</div");
+    $('#' + id_section).append("</div>");
 
     id_section = "crm-section-per-" + count;
     sect_tag = "<div class=\"crm-section\" id=" + id_section + "> <div class=\"label\"><label>Percentage</label>";

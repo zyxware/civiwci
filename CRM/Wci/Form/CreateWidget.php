@@ -58,9 +58,29 @@ class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
       'color_button' => array(ts('Button text color'),
         'text',
         FALSE,
-        '#000000',
+        '#FFFFFF',
       ),
       'color_button_bg' => array(ts('Button background color'),
+        'text',
+        FALSE,
+        '#BF0F0F',
+      ),
+      'color_btn_newsletter' => array(ts('Newsletter Button text color'),
+        'text',
+        FALSE,
+        '#FFFFFF',
+      ),
+      'color_btn_newsletter_bg' => array(ts('Newsletter Button color'),
+        'text',
+        FALSE,
+        '#BF0F0F',
+      ),
+      'newsletter_text' => array(ts('Newsletter text'),
+        'text',
+        FALSE,
+        'Get the monthly newsletter',
+      ),
+      'color_newsletter_text' => array(ts('Newsletter text color'),
         'text',
         FALSE,
         '#BF0F0F',
@@ -184,6 +204,16 @@ where w.id=" . $this->_id;*/
               'hide_border' => $wid_page[$dao->id]['hide_border']));
         $this->setDefaults(array(
               'hide_pbcap' => $wid_page[$dao->id]['hide_pbcap']));
+
+        $this->setDefaults(array(
+              'color_btn_newsletter' => $wid_page[$dao->id]['color_btn_newsletter']));
+        $this->setDefaults(array(
+              'color_btn_newsletter_bg' => $wid_page[$dao->id]['color_btn_newsletter_bg']));
+        $this->setDefaults(array(
+              'newsletter_text' => $wid_page[$dao->id]['newsletter_text']));
+        $this->setDefaults(array(
+              'color_newsletter_text' => $wid_page[$dao->id]['color_newsletter_text']));
+                            
         if(true == $wid_page[$dao->id]['override']) {
           $cust_templ =  html_entity_decode($wid_page[$dao->id]['custom_template']);
           $this->setDefaults(array(
@@ -260,6 +290,10 @@ where w.id=" . $this->_id;*/
         . "', hide_title = '" . $hide_title
         . "', hide_border = '" . $hide_border
         . "', hide_pbcap = '" . $hide_pbcap
+        . "', color_btn_newsletter = '" . $values['color_btn_newsletter']
+        . "', color_btn_newsletter_bg = '" . $values['color_btn_newsletter_bg']
+        . "', newsletter_text = '" . $values['newsletter_text']
+        . "', color_newsletter_text = '" . $values['color_newsletter_text']
         . "', style_rules = '" . str_replace("'", "''", $values['style_rules']) . "', override = '" 
         . $override . $quote . $coma . $cust_tmpl_col . $equals . $quote . $cust_tmpl . "' where id =" . $this->_id ;
     }
@@ -268,7 +302,9 @@ where w.id=" . $this->_id;*/
       button_title, button_link_to, progress_bar_id, description, 
       email_signup_group_id, size_variant, color_title, color_title_bg, 
       color_progress_bar, color_widget_bg, color_description, color_border, 
-      color_button, color_button_bg, hide_title, hide_border, hide_pbcap, style_rules, override" . $coma . $cust_tmpl_col ." ) 
+      color_button, color_button_bg, hide_title, hide_border, hide_pbcap, 
+      color_btn_newsletter, color_btn_newsletter_bg, newsletter_text, color_newsletter_text, 
+      style_rules, override" . $coma . $cust_tmpl_col ." ) 
       VALUES ('" . $title . "','" . $values['logo_image'] . "','" . 
       $values['image'] . "','" . $values['button_title'] . "','" . 
       $values['button_link_to'] . "','" . $values['progress_bar'] . "','" . 
@@ -279,8 +315,10 @@ where w.id=" . $this->_id;*/
       $values['color_widget_bg'] . "','" . $values['color_description'] . "','" .
       $values['color_border'] . "','" . $values['color_button'] . "','" . 
       $values['color_button_bg'] . "','" . $hide_title . "','" .
-      $hide_border . "','" . $hide_pbcap . "','"
-      . str_replace("'", "''", $values['style_rules']) . "','" . 
+      $hide_border . "','" . $hide_pbcap . "','" .
+      $values['color_btn_newsletter'] . "','" . $values['color_btn_newsletter_bg'] . "','" .
+      $values['newsletter_text'] . "','" . $values['color_newsletter_text'] . "','" .
+      str_replace("'", "''", $values['style_rules']) . "','" . 
       $override . $quote . $coma . $quote . $cust_tmpl
         . "')";
     }

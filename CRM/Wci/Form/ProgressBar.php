@@ -116,7 +116,7 @@ class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
     
     $this->fillData();
     
-    $this->addElement('link', 'addmore_link',' ', 'addmore', 'Add more');
+    $this->addElement('link', 'addmore_link',' ', 'addmore', 'Add another contribution page');
 
     $this->addButtons(array(
       array(

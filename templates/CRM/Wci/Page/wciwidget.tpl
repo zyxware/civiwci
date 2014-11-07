@@ -14,7 +14,6 @@
           border: None;
         {/literal}{/if}{literal}
         background-color: {/literal}{$wciform.color_widget_bg}{literal}; /* background color */
-        box-shadow: 3px 3px 6px;
     }
     
     .crm-wci-widget.thin {
@@ -150,6 +149,13 @@
       text-align: center;
       margin: 0 auto;
     }
+    input.btnNL, button.btnNL {
+       color:{/literal}{$wciform.color_btn_newsletter}{literal};
+       background:{/literal}{$wciform.color_btn_newsletter_bg}{literal};
+    }
+    #newsletter_msg {
+      color:{/literal}{$wciform.color_newsletter_text}{literal};
+    }
 </style>
 
 <style>
@@ -201,16 +207,16 @@
         <form action="{$wciform.emailSignupGroupFormURL}" method="post">
       {/if}
         <p id="newsletter_msg">
-          Get the monthly newsletter
+          {$wciform.newsletter_text}
         </p>
         <p id="newsletter_mail">
           <input id="frmEmail" type="text" name="email-Primary" size="18" maxlength="80" placeholder="email address">
         </p>
         <p id="newsletter_submit">
           {if $embed eq 1 }
-            <input type="submit" name="_qf_Edit_next" value="Subscribe me">
+            <input class ="btnNL" type="submit" name="_qf_Edit_next" value="Subscribe me">
           {else}
-            <input type="button" name="_qf_Edit_next" value="Subscribe me">
+            <button class ="btnNL" type="button" name="_qf_Edit_next" value="Subscribe me">Subscribe me</button>
           {/if}
         </p>
         <div>

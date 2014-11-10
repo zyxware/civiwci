@@ -228,7 +228,6 @@ where w.id=" . $this->_id;*/
     }
     else {
       CRM_Utils_System::setTitle(ts('Create Widget'));
-      /** Keep template in civicrm-wci/templates folder*/
       $output = file_get_contents('templates/CRM/Wci/Page/wciwidget.tpl',FILE_USE_INCLUDE_PATH);
       $elem = $this->getElement('custom_template');
       $elem->setValue($output);

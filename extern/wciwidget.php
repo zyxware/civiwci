@@ -70,6 +70,9 @@ if (isset($format)) {
     $wcidata = $template->fetch('string:' . html_entity_decode($data['custom_template']));
   }
   $output = 'var wciwidgetcode =  ' . json_encode($wcidata) . ';';
+  
+  $wciembed = file_get_contents('wciembed.js',FILE_USE_INCLUDE_PATH);
+  $output = $output . $wciembed;
   echo $output;
 }
 

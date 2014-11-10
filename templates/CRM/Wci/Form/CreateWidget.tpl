@@ -41,16 +41,14 @@
           <div class="description">
             Click <strong>Save &amp; Preview</strong> to save any changes to your settings, and preview the widget again on this page.
           </div>
-          <script type="text/javascript" src="{php}echo $widget_controller_path;{/php}?widgetId={php}echo $wid_id;{/php}&embed=0"></script>
-  <script type="text/javascript" src="{php}echo $extension_root_path;{/php}/extern/wciembed.js"></script>
+          <script type="text/javascript" src="{php}echo $widget_controller_path;{/php}?widgetId={php}echo $wid_id;{/php}&embed=0&referalid=2442"></script></script>
   <div id='widgetwci'></div>
         </div>
         <div class="col2">
           <div class="description">
             Add this widget to any web page by copying and pasting the code below.
           </div>
-          <textarea rows="8" cols="40" name="widget_code" id="widget_code"><script type="text/javascript" src="{php}echo $widget_controller_path;{/php}?widgetId={php}echo $wid_id;{/php}&embed=1"></script>
-<script type="text/javascript" src="{php}echo $extension_root_path;{/php}/extern/wciembed.js"></script>
+          <textarea rows="8" cols="40" name="widget_code" id="widget_code"><script type="text/javascript" src="{php}echo $widget_controller_path;{/php}?widgetId={php}echo $wid_id;{/php}&embed=1&referalId=2442"> </script> 
 <div id='widgetwci'></div></textarea>
           <br>
           <strong>

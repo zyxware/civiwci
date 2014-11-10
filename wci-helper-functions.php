@@ -18,7 +18,7 @@
   }
   
   function getWciWidgetControllerPath() {
-    $widget_controller_path = getExtensionRootPath() . '/extern/wciwidget.php';
+    $widget_controller_path = getExtensionRootPath() . '/extern/embed.php';
     
     return $widget_controller_path;
   }

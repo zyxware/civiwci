@@ -170,4 +170,24 @@ class CRM_Wci_BAO_Widget extends CRM_Wci_DAO_Widget {
     }
     return $data;
   }
+  /**
+   * Returns array of widgets
+   * Fields : id, name
+   * @return widget array
+   * @access public
+   */  
+  public static function getWidgetList() {
+    $query = "SELECT * FROM civicrm_wci_widget";
+    $params = array();
+    $widgList = array();
+    
+    $dao = CRM_Core_DAO::executeQuery($query, $params, TRUE, 'CRM_Wci_DAO_Widget');
+
+    while ($dao->fetch()) {
+      $widgList[$dao->id] = array();
+      CRM_Core_DAO::storeValues($dao, $widgList[$dao->id]);
+    }
+
+    return $widgList;
+  }
 }

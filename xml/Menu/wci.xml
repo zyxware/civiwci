@@ -36,4 +36,16 @@
     <title>WCISettings</title>
     <access_arguments>access CiviCRM</access_arguments>
   </item>
+  <item>
+    <path>civicrm/wci/embed-code/add</path>
+    <page_callback>CRM_Wci_Form_NewEmbedCode</page_callback>
+    <title>NewEmbedCode</title>
+    <access_arguments>access CiviCRM</access_arguments>
+  </item>
+  <item>
+    <path>civicrm/wci/embed-code</path>
+    <page_callback>CRM_Wci_Page_ManageEmbedCode</page_callback>
+    <title>ManageEmbedCode</title>
+    <access_arguments>access CiviCRM</access_arguments>
+  </item>
 </menu>

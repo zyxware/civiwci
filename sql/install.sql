@@ -53,3 +53,12 @@ CREATE TABLE IF NOT EXISTS civicrm_wci_widget (
   UNIQUE KEY `unique_wci_title` (`title`),
   CONSTRAINT FK_civicrm_wci_widget_progress_bar_id FOREIGN KEY (`progress_bar_id`) REFERENCES `civicrm_wci_progress_bar`(`id`) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+-- WCI embed code.
+CREATE TABLE IF NOT EXISTS civicrm_wci_embed_code (
+  id int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Custom Progress bar Id.',
+  name varchar(64) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Embed code.',
+  widget_id int(10) unsigned DEFAULT NULL COMMENT 'widget id.',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `unique_wci_name` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;

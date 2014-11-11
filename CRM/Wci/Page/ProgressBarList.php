@@ -27,6 +27,7 @@ class CRM_Wci_Page_ProgressBarList extends CRM_Core_Page {
       return $controller->run();
     } 
     elseif ($action & CRM_Core_Action::DELETE) {
+      $errorScope = CRM_Core_TemporaryErrorScope::useException();
       try {
         $transaction = new CRM_Core_Transaction();
         $sql = "DELETE FROM civicrm_wci_progress_bar_formula where progress_bar_id = " . $id;
@@ -37,8 +38,8 @@ class CRM_Wci_Page_ProgressBarList extends CRM_Core_Page {
         $transaction->commit();
       }
       catch (Exception $e) {
-        //TODO
-        print_r($e->getMessage());
+        $errmgs = $e->getMessage() . ts('. Check whether progressbar is used by any widget or not');
+        CRM_Core_Session::setStatus($errmgs, '', 'error');
         $transaction->rollback();      
       } 
     }

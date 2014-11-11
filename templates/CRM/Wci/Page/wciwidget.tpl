@@ -8,14 +8,18 @@
         -webkit-border-radius: 12px;
         -khtml-border-radius: 12px;
         border-radius: 12px;
-        {/literal}{if (0 == $wciform.hide_border)}{literal}
-          border: 4px solid {/literal}{$wciform.color_border}{literal};
-        {if (1 == $wciform.hide_border)}
-          border: None;
-        {/literal}{/if}{literal}
+    }
+    .crm-wci-widget-border {
+        border: 4px solid {/literal}{$wciform.color_border}{literal};
         background-color: {/literal}{$wciform.color_widget_bg}{literal}; /* background color */
     }
     
+    .crm-wci-widget hr {
+      text-align:center;
+      display: block; height: 1px;
+      border: 0; border-top: 1px solid {/literal}{$wciform.color_border}{literal};
+      margin: 1em 0; padding: 0;
+    }
     .crm-wci-widget.thin {
       width: 150px;
     }
@@ -28,7 +32,7 @@
       width: 250px;
     }
     
-    h5 {
+    .crm-wci-widget h5 {
         font-size:14px;
         padding:3px;
         margin: 0px;
@@ -164,14 +168,19 @@
 {literal}
 </style>
 {/literal}
+
+{if (1 == $wciform.hide_border)}
 <div id="crm_wid_{$wciform.widgetId}" class="crm-wci-widget {$wciform.size_variant}">
-  {if $wciform.title && (false == $wciform.hide_title)}
-    <h5 id="crm_wid_{$wciform.widgetId}_title">
+{else}
+<div id="crm_wid_{$wciform.widgetId}" class="crm-wci-widget crm-wci-widget-border {$wciform.size_variant}">
+{/if}
       {if $wciform.logo_image}
         <span class="crm-logo">
           <img src="{$wciform.logo_image}" alt={ts}Logo{/ts}>
         </span>
       {/if}
+  {if $wciform.title && (false == $wciform.hide_title)}
+    <h5 id="crm_wid_{$wciform.widgetId}_title">
       {$wciform.title}
     </h5>
   {/if}
@@ -197,13 +206,16 @@
     </div>
     <div id="crm_wid_{$wciform.widgetId}_campaign" class="crm-campaign">
     </div>
-    {if $wciform.button_title}
+    {if $wciform.button_title && $cpageId}
     <div class="crm-wci-button-wrapper" id="crm_wid_{$wciform.widgetId}_button">
         <a href='{crmURL p="civicrm/contribute/transact" q="reset=1&id=$cpageId" h=0 a=1 fe=1}' class="crm-wci-button"><span class="crm-wci-button-inner" id="crm_wid_{$wciform.widgetId}_btn_txt">{$wciform.button_title}</span></a>
     </div>
+        {if $wciform.email_signup_group_id}
+        <hr>
+        {/if}
     {/if}
     {if $wciform.email_signup_group_id}
-      {if $embed eq 1 }
+      {if $preview eq 0 }
         <form action="{$wciform.emailSignupGroupFormURL}" method="post">
       {/if}
         <p id="newsletter_msg">
@@ -213,7 +225,7 @@
           <input id="frmEmail" type="text" name="email-Primary" size="18" maxlength="80" placeholder="email address">
         </p>
         <p id="newsletter_submit">
-          {if $embed eq 1 }
+          {if $preview eq 0 }
             <input class ="btnNL" type="submit" name="_qf_Edit_next" value="Subscribe me">
           {else}
             <button class ="btnNL" type="button" name="_qf_Edit_next" value="Subscribe me">Subscribe me</button>
@@ -224,7 +236,7 @@
           <input type="hidden" name="group[{$wciform.email_signup_group_id}]" value="1">
           <input name="_qf_default" type="hidden" value="Edit:cancel">
         </div>
-      {if $embed eq 1 }
+      {if $preview eq 0 }
         </form>
       {/if}
     {/if}

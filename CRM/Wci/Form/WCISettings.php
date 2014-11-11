@@ -19,13 +19,14 @@ class CRM_Wci_Form_WCISettings extends CRM_Core_Form {
       true // is required
     );*/
    
-    $this->add(
+    /*$this->add(
       'select', // field type
       'default_widget', // field name
       'Default widget', // field label
       $this->getWidgets(), // list of options
       false // is required
-    );
+    );*/
+    
     $this->add('text', 'default_profile', ts('Default profile'),true)->setSize(45);
     $this->addButtons(array(
       array(

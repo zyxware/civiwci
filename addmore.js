@@ -9,6 +9,7 @@ cj(function ( $ ) {
       $('#' + "contribution_page_" + i).parent().parent().attr("id", "crm-section-con-" + i);
       $('#' + "percentage_" + i).parent().parent().attr("id", 'crm-section-per-' + i);
     }
+    $('#percentage_1').after('<label><br><SMALL>Progressbar shows the sum of each percentage of contributions done on each selected contribution page</SMALL></label>');
   });
   $("#ProgressBar").validate({
     rules: {

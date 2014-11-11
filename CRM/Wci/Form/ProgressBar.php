@@ -56,7 +56,7 @@ class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
         $this->add(
           'text', // field type
           'percentage_'.$count, // field name
-          'Percentage', // field label
+          'Percentage of contribution taken', // field label
           false // is required
         );
         //save formula id 
@@ -84,7 +84,7 @@ class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
       $this->add(
         'text', // field type
         'percentage_1', // field name
-        'Percentage', // field label
+        'Percentage of contribution taken', // field label
         true // is required
       );
       CRM_Utils_System::setTitle(ts('Create Progress Bar'));

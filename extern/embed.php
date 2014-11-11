@@ -43,6 +43,46 @@ require_once 'CRM/Core/Config.php';
 require_once 'CRM/Contribute/BAO/Widget.php';
 require_once 'CRM/Utils/Request.php';
 
+$wciembed_js = '// Cleanup functions for the document ready method
+if ( document.addEventListener ) {
+    DOMContentLoaded = function() {
+        document.removeEventListener( "DOMContentLoaded", DOMContentLoaded, false );
+        onReady();
+    };
+} else if ( document.attachEvent ) {
+    DOMContentLoaded = function() {
+        // Make sure body exists, at least, in case IE gets a little overzealous
+        if ( document.readyState === "complete" ) {
+            document.detachEvent( "onreadystatechange", DOMContentLoaded );
+            onReady();
+        }
+    };
+}
+if ( document.readyState === "complete" ) {
+    // Handle it asynchronously to allow scripts the opportunity to delay ready
+    setTimeout( onReady, 1 );
+}
+
+// Mozilla, Opera and webkit support this event
+if ( document.addEventListener ) {
+    // Use the handy event callback
+    document.addEventListener( "DOMContentLoaded", DOMContentLoaded, false );
+    // A fallback to window.onload, that will always work
+    window.addEventListener( "load", onReady, false );
+    // If IE event model is used
+} else if ( document.attachEvent ) {
+    // ensure firing before onload,
+    // maybe late but safe also for iframes
+    document.attachEvent("onreadystatechange", DOMContentLoaded);
+
+    // A fallback to window.onload, that will always work
+    window.attachEvent( "onload", onReady );
+}
+
+function onReady( ) {
+  document.getElementById("widgetwci").innerHTML = wciwidgetcode;
+}';
+
 $config = CRM_Core_Config::singleton();
 $template = CRM_Core_Smarty::singleton();
 
@@ -55,7 +95,7 @@ if(empty($widgetId)) {
     $widgetId = civicrm_api3('setting', 'getValue', array('group' => 'Wci Preference', 'name' => 'default_wci_widget'));
   }
 }
-$embed = CRM_Utils_Request::retrieve('embed', 'Positive', CRM_Core_DAO::$_nullObject);
+$preview = CRM_Utils_Request::retrieve('preview', 'Positive', CRM_Core_DAO::$_nullObject);
 
 if (isset($format)) {
   $jsonvar .= $cpageId;
@@ -66,7 +106,7 @@ if (isset($format)) {
 
   $template->assign('wciform', $data);
   $template->assign('cpageId', $data['button_link_to']);
-  $template->assign('embed', $embed);
+  $template->assign('preview', $preview);
 
   if ($data["override"] == '0') {
     $template->template_dir[] = getWciWidgetTemplatePath();
@@ -76,8 +116,7 @@ if (isset($format)) {
   }
   $output = 'var wciwidgetcode =  ' . json_encode($wcidata) . ';';
   
-  $wciembed = file_get_contents('wciembed.js',FILE_USE_INCLUDE_PATH);
-  $output = $output . $wciembed;
+  $output = $output . $wciembed_js;
   echo $output;
 }
 

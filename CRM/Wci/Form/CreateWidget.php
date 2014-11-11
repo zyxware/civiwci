@@ -109,7 +109,7 @@ class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
     $this->add('select', 'progress_bar', ts('Progress bar'), $this->getProgressBars());
     $this->addWysiwyg('description', ts('Description'), '');
     $this->add('select', 'email_signup_group_id', ts('Newsletter signup'), $this->getGroupOptions());
-    $this->add('select', 'size_variant', ts('Size variant'), $this->getSizeOptions());
+    $this->add('select', 'size_variant', ts('Size variant<br><SMALL>Fixed width. Height depends on what contents selected.</SMALL>'), $this->getSizeOptions());
     // $fieldset = $this->addElement('fieldset')->setLabel('Advanced Settings');
     $this->add('checkbox', 'hide_title', ts('Hide Title'));
     $this->add('checkbox', 'hide_border', ts('Hide border'));
@@ -138,11 +138,9 @@ class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
           'name' => ts('Save & Preview'),
         ),
     ));
-    
     // export form elements
     $this->assign('elementNames', $this->getRenderableElementNames());
-
-    if (isset($this->_id)) {  
+    if (isset($this->_id)) {
       /** Updating existing widget*/
       
       /*$query = "SELECT pb.id as pbid, w.*  FROM civicrm_wci_widget w INNER JOIN civicrm_wci_progress_bar pb on pb.id = w.progress_bar_id 
@@ -154,10 +152,8 @@ where w.id=" . $this->_id;*/
       $dao = CRM_Core_DAO::executeQuery($query, $params, TRUE, 'CRM_Wci_DAO_Widget');
 
       while ($dao->fetch()) {
-
         $wid_page[$dao->id] = array();
         CRM_Core_DAO::storeValues($dao, $wid_page[$dao->id]);
-
         $this->setDefaults(array(
               'title' => $wid_page[$dao->id]['title']));
         $this->setDefaults(array(
@@ -168,7 +164,6 @@ where w.id=" . $this->_id;*/
               'button_link_to' => $wid_page[$dao->id]['button_link_to']));
         $this->setDefaults(array(
               'button_title' => $wid_page[$dao->id]['button_title']));
-
         $this->setDefaults(array(
               'progress_bar' => $dao->progress_bar_id/*$dao->pbid*/));
         $description = $wid_page[$dao->id]['description'];
@@ -388,9 +383,9 @@ where w.id=" . $this->_id;*/
 
   function getSizeOptions() {
     $options = array(
-      'thin' => ts('Thin'),
-      'normal' => ts('Normal'),
-      'wide' => ts('Wide'),
+      'thin' => ts('Thin (150px)'),
+      'normal' => ts('Normal (200px)'),
+      'wide' => ts('Wide (250px)'),
     );
     
     return $options;

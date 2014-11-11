@@ -12,6 +12,10 @@ cj(function ( $ ) {
     } else {
       $('#embd_code').parents('.crm-section').hide();
     }
+    
+    $('#image').after('<label><br><SMALL>Select a smaller image than Size variant</SMALL></label>');
+    $('#logo_image').after('<label><br><SMALL>Select smaller image appropriate for logo</SMALL></label>');
+    
   }
   $(document).ready(setState)
   $('#override').click(setState);

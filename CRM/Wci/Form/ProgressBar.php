@@ -21,8 +21,8 @@ class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
     $count = 1;
     if (isset($this->_id)) {
       /** Updating existing progress bar*/
-      $query = "SELECT * FROM civicrm_wci_progress_bar where id=" . $this->_id;
-      $params = array();
+      $query = "SELECT * FROM civicrm_wci_progress_bar where id=%1";
+      $params = array(1 => array($this->_id, 'Integer'));
       
       $dao = CRM_Core_DAO::executeQuery($query, $params, TRUE, 'CRM_Wci_DAO_ProgressBar');
 
@@ -37,8 +37,8 @@ class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
               'goal_amount' => $con_page[$dao->id]['goal_amount']));
       }
        
-      $query = "SELECT * FROM civicrm_wci_progress_bar_formula WHERE progress_bar_id =" . $this->_id;
-      $params = array();
+      $query = "SELECT * FROM civicrm_wci_progress_bar_formula WHERE progress_bar_id =%1";
+      $params = array(1 => array($this->_id, 'Integer'));
 
       $dao = CRM_Core_DAO::executeQuery($query, $params, TRUE, 'CRM_Wci_DAO_ProgressBarFormula');
 
@@ -138,22 +138,32 @@ class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
       try {
         $transaction = new CRM_Core_Transaction();
         
-        $sql = "UPDATE civicrm_wci_progress_bar SET name = '". $_REQUEST['progressbar_name'] . 
-          "', starting_amount = '" . $_REQUEST['starting_amount'] . 
-          "', goal_amount = '" . $_REQUEST['goal_amount'] . 
-          "' where id =".$this->_id;
-
-        CRM_Core_DAO::executeQuery($sql);
-        /** Delete existiing formula fields and add fields fresh*/
-        CRM_Core_DAO::executeQuery('DELETE FROM civicrm_wci_progress_bar_formula WHERE progress_bar_id=' . $this->_id);
+        $sql = "UPDATE civicrm_wci_progress_bar SET name = %1, 
+          starting_amount = %2, goal_amount = %3 where id = %4";
         
+        CRM_Core_DAO::executeQuery($sql, 
+              array(1=>array($_REQUEST['progressbar_name'], 'String'),
+              2=>array($_REQUEST['starting_amount'], 'Float'),
+              3=>array($_REQUEST['goal_amount'], 'Float'),
+              4=>array($this->_id, 'Integer'),
+        ));
+        /** Delete existiing formula fields and add fields fresh*/
+        CRM_Core_DAO::executeQuery('DELETE FROM civicrm_wci_progress_bar_formula
+            WHERE progress_bar_id=%1', array(1 => array($this->_id, 'Integer')));
+
         for($i = 1; $i <= (int)$_REQUEST['contrib_count']; $i++) {
           $page = 'contribution_page_' . (string)$i;
           $perc = 'percentage_' . (string)$i;
-          $sql = "INSERT INTO civicrm_wci_progress_bar_formula (contribution_page_id, progress_bar_id, percentage) 
-              VALUES ('" . $_REQUEST[$page] . "','" . $this->_id . "','" . $_REQUEST[$perc] . "')";
 
-          CRM_Core_DAO::executeQuery($sql);
+          $sql = "INSERT INTO civicrm_wci_progress_bar_formula
+            (contribution_page_id, progress_bar_id, percentage) 
+            VALUES (%1, %2, %3)";
+
+          CRM_Core_DAO::executeQuery($sql, 
+            array(1 => array($_REQUEST[$page], 'Integer'),
+            2 => array($this->_id, 'Integer'),
+            3 => array($_REQUEST[$perc], 'Float'),
+          ));
         }
         
         $transaction->commit();
@@ -167,27 +177,36 @@ class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
     
     } 
     else {
-      $sql = "INSERT INTO civicrm_wci_progress_bar (name, starting_amount, goal_amount) 
-      VALUES ('" . $_REQUEST['progressbar_name'] . "','" . $_REQUEST['starting_amount'] . "','" . $_REQUEST['goal_amount'] . "')";
+      $sql = "INSERT INTO civicrm_wci_progress_bar 
+              (name, starting_amount, goal_amount) VALUES (%1, %2, %3)";
       try {
         $transaction = new CRM_Core_Transaction();
-        CRM_Core_DAO::executeQuery($sql);
+        CRM_Core_DAO::executeQuery($sql, 
+          array(1=>array($_REQUEST['progressbar_name'], 'String'),
+          2=>array($_REQUEST['starting_amount'], 'Float'),
+          3=>array($_REQUEST['goal_amount'], 'Float'),  
+        ));
         $progressbar_id = CRM_Core_DAO::singleValueQuery('SELECT LAST_INSERT_ID()');
         for($i = 1; $i <= (int)$_REQUEST['contrib_count']; $i++):
           $page = 'contribution_page_' . (string)$i;
           $perc = 'percentage_' . (string)$i;
 
-          $sql = "INSERT INTO civicrm_wci_progress_bar_formula (contribution_page_id, progress_bar_id, percentage) 
-          VALUES ('" . $_REQUEST[$page] . "','" . $progressbar_id . "','" . $_REQUEST[$perc] . "')";
+          $sql = "INSERT INTO civicrm_wci_progress_bar_formula 
+          (contribution_page_id, progress_bar_id, percentage) 
+          VALUES (%1, %2, %3)";
           
-          CRM_Core_DAO::executeQuery($sql);
+          CRM_Core_DAO::executeQuery($sql, 
+          array(1 => array($_REQUEST[$page], 'Integer'),
+          2 => array($progressbar_id, 'Integer'),
+          3 => array($_REQUEST[$perc], 'Float'),
+          ));
         endfor;
         $transaction->commit();
         CRM_Utils_System::redirect('civicrm/wci/progress-bar?reset=1');
       }    
       catch (Exception $e) {
-        //TODO
-        print_r($e->getMessage());
+        CRM_Core_Session::setStatus(ts('Failed to create Progress bar. ') . 
+        $e->getMessage(), '', 'error');
         $transaction->rollback();
       }
       $elem = $this->getElement('contrib_count');

@@ -30,11 +30,13 @@ class CRM_Wci_Page_ProgressBarList extends CRM_Core_Page {
       $errorScope = CRM_Core_TemporaryErrorScope::useException();
       try {
         $transaction = new CRM_Core_Transaction();
-        $sql = "DELETE FROM civicrm_wci_progress_bar_formula where progress_bar_id = " . $id;
-        CRM_Core_DAO::executeQuery($sql);
+        $sql = "DELETE FROM civicrm_wci_progress_bar_formula where progress_bar_id = %1";
+        $params = array(1 => array($id, 'Integer'));
+        CRM_Core_DAO::executeQuery($sql, $params);
         
-        $sql = "DELETE FROM civicrm_wci_progress_bar where id = " . $id;
-        CRM_Core_DAO::executeQuery($sql);
+        $sql = "DELETE FROM civicrm_wci_progress_bar where id = %1";
+        $params = array(1 => array($id, 'Integer'));
+        CRM_Core_DAO::executeQuery($sql, $params);
         $transaction->commit();
       }
       catch (Exception $e) {

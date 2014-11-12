@@ -40,8 +40,8 @@ class CRM_Wci_Form_NewEmbedCode extends CRM_Core_Form {
     ));
 
     if (isset($this->_id)) {
-      $query = "SELECT * FROM civicrm_wci_embed_code WHERE id=" . $this->_id;
-      $params = array();
+      $query = "SELECT * FROM civicrm_wci_embed_code WHERE id= %1";
+      $params = array(1 => array($this->_id, 'Integer'));
       
       $dao = CRM_Core_DAO::executeQuery($query, $params, TRUE, 'CRM_Wci_DAO_EmbedCode');
 

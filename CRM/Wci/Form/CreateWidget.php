@@ -146,8 +146,8 @@ class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
       /*$query = "SELECT pb.id as pbid, w.*  FROM civicrm_wci_widget w INNER JOIN civicrm_wci_progress_bar pb on pb.id = w.progress_bar_id 
 where w.id=" . $this->_id;*/
 
-      $query = "SELECT * FROM civicrm_wci_widget WHERE id=" . $this->_id;
-      $params = array();
+      $query = "SELECT * FROM civicrm_wci_widget WHERE id=%1";
+      $params = array(1 => array($this->_id, 'Integer'));
       
       $dao = CRM_Core_DAO::executeQuery($query, $params, TRUE, 'CRM_Wci_DAO_Widget');
 
@@ -334,7 +334,8 @@ where w.id=" . $this->_id;*/
       }
     }    
     catch (Exception $e) {
-      CRM_Core_Session::setStatus(ts('Failed to create widget'), '', 'error');
+      CRM_Core_Session::setStatus(ts('Failed to create widget. ').
+      $e->getMessage(), '', 'error');
       $transaction->rollback();
     }
      

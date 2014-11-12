@@ -57,11 +57,7 @@ class CRM_Wci_Page_ManageEmbedCode extends CRM_Core_Page {
       $action = array_sum(array_keys($this->actionLinks())); 
       //build the normal action links.
       $emb_code[$dao->id]['action'] = CRM_Core_Action::formLink(self::actionLinks(),
-        $action,
-        array('id' => $dao->id),
-        ts('more'),
-        TRUE
-      );     
+        $action, array('id' => $dao->id));     
     }
    
     if (isset($emb_code)) {

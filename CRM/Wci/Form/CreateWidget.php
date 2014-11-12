@@ -109,7 +109,7 @@ class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
     $this->add('select', 'progress_bar', ts('Progress bar'), $this->getProgressBars());
     $this->addWysiwyg('description', ts('Description'), '');
     $this->add('select', 'email_signup_group_id', ts('Newsletter signup'), $this->getGroupOptions());
-    $this->add('select', 'size_variant', ts('Size variant<br><SMALL>Fixed width. Height depends on what contents selected.</SMALL>'), $this->getSizeOptions());
+    $this->add('select', 'size_variant', ts('Size variant'), $this->getSizeOptions());
     // $fieldset = $this->addElement('fieldset')->setLabel('Advanced Settings');
     $this->add('checkbox', 'hide_title', ts('Hide Title'));
     $this->add('checkbox', 'hide_border', ts('Hide border'));

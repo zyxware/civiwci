@@ -57,11 +57,7 @@ class CRM_Wci_Page_WidgetList extends CRM_Core_Page {
       $action = array_sum(array_keys($this->actionLinks())); 
       //build the normal action links.
       $wid_page[$dao->id]['action'] = CRM_Core_Action::formLink(self::actionLinks(),
-        $action,
-        array('id' => $dao->id),
-        ts('more'),
-        TRUE
-      );
+        $action, array('id' => $dao->id));
     }
    
     if (isset($wid_page)) {

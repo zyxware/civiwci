@@ -174,14 +174,17 @@
 {else}
 <div id="crm_wid_{$wciform.widgetId}" class="crm-wci-widget crm-wci-widget-border {$wciform.size_variant}">
 {/if}
+
+  {if $wciform.title }
+    <h5 id="crm_wid_{$wciform.widgetId}_title">
       {if $wciform.logo_image}
         <span class="crm-logo">
           <img src="{$wciform.logo_image}" alt={ts}Logo{/ts}>
         </span>
       {/if}
-  {if $wciform.title && (false == $wciform.hide_title)}
-    <h5 id="crm_wid_{$wciform.widgetId}_title">
-      {$wciform.title}
+      {if (false == $wciform.hide_title)}
+        {$wciform.title}
+      {/if}
     </h5>
   {/if}
     {if $wciform.image}

@@ -44,7 +44,21 @@ CREATE TABLE IF NOT EXISTS civicrm_wci_widget (
   hide_title tinyint(4) NOT NULL DEFAULT '0' COMMENT 'Hide title, if 1.',
   hide_border tinyint(4) NOT NULL DEFAULT '0' COMMENT 'Hide widget border, if 1.',
   hide_pbcap tinyint(4) NOT NULL DEFAULT '0' COMMENT 'Hide pb caption, if 1.',
+  color_btn_newsletter varchar(10) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Newsletter Button text color',
+  color_btn_newsletter_bg varchar(10) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Newsletter Button color',
+  newsletter_text varchar(64) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Newsletter text',
+  color_newsletter_text varchar(10) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Newsletter text color',
+  
   PRIMARY KEY (`id`),
   UNIQUE KEY `unique_wci_title` (`title`),
-  CONSTRAINT FK_civicrm_wci_widget_progress_bar_id FOREIGN KEY (`progress_bar_id`) REFERENCES `civicrm_wci_progress_bar`(`id`) ON DELETE SET NULL
+  CONSTRAINT FK_civicrm_wci_widget_progress_bar_id FOREIGN KEY (`progress_bar_id`) REFERENCES `civicrm_wci_progress_bar`(`id`) ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+-- WCI embed code.
+CREATE TABLE IF NOT EXISTS civicrm_wci_embed_code (
+  id int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Custom Progress bar Id.',
+  name varchar(64) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Embed code.',
+  widget_id int(10) unsigned DEFAULT NULL COMMENT 'widget id.',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `unique_wci_name` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;

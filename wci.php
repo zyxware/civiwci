@@ -179,14 +179,38 @@ function wci_civicrm_navigationMenu( &$params ) {
         
         '5' => array (
         'attributes' => array (
-        'label' => ts('Widget Settings'),
-        'name' => 'manage_progress_bar',
-        'url' => 'civicrm/wci/settings?reset=1',
+        'label' => ts('New Embed Code'),
+        'name' => 'new_embed-code',
+        'url' => 'civicrm/wci/embed-code/add',
         'permission' => 'access CiviReport,access CiviContribute',
         'operator' => 'OR',
         'separator' => 1,
         'parentID' => $navId, 
         'navID' => $navId+5,
+        'active' => 1)),
+
+        '6' => array (
+        'attributes' => array (
+        'label' => ts('Manage Embed Code'),
+        'name' => 'manage-emebed-code',
+        'url' => 'civicrm/wci/embed-code?reset=1',
+        'permission' => 'access CiviReport,access CiviContribute',
+        'operator' => 'OR',
+        'separator' => 1,
+        'parentID' => $navId, 
+        'navID' => $navId+6,
+        'active' => 1)),
+        
+        '7' => array (
+        'attributes' => array (
+        'label' => ts('Widget Settings'),
+        'name' => 'widget-settings',
+        'url' => 'civicrm/wci/settings?reset=1',
+        'permission' => 'access CiviReport,access CiviContribute',
+        'operator' => 'OR',
+        'separator' => 1,
+        'parentID' => $navId, 
+        'navID' => $navId+7,
         'active' => 1)),
         ),
   );

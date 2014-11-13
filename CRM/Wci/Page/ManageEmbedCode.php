@@ -1,9 +1,9 @@
 <?php
 
 require_once 'CRM/Core/Page.php';
-require_once 'CRM/Wci/DAO/ProgressBar.php';
+require_once 'CRM/Wci/DAO/NewEmbedCode.php';
 
-class CRM_Wci_Page_ProgressBarList extends CRM_Core_Page {
+class CRM_Wci_Page_ManageEmbedCode extends CRM_Core_Page {
   private static $_actionLinks;
   function run() {
     // get the requested action
@@ -18,8 +18,8 @@ class CRM_Wci_Page_ProgressBarList extends CRM_Core_Page {
     );
 
     if ($action & CRM_Core_Action::UPDATE) {
-      $controller = new CRM_Core_Controller_Simple('CRM_Wci_Form_ProgressBar',
-        'Edit Progressbar',
+      $controller = new CRM_Core_Controller_Simple('CRM_Wci_Form_NewEmbedCode',
+        'Edit Embed Code',
         CRM_Core_Action::UPDATE
       );
       $controller->set('id', $id);
@@ -27,53 +27,52 @@ class CRM_Wci_Page_ProgressBarList extends CRM_Core_Page {
       return $controller->run();
     } 
     elseif ($action & CRM_Core_Action::DELETE) {
-      $errorScope = CRM_Core_TemporaryErrorScope::useException();
       try {
         $transaction = new CRM_Core_Transaction();
-        $sql = "DELETE FROM civicrm_wci_progress_bar_formula where progress_bar_id = %1";
-        $params = array(1 => array($id, 'Integer'));
-        CRM_Core_DAO::executeQuery($sql, $params);
         
-        $sql = "DELETE FROM civicrm_wci_progress_bar where id = %1";
+        $sql = "DELETE FROM civicrm_wci_embed_code where id = %1";
         $params = array(1 => array($id, 'Integer'));
         CRM_Core_DAO::executeQuery($sql, $params);
         $transaction->commit();
       }
       catch (Exception $e) {
-        $errmgs = $e->getMessage() . ts('. Check whether progressbar is used by any widget or not');
-        CRM_Core_Session::setStatus($errmgs, '', 'error');
-        $transaction->rollback();      
+        //TODO
+        print_r($e->getMessage());
+        $transaction->rollback();
       } 
     }
-    // Example: Set the page-title dynamically; alternatively, declare a static title in xml/Menu/*.xml
-    CRM_Utils_System::setTitle(ts('Progress Bar List'));
 
-    $query = "SELECT * FROM civicrm_wci_progress_bar";
+
+    CRM_Utils_System::setTitle(ts('Embed Code List'));
+    $query = "SELECT * FROM civicrm_wci_embed_code";
     $params = array();
     
-    $dao = CRM_Core_DAO::executeQuery($query, $params, TRUE, 'CRM_Wci_DAO_ProgressBar');
+    $dao = CRM_Core_DAO::executeQuery($query, $params, TRUE, 'CRM_Wci_DAO_EmbedCode');
 
     while ($dao->fetch()) {
-      $con_page[$dao->id] = array();
-      CRM_Core_DAO::storeValues($dao, $con_page[$dao->id]);
+      $emb_code[$dao->id] = array();
+      CRM_Core_DAO::storeValues($dao, $emb_code[$dao->id]);
+      $emb_code[$dao->id]['id'] = $emb_code[$dao->id]['id'];
+      $emb_code[$dao->id]['name'] = $emb_code[$dao->id]['name'];
      
       $action = array_sum(array_keys($this->actionLinks())); 
       //build the normal action links.
-      $con_page[$dao->id]['action'] = CRM_Core_Action::formLink(self::actionLinks(),
-        $action, array('id' => $dao->id));
+      $emb_code[$dao->id]['action'] = CRM_Core_Action::formLink(self::actionLinks(),
+        $action, array('id' => $dao->id));     
+    }
+   
+    if (isset($emb_code)) {
+      $this->assign('rows', $emb_code);
     }
 
-    if (isset($con_page)) {
-      $this->assign('rows', $con_page);
-    }
-    return parent::run();
+
+    parent::run();
   }
-  
   function &actionLinks() {
     // check if variable _actionsLinks is populated
     if (!isset(self::$_actionLinks)) {
       // helper variable for nicer formatting
-      $deleteExtra = ts('Are you sure you want to delete this Progressbar page?');
+      $deleteExtra = ts('Are you sure you want to delete this Widget?');
 
       self::$_actionLinks = array(
         CRM_Core_Action::UPDATE => array(

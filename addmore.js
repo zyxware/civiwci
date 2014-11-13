@@ -4,11 +4,13 @@ cj(function ( $ ) {
   $(document).ready(function(){
     var count = parseInt($('input[name=contrib_count]').val());
     for ( var i = 2; i <= count; i++ ) {
+      $('#' + "contribution_page_" + i).parent().parent().before('<div class="crm-wci-pb"><hr></div>');
       $('#' + "contribution_page_" + i).after(
       '<a id=\"remove_link\" class=\"form-link\" href=\"remove\" name=\"remove_link-' + i + '\"> Remove</a>');
       $('#' + "contribution_page_" + i).parent().parent().attr("id", "crm-section-con-" + i);
       $('#' + "percentage_" + i).parent().parent().attr("id", 'crm-section-per-' + i);
     }
+    $('#goal_amount').parent().after('<div class="crm-wci-pb"><hr></div><label><SMALL>Progressbar shows the sum of each percentage of contributions done on each selected contribution page</SMALL></label>');
   });
   $("#ProgressBar").validate({
     rules: {
@@ -43,14 +45,14 @@ cj(function ( $ ) {
     c_page_sel.attr("name", "contribution_page_" + count);
 
     var id_section = "crm-section-con-" + count;
-    var sect_tag = "<div class=\"crm-section\" id=" + id_section + "> <div class=\"label\"><label>Contribution Page</label>";
+    var sect_tag = "<div class=\"crm-section crm-wci-pb\" id=" + id_section + "><hr><div class=\"label\"><label>Contribution Page</label>";
     $('#addmore_link').parent().parent().before(sect_tag);
 
     var id_content = "content_con-" + count;
     $('#' + id_section).append("<div class=\"content\" id="+ id_content + ">");
     $('#' + id_content).append(c_page_sel);
     $('#' + id_content).append('<a id=\"remove_link\" class=\"form-link\" href=\"remove\" name=\"remove_link-' + count + '\"> Remove</a>');
-    $('#' + id_section).append("</div");
+    $('#' + id_section).append("</div>");
 
     id_section = "crm-section-per-" + count;
     sect_tag = "<div class=\"crm-section\" id=" + id_section + "> <div class=\"label\"><label>Percentage</label>";

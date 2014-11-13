@@ -19,13 +19,14 @@ class CRM_Wci_Form_WCISettings extends CRM_Core_Form {
       true // is required
     );*/
    
-    $this->add(
+    /*$this->add(
       'select', // field type
       'default_widget', // field name
       'Default widget', // field label
       $this->getWidgets(), // list of options
       false // is required
-    );
+    );*/
+    
     $this->add('text', 'default_profile', ts('Default profile'),true)->setSize(45);
     $this->addButtons(array(
       array(
@@ -38,8 +39,8 @@ class CRM_Wci_Form_WCISettings extends CRM_Core_Form {
     $widgetId = civicrm_api3('setting', 'getValue', array('group' => 'Wci Preference', 'name' => 'default_wci_widget'));
     $defProf = civicrm_api3('setting', 'getValue', array('group' => 'Wci Preference', 'name' => 'default_wci_profile'));
 
-    $this->setDefaults(array(
-              'default_widget' => $widgetId));
+    /*$this->setDefaults(array(
+              'default_widget' => $widgetId));*/
     $this->setDefaults(array(
               'default_profile' => $defProf));
     // export form elements
@@ -52,7 +53,7 @@ class CRM_Wci_Form_WCISettings extends CRM_Core_Form {
 
   function postProcess() {
     $values = $this->exportValues();
-    civicrm_api3('setting', 'create', array('domain_id' => 1, 'default_wci_widget' => $values['default_widget'],));
+    /*civicrm_api3('setting', 'create', array('domain_id' => 1, 'default_wci_widget' => $values['default_widget'],));*/
     civicrm_api3('setting', 'create', array('domain_id' => 1, 'default_wci_profile' => $values['default_profile'],));
     CRM_Core_Session::setStatus(ts('Widget settings are saved to database'), '', 'success');
     parent::postProcess();

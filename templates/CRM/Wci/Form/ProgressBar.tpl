@@ -1,3 +1,13 @@
+{literal}
+<style>
+    .crm-wci-pb hr {
+      align:center;
+      display: block; height: 1px;
+      border: 0; border-top: 1px;
+      margin: 1em 0; padding: 0;
+    }
+</style>
+{/literal}
 {* HEADER *}
 <div class="crm-block crm-form-block">
   <div class="crm-submit-buttons">

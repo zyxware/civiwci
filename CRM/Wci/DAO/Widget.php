@@ -227,6 +227,35 @@ class CRM_Wci_DAO_Widget extends CRM_Core_DAO
    * @var string
    */
   public $custom_template;
+  
+  /**
+   * Newsletter Button text color
+   *
+   * @var string
+   */
+  public $color_btn_newsletter;
+  
+  /**
+   * Newsletter Button color
+   *
+   * @var string
+   */
+  public $color_btn_newsletter_bg;  
+  
+   /**
+   * Newsletter text
+   *
+   * @var string
+   */
+  public $newsletter_text;
+  
+  /**
+   * Newsletter msg text color
+   *
+   * @var string
+   */
+  public $color_newsletter_text;
+     
   function __construct()
   {
     $this->__table = 'civicrm_wci_widget';
@@ -416,6 +445,35 @@ class CRM_Wci_DAO_Widget extends CRM_Core_DAO
           'type' => CRM_Utils_Type::T_TEXT,
           'title' => ts('Widget custom template', array('domain' => 'org.civicrm.wci')) ,
           'required' => false,
+        ) ,
+        
+        'color_btn_newsletter' => array(
+          'name' => 'color_btn_newsletter',
+          'type' => CRM_Utils_Type::T_STRING,
+          'title' => ts('Newsletter Button text color', array('domain' => 'org.civicrm.wci')) ,
+          'required' => true,
+          'maxlength' => 10,
+        ) ,
+        'color_btn_newsletter_bg' => array(
+          'name' => 'color_btn_newsletter_bg',
+          'type' => CRM_Utils_Type::T_STRING,
+          'title' => ts('Newsletter Button color', array('domain' => 'org.civicrm.wci')) ,
+          'required' => true,
+          'maxlength' => 10,
+        ) ,
+        'newsletter_text' => array(
+          'name' => 'newsletter_text',
+          'type' => CRM_Utils_Type::T_STRING,
+          'title' => ts('Newsletter text', array('domain' => 'org.civicrm.wci')) ,
+          'required' => true,
+          'maxlength' => 64,
+        ) ,
+        'color_newsletter_text' => array(
+          'name' => 'color_newsletter_text',
+          'type' => CRM_Utils_Type::T_STRING,
+          'title' => ts('Newsletter text color', array('domain' => 'org.civicrm.wci')) ,
+          'required' => true,
+          'maxlength' => 10,
         ) ,
       );
     }

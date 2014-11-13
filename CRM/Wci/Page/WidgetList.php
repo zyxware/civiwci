@@ -30,8 +30,9 @@ class CRM_Wci_Page_WidgetList extends CRM_Core_Page {
       try {
         $transaction = new CRM_Core_Transaction();
         
-        $sql = "DELETE FROM civicrm_wci_widget where id = " . $id;
-        CRM_Core_DAO::executeQuery($sql);
+        $sql = "DELETE FROM civicrm_wci_widget where id = %1";
+        $params = array(1 => array($id, 'Integer'));
+        CRM_Core_DAO::executeQuery($sql, $params);
         $transaction->commit();
       }
       catch (Exception $e) {
@@ -57,11 +58,7 @@ class CRM_Wci_Page_WidgetList extends CRM_Core_Page {
       $action = array_sum(array_keys($this->actionLinks())); 
       //build the normal action links.
       $wid_page[$dao->id]['action'] = CRM_Core_Action::formLink(self::actionLinks(),
-        $action,
-        array('id' => $dao->id),
-        ts('more'),
-        TRUE
-      );
+        $action, array('id' => $dao->id));
     }
    
     if (isset($wid_page)) {

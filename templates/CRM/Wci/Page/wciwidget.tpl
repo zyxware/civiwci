@@ -8,10 +8,10 @@
         -webkit-border-radius: 12px;
         -khtml-border-radius: 12px;
         border-radius: 12px;
+        background-color: {/literal}{$wciform.color_widget_bg}{literal}; /* background color */
     }
     .crm-wci-widget-border {
         border: 4px solid {/literal}{$wciform.color_border}{literal};
-        background-color: {/literal}{$wciform.color_widget_bg}{literal}; /* background color */
     }
     
     .crm-wci-widget hr {

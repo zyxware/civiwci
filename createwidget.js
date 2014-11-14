@@ -17,7 +17,7 @@ cj(function ( $ ) {
     $('#logo_image').after('<label><br><SMALL>Select smaller image appropriate for logo</SMALL></label>');
     $('#email_signup_group_id').after("<label><br><SMALL>Those groups that are 'Mailing List' selected are shown.</SMALL></label>");
     $('#size_variant').after("<label><br><SMALL>Fixed width. Height depends on what contents selected.</SMALL></label>");
-    
+    $('#hide_border').after("<label><br>To get transparent background give <strong>none</strong> in the Background color field.</label>");
   }
   $(document).ready(setState)
   $('#override').click(setState);

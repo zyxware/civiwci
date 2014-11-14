@@ -18,14 +18,14 @@ class CRM_Wci_Form_NewEmbedCode extends CRM_Core_Form {
   }
           
   function buildQuickForm() {
-    $this->add('text', 'title', ts('Title'),true)->setSize(45);
+    $this->add('text', 'title', ts('Title'),true, true)->setSize(45);
     // add form elements
     $this->add(
       'select', // field type
       'widget', // field name
       'Widget', // field label
       $this->getWidgets(), // list of options
-      false // is required
+      true // is required
     );
     $this->addButtons(array(
       array(

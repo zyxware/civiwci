@@ -101,7 +101,7 @@ class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
 
   function buildQuickForm() {
     // add form elements
-    $this->add('text', 'title', ts('Title'),true)->setSize(45);
+    $this->add('text', 'title', ts('Title'),true, true)->setSize(45);
     $this->add('text', 'logo_image', ts('Logo image'))->setSize(45);
     $this->add('text', 'image', ts('Image'))->setSize(45);
     $this->add('select', 'button_link_to', ts('Contribution button'), getContributionPageOptions());
@@ -267,7 +267,7 @@ where w.id=" . $this->_id;*/
     if (isset($this->_id)) {
       $sql = "UPDATE civicrm_wci_widget SET title = '". $title
         . "', logo_image = '" . $values['logo_image'] . "', image = '" 
-        . $values['image'] . "', button_title = '" . $values['button_title'] 
+        . $values['image'] . "', button_title = '" . $values['button_title']
         . "', button_link_to = '" . $values['button_link_to'] 
         . "', progress_bar_id = '" . $values['progress_bar'] 
         . "', description = '" . str_replace("'", "''", $values['description']) 
@@ -353,6 +353,7 @@ where w.id=" . $this->_id;*/
 
     return $options;
   }
+/*  
   function getContributionPageOptions() {
     $options = array(
       '' => ts('- select -'),
@@ -365,7 +366,7 @@ where w.id=" . $this->_id;*/
     
     return $options;
   }
-
+*/
   function getGroupOptions() {
     $options = array(
       '' => ts('- select -'),

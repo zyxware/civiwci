@@ -32,7 +32,7 @@
       width: 250px;
     }
     
-    .crm-wci-widget h5 {
+    .crm-wci-widget-title {
         font-size:14px;
         padding:3px;
         margin: 0px;
@@ -47,7 +47,10 @@
 
     .crm-amounts {
         height:1em;
-        margin:.8em 0px;
+        /*margin:.8em 0px;*/
+        margin-left: auto;
+        margin-right: auto;
+        width:98%;
         font-size:13px;
     }
     .crm-amount-low {
@@ -62,16 +65,18 @@
     }
     .crm-amount-bar { /* progress bar */
         background-color:#FFF;
-        width:100%;
+        width:98%;
         display:block;
         border:1px solid #CECECE;
         -moz-border-radius:   4px;
         -webkit-border-radius:   4px;
         -khtml-border-radius:   4px;
         border-radius:      4px;
+        margin-top:.8em;
         margin-bottom:.8em;
-        text-align:left;
-        
+        /*text-align:left;*/
+        margin-left: auto;
+        margin-right: auto;
         background-color: #FFFFFF;
         border-color:#CECECE;
     }
@@ -176,29 +181,38 @@
 {/if}
 
   {if $wciform.title }
-    <h5 id="crm_wid_{$wciform.widgetId}_title">
-      {if $wciform.logo_image}
-        <span class="crm-logo">
-          <img src="{$wciform.logo_image}" alt={ts}Logo{/ts}>
-        </span>
-      {/if}
       {if (false == $wciform.hide_title)}
+      <div class="crm-wci-widget-title" id="crm_wid_{$wciform.widgetId}_title">
+        {if $wciform.logo_image}
+          <span class="crm-logo">
+            <img src="{$wciform.logo_image}" alt={ts}Logo{/ts}>
+          </span>
+        {/if}
         {$wciform.title}
-      {/if}
-    </h5>
-  {/if}
-    {if $wciform.image}
-      <div id="crm_wci_image_container">
-        <img id="crm_wci_image" src='{$wciform.image}'/>
       </div>
-    {/if}
-    {if (false == $wciform.hide_pbcap)}
+      {else}
+        {if $wciform.logo_image}
+          <div class="crm-wci-widget-title" id="crm_wid_{$wciform.widgetId}_title">
+            <span class="crm-logo">
+              <img src="{$wciform.logo_image}" alt={ts}Logo{/ts}>
+            </span>
+          </div>
+        {/if}
+      {/if}
+  {/if}
+  {if $wciform.image}
+    <div id="crm_wci_image_container">
+      <img id="crm_wci_image" src='{$wciform.image}'/>
+    </div>
+  {/if}
+  {if false == $wciform.no_pb}
+  {if (false == $wciform.hide_pbcap)}
     <div class="crm-amounts">
         <div id="crm_wid_{$wciform.widgetId}_amt_hi" class="crm-amount-high">${$wciform.goal_amount}</div>
         <div id="crm_wid_{$wciform.widgetId}_amt_low" class="crm-amount-low">${$wciform.starting_amount}</div>
         <div id="crm_wid_{$wciform.widgetId}_percentage" class="crm-percentage">{$wciform.pb_percentage}%</div>
     </div>
-    {/if}
+  {/if}
     <div class="crm-amount-bar">
         <div class="crm-amount-fill" id="crm_wid_{$wciform.widgetId}_amt_fill"></div>
     </div>
@@ -207,6 +221,7 @@
     <div id="crm_wid_{$wciform.widgetId}_comments" class="crm-comments">
       {$wciform.description}
     </div>
+  {/if}
     <div id="crm_wid_{$wciform.widgetId}_campaign" class="crm-campaign">
     </div>
     {if $wciform.button_title && $cpageId}

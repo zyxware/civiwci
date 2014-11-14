@@ -100,10 +100,7 @@ $preview = CRM_Utils_Request::retrieve('preview', 'Positive', CRM_Core_DAO::$_nu
 if (isset($format)) {
   $jsonvar .= $cpageId;
 } else {
-  $widData = CRM_Wci_BAO_Widget::getWidgetData($widgetId);
-  $pbData = CRM_Wci_BAO_ProgressBar::getProgressbarData($widData["progress_bar_id"]);
-  $data = array_merge($widData, $pbData);
-
+  $data = CRM_Wci_BAO_Widget::getWidgetData($widgetId);
   $template->assign('wciform', $data);
   $template->assign('cpageId', $data['button_link_to']);
   $template->assign('preview', $preview);

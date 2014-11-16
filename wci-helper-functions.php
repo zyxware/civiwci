@@ -2,7 +2,7 @@
 
   function getContributionPageOptions() {
     $options = array(
-      '' => ts('- select -'),
+      0 => ts('- select -'),
     );
     
     $result = civicrm_api3('contribution_page', 'get');

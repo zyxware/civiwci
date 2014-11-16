@@ -344,7 +344,7 @@ where w.id=" . $this->_id;*/
   
   function getProgressBars() {
     $options = array(
-      '' => ts('- select -'),
+      0 => ts('- select -'),
     );
     $pbList = CRM_Wci_BAO_ProgressBar::getProgressbarList();
     foreach ($pbList as $pb) {
@@ -369,7 +369,7 @@ where w.id=" . $this->_id;*/
 */
   function getGroupOptions() {
     $options = array(
-      '' => ts('- select -'),
+      0 => ts('- select -'),
     );
     
     $result = civicrm_api3('group', 'get', array(

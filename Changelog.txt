@@ -1,7 +1,11 @@
 Release Notes for civicrm-wci CiciCRM extension. Beta - II
 ===========================================================
 
-Beta - II. 11/13/2014
+Beta - 3, 11/16/2014
+---------------------
+1. Fixed db error due to invalid data type in select widgets. 
+
+Beta - 2, 11/13/2014
 ------------------------------------------
 1. Decoupled widgets and embed code
 2. Interface tweaks for progress bar creation interface
@@ -9,24 +13,24 @@ Beta - II. 11/13/2014
 4. Customizable Newsletter signup
 5. Fixed Beta I Bugs
 
-Beta - I. 11/06/2014
+Beta - 1, 11/06/2014
 ------------------------------------------
 1. Fixed Unit Testing Bugs
 2. Decoupled widget id from widget
 3. Show and hide checkboxes
 
-Alpha - III. 10/30/2014
+Alpha - 3, 10/30/2014
 ------------------------------------------
 1. Fixed Unit Testing Bugs
 
 
-Alpha - II. 10/23/2014
+Alpha - 2, 10/23/2014
 ------------------------------------------
 1. Newsletter signup feature 
 2. Added preview button
 3. Widget properties specified the creation form applied to widget
 
-Alpha - I. 10/16/2014
+Alpha - 1, 10/16/2014
 ------------------------------------------
 1. Create Progressbar
 2. Edit Progressbar

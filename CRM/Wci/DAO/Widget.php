@@ -162,6 +162,13 @@ class CRM_Wci_DAO_Widget extends CRM_Core_DAO
    */
   public $color_progress_bar;
   /**
+   * Widget progress bar background color
+   *
+   * @var string
+   */
+  public $color_progress_bar_bg;
+
+  /**
    * Widget background color
    *
    * @var string
@@ -375,6 +382,13 @@ class CRM_Wci_DAO_Widget extends CRM_Core_DAO
           'required' => true,
           'maxlength' => 10,
         ) ,
+        'color_progress_bar_bg' => array(
+          'name' => 'color_progress_bar_bg',
+          'type' => CRM_Utils_Type::T_STRING,
+          'title' => ts('Progress bar background color', array('domain' => 'org.civicrm.wci')) ,
+          'required' => true,
+          'maxlength' => 10,
+        ) ,
         'color_widget_bg' => array(
           'name' => 'color_widget_bg',
           'type' => CRM_Utils_Type::T_STRING,
@@ -502,7 +516,8 @@ class CRM_Wci_DAO_Widget extends CRM_Core_DAO
         'size_variant' => 'size_variant',
         'color_title' => 'color_title',
         'color_title_bg' => 'color_title_bg',
-        'color_progress_bar' => 'color_progress_bar',
+        'color_progress_bar' => 'color_progress_bar', 
+        'color_progress_bar_bg' => 'color_progress_bar_bg', 
         'color_widget_bg' => 'color_widget_bg',
         'color_description' => 'color_description',
         'color_border' => 'color_border',

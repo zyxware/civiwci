@@ -77,7 +77,7 @@
         /*text-align:left;*/
         margin-left: auto;
         margin-right: auto;
-        background-color: #FFFFFF;
+        background-color: {/literal}{$wciform.color_progress_bar_bg}{literal};
         border-color:#CECECE;
     }
     .crm-amount-fill {

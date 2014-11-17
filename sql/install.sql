@@ -33,6 +33,7 @@ CREATE TABLE IF NOT EXISTS civicrm_wci_widget (
   color_title varchar(10) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Widget title color.',
   color_title_bg varchar(10) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Widget title background color.',
   color_progress_bar varchar(10) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Progress bar color.',
+  color_progress_bar_bg varchar(10) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Progress bar background color.',
   color_widget_bg varchar(10) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Widget background color.',
   color_description varchar(10) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Widget description color.',
   color_border varchar(10) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Widget border color.',

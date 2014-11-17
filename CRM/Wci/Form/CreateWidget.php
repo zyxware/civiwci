@@ -40,6 +40,11 @@ class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
         FALSE,
         '#BF0F0F',
       ),
+      'color_bar_bg' => array(ts('Progress Bar Background Color'),
+        'text',
+        FALSE,
+        '#FFFFFF',
+      ),
       'color_widget_bg' => array(ts('Background color'),
         'text',
         FALSE,
@@ -180,6 +185,8 @@ where w.id=" . $this->_id;*/
         $this->setDefaults(array(
               'color_bar' => $wid_page[$dao->id]['color_progress_bar']));
         $this->setDefaults(array(
+              'color_bar_bg' => $wid_page[$dao->id]['color_progress_bar_bg']));
+        $this->setDefaults(array(
               'color_widget_bg' => $wid_page[$dao->id]['color_widget_bg']));
         $this->setDefaults(array(
               'color_description' => $wid_page[$dao->id]['color_description']));
@@ -262,66 +269,69 @@ where w.id=" . $this->_id;*/
     if(isset($values['hide_pbcap'])){
         $hide_pbcap = $values['hide_pbcap'];
     }
+
     $title = str_replace("'", "''", $values['title']);
-    
+    $params = array(1 => array($title, 'String'),
+      2 => array($values['logo_image'], 'String'),
+      3 => array($values['image'], 'String'),
+      4 => array($values['button_title'], 'String'),
+      5 => array($values['button_link_to'], 'String'),
+      6 => array($values['progress_bar'], 'Integer'),
+      7 => array(str_replace("'", "''", $values['description']), 'String'),
+      8 => array($values['email_signup_group_id'], 'String'),
+      9 => array($values['size_variant'], 'String'),
+      10 => array($values['color_title'], 'String'),
+      11 => array($values['color_title_bg'], 'String'),
+      12 => array($values['color_bar'], 'String'),
+      13 => array($values['color_bar_bg'], 'String'),
+      14 => array($values['color_widget_bg'], 'String'),
+      15 => array($values['color_description'], 'String'),
+      16 => array($values['color_border'], 'String'),
+      17 => array($values['color_button'], 'String'),
+      18 => array($values['color_button_bg'], 'String'),
+      19 => array($hide_title, 'Integer'),
+      20 => array($hide_border, 'Integer'),
+      21 => array($hide_pbcap, 'Integer'),
+      22 => array($values['color_btn_newsletter'], 'String'),
+      23 => array($values['color_btn_newsletter_bg'], 'String'),
+      24 => array($values['newsletter_text'], 'String'),
+      25 => array($values['color_newsletter_text'], 'String'),
+      26 => array($values['style_rules'], 'String'),
+      27 => array($override, 'Integer'),
+      28 => array($values['custom_template'], 'String'), );
+
     if (isset($this->_id)) {
-      $sql = "UPDATE civicrm_wci_widget SET title = '". $title
-        . "', logo_image = '" . $values['logo_image'] . "', image = '" 
-        . $values['image'] . "', button_title = '" . $values['button_title']
-        . "', button_link_to = '" . $values['button_link_to'] 
-        . "', progress_bar_id = '" . $values['progress_bar'] 
-        . "', description = '" . str_replace("'", "''", $values['description']) 
-        . "', email_signup_group_id = '" . $values['email_signup_group_id'] 
-        . "', size_variant = '" . $values['size_variant'] 
-        . "', color_title = '" . $values['color_title'] 
-        . "', color_title_bg = '" . $values['color_title_bg'] 
-        . "', color_progress_bar = '" . $values['color_bar'] 
-        . "', color_widget_bg = '" . $values['color_widget_bg'] 
-        . "', color_description = '" . $values['color_description'] 
-        . "', color_border = '" . $values['color_border'] 
-        . "', color_button = '" . $values['color_button'] 
-        . "', color_button_bg = '" . $values['color_button_bg']
-        . "', hide_title = '" . $hide_title
-        . "', hide_border = '" . $hide_border
-        . "', hide_pbcap = '" . $hide_pbcap
-        . "', color_btn_newsletter = '" . $values['color_btn_newsletter']
-        . "', color_btn_newsletter_bg = '" . $values['color_btn_newsletter_bg']
-        . "', newsletter_text = '" . $values['newsletter_text']
-        . "', color_newsletter_text = '" . $values['color_newsletter_text']
-        . "', style_rules = '" . str_replace("'", "''", $values['style_rules']) . "', override = '" 
-        . $override . $quote . $coma . $cust_tmpl_col . $equals . $quote . $cust_tmpl . "' where id =" . $this->_id ;
+      $sql = "UPDATE civicrm_wci_widget SET title = %1, logo_image =%2, 
+      image = %3, button_title =%4, button_link_to =%5, 
+      progress_bar_id = %6, description = %7, email_signup_group_id = %8,
+      size_variant = %9, color_title = %10, color_title_bg = %11, 
+      color_progress_bar = %12, color_progress_bar_bg = %13, 
+      color_widget_bg=%14, color_description=%15, color_border = %16, 
+      color_button = %17, color_button_bg = %18, hide_title = %19, 
+      hide_border = %20, hide_pbcap = %21, color_btn_newsletter = %22, 
+      color_btn_newsletter_bg = %23, newsletter_text = %24, 
+      color_newsletter_text = %25, style_rules = %26, override = %27, 
+      custom_template = %28 where id = %29";
+      
+      $params += array(29 => array($this->_id, 'Integer'),);
     }
     else {
       $sql = "INSERT INTO civicrm_wci_widget (title, logo_image, image, 
       button_title, button_link_to, progress_bar_id, description, 
       email_signup_group_id, size_variant, color_title, color_title_bg, 
-      color_progress_bar, color_widget_bg, color_description, color_border, 
+      color_progress_bar, color_progress_bar_bg, color_widget_bg, color_description, color_border, 
       color_button, color_button_bg, hide_title, hide_border, hide_pbcap, 
-      color_btn_newsletter, color_btn_newsletter_bg, newsletter_text, color_newsletter_text, 
-      style_rules, override" . $coma . $cust_tmpl_col ." ) 
-      VALUES ('" . $title . "','" . $values['logo_image'] . "','" . 
-      $values['image'] . "','" . $values['button_title'] . "','" . 
-      $values['button_link_to'] . "','" . $values['progress_bar'] . "','" . 
-      str_replace("'", "''", $values['description']) . "','" . 
-      $values['email_signup_group_id'] . "','" . 
-      $values['size_variant'] . "','" . $values['color_title'] . "','" . 
-      $values['color_title_bg'] . "','" . $values['color_bar'] . "','" . 
-      $values['color_widget_bg'] . "','" . $values['color_description'] . "','" .
-      $values['color_border'] . "','" . $values['color_button'] . "','" . 
-      $values['color_button_bg'] . "','" . $hide_title . "','" .
-      $hide_border . "','" . $hide_pbcap . "','" .
-      $values['color_btn_newsletter'] . "','" . $values['color_btn_newsletter_bg'] . "','" .
-      $values['newsletter_text'] . "','" . $values['color_newsletter_text'] . "','" .
-      str_replace("'", "''", $values['style_rules']) . "','" . 
-      $override . $quote . $coma . $quote . $cust_tmpl
-        . "')";
+      color_btn_newsletter, color_btn_newsletter_bg, newsletter_text, 
+      color_newsletter_text, style_rules, override, custom_template) 
+      VALUES (%1, %2, %3, %4, %5, %6, %7, %8, %9, %10, %11, %12, %13, 
+      %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28)";
     }
 
     $errorScope = CRM_Core_TemporaryErrorScope::useException();
     try {
       $transaction = new CRM_Core_Transaction();
       CRM_Core_DAO::executeQuery("SET foreign_key_checks = 0;");
-      CRM_Core_DAO::executeQuery($sql);
+      CRM_Core_DAO::executeQuery($sql, $params);
       CRM_Core_DAO::executeQuery("SET foreign_key_checks = 1;");
       $transaction->commit();
       CRM_Core_Session::setStatus(ts('Widget created successfuly'), '', 'success');
@@ -353,20 +363,7 @@ where w.id=" . $this->_id;*/
 
     return $options;
   }
-/*  
-  function getContributionPageOptions() {
-    $options = array(
-      '' => ts('- select -'),
-    );
-    
-    $result = civicrm_api3('contribution_page', 'get');
-    foreach ($result['values'] as $contribution_page) {
-      $options[$contribution_page['id']] = $contribution_page['title'];
-    }
-    
-    return $options;
-  }
-*/
+
   function getGroupOptions() {
     $options = array(
       0 => ts('- select -'),

@@ -152,6 +152,7 @@ class CRM_Wci_BAO_Widget extends CRM_Wci_DAO_Widget {
       $data["color_title"] = $dao->color_title;
       $data["color_title_bg"] = $dao->color_title_bg;
       $data["color_progress_bar"] = $dao->color_progress_bar;
+      $data["color_progress_bar_bg"] = $dao->color_progress_bar_bg;
       $data["color_widget_bg"] = $dao->color_widget_bg;
       $data["color_description"] = $dao->color_description;
       $data["color_border"] = $dao->color_border;

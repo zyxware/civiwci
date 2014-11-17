@@ -210,7 +210,11 @@
     <div class="crm-amounts">
         <div id="crm_wid_{$wciform.widgetId}_amt_hi" class="crm-amount-high">${$wciform.goal_amount}</div>
         <div id="crm_wid_{$wciform.widgetId}_amt_low" class="crm-amount-low">${$wciform.starting_amount}</div>
-        <div id="crm_wid_{$wciform.widgetId}_percentage" class="crm-percentage">{$wciform.pb_percentage}%</div>
+        {if (true == $wciform.show_pb_perc)}
+        <div id="crm_wid_{$wciform.widgetId}_percentage" class="crm-percentage">{$wciform.pb_caption}%</div>
+        {else}
+        <div id="crm_wid_{$wciform.widgetId}_percentage" class="crm-percentage">${$wciform.pb_caption}</div>
+        {/if}
     </div>
   {/if}
     <div class="crm-amount-bar">

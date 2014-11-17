@@ -157,22 +157,9 @@ class CRM_Wci_BAO_ProgressBar extends CRM_Wci_DAO_ProgressBar {
    * @return decimal percentage value
    * @access public
    */  
-  public static function getProgressbarPercentage($idPB) {
+  public static function getPBCollectedAmount($pbId) {
     $bp = 0;
-    $ga = 0;
-    $query = "SELECT * FROM civicrm_wci_progress_bar where id=" . $idPB;
-    $params = array();
-    $dao = CRM_Core_DAO::executeQuery($query, $params, TRUE, 'CRM_Wci_DAO_ProgressBar');
-
-    while ($dao->fetch()) {
-      $con_page[$dao->id] = array();
-      CRM_Core_DAO::storeValues($dao, $con_page[$dao->id]);
-      $con_page[$dao->id]['name'];
-      $sa = $con_page[$dao->id]['starting_amount'];
-      $ga = $con_page[$dao->id]['goal_amount'];
-    }
- 
-    $query = "SELECT * FROM civicrm_wci_progress_bar_formula WHERE progress_bar_id =" . $idPB;
+    $query = "SELECT * FROM civicrm_wci_progress_bar_formula WHERE progress_bar_id =" . $pbId;
     $params = array();
 
     $daoPbf = CRM_Core_DAO::executeQuery($query, $params, TRUE, 'CRM_Wci_DAO_ProgressBarFormula');
@@ -194,25 +181,50 @@ class CRM_Wci_BAO_ProgressBar extends CRM_Wci_DAO_ProgressBar {
           $bp += $bx * $px / 100;
         }
      }
-     (0 == $ga) ? $perc = 0: $perc = (($sa + $bp) / $ga ) * 100;
-     if (100 < $perc){
-       $perc = 100; 
-     } 
-     return round($perc);
+     return floor($bp);
+  }
+  
+  public static function getProgressbarInfo($pbId) {
+    $ga = 0;
+    $query = "SELECT * FROM civicrm_wci_progress_bar where id=" . $pbId;
+    $params = array();
+    $pbInfo = array();
+    $dao = CRM_Core_DAO::executeQuery($query, $params, TRUE, 'CRM_Wci_DAO_ProgressBar');
+
+    while ($dao->fetch()) {
+      $con_page[$dao->id] = array();
+      CRM_Core_DAO::storeValues($dao, $con_page[$dao->id]);
+      $pbInfo['name'] = $con_page[$dao->id]['name'];
+      $pbInfo['starting_amount'] = $con_page[$dao->id]['starting_amount'];
+      $pbInfo['goal_amount'] = $con_page[$dao->id]['goal_amount'];
+    }
+
+     return $pbInfo;
+  }
+  public static function getProgressbarPercentage($pbId, &$pbInfo) {
+
+    $pbInfo = CRM_Wci_BAO_ProgressBar::getProgressbarInfo($pbId);
+    $ga = $pbInfo['goal_amount'];
+    $currAmnt = CRM_Wci_BAO_ProgressBar::getPBCollectedAmount($pbId)
+      + $pbInfo['starting_amount'];
+    (0 == $ga) ? $currAmt = 0: $perc = ($currAmnt / $ga ) * 100;
+    if (100 < $perc){
+      $perc = 100; 
+    }
+
+     return floor($perc);  
   }
   public static function getProgressbarData($pbId, &$pbData) {
     if(0 != $pbId) {
-      $query = "SELECT * FROM civicrm_wci_progress_bar where id=".$pbId;
-      $params = array();
+      $pbInfo = array();//CRM_Wci_BAO_ProgressBar::getProgressbarInfo($pbId);
+      $pbData["pb_percentage"] = CRM_Wci_BAO_ProgressBar::getProgressbarPercentage($pbId, $pbInfo);
+      $pbData["starting_amount"] = floor($pbInfo['starting_amount']);
+      $pbData["goal_amount"] = ceil($pbInfo['goal_amount']);
       
-      $dao = CRM_Core_DAO::executeQuery($query, $params, TRUE, 'CRM_Wci_DAO_Widget');
+      ($pbData["show_pb_perc"]) ? $pbData["pb_caption"] = $pbData["pb_percentage"]
+        : $pbData["pb_caption"] = CRM_Wci_BAO_ProgressBar::getPBCollectedAmount($pbId)
+        + $pbData["starting_amount"];
 
-      //$pbData = array();
-      while ($dao->fetch()) {
-        $pbData["starting_amount"] = $dao->starting_amount;
-        $pbData["goal_amount"] = $dao->goal_amount;
-      }
-      $pbData["pb_percentage"] = CRM_Wci_BAO_ProgressBar::getProgressbarPercentage($pbId);
       $pbData["no_pb"] = False;
     } else {
       $pbData["no_pb"] = True;

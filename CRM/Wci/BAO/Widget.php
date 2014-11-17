@@ -159,6 +159,7 @@ class CRM_Wci_BAO_Widget extends CRM_Wci_DAO_Widget {
       $data["color_button"] = $dao->color_button;
       $data["color_button_bg"] = $dao->color_button_bg;
       $data['style_rules'] = $dao->style_rules;
+      $data["show_pb_perc"] = $dao->show_pb_perc;
       CRM_Wci_BAO_ProgressBar::getProgressbarData($dao->progress_bar_id, $data);
       $data["custom_template"] = $dao->custom_template;
       $data["widgetId"] = $widgetId;

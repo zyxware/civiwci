@@ -97,6 +97,7 @@ class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
     $defaults = array();
     if (!isset($this->_id)) {
       $defaults['size_variant'] = 'normal';
+      $defaults['show_pb_perc'] = 1;
       foreach ($this->_colorFields as $name => $val) {
         $defaults[$name] = $val[3];
       }
@@ -112,6 +113,13 @@ class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
     $this->add('select', 'button_link_to', ts('Contribution button'), getContributionPageOptions());
     $this->add('text', 'button_title', ts('Contribution button title'))->setSize(45);
     $this->add('select', 'progress_bar', ts('Progress bar'), $this->getProgressBars());
+
+    $pbtype = array();
+    $pbtype[1] = "Percentage";
+    $pbtype[0] = "Amount";
+    $this->addRadio('show_pb_perc', ts('Progressbar caption type'), $pbtype,
+        NULL, "&nbsp;");
+
     $this->addWysiwyg('description', ts('Description'), '');
     $this->add('select', 'email_signup_group_id', ts('Newsletter signup'), $this->getGroupOptions());
     $this->add('select', 'size_variant', ts('Size variant'), $this->getSizeOptions());
@@ -206,6 +214,8 @@ where w.id=" . $this->_id;*/
               'hide_border' => $wid_page[$dao->id]['hide_border']));
         $this->setDefaults(array(
               'hide_pbcap' => $wid_page[$dao->id]['hide_pbcap']));
+        $this->setDefaults(array(
+              'show_pb_perc' => $wid_page[$dao->id]['show_pb_perc']));
 
         $this->setDefaults(array(
               'color_btn_newsletter' => $wid_page[$dao->id]['color_btn_newsletter']));
@@ -298,7 +308,8 @@ where w.id=" . $this->_id;*/
       25 => array($values['color_newsletter_text'], 'String'),
       26 => array($values['style_rules'], 'String'),
       27 => array($override, 'Integer'),
-      28 => array($values['custom_template'], 'String'), );
+      28 => array($values['custom_template'], 'String'), 
+      29 => array($values['show_pb_perc'], 'Integer'),);
 
     if (isset($this->_id)) {
       $sql = "UPDATE civicrm_wci_widget SET title = %1, logo_image =%2, 
@@ -311,9 +322,9 @@ where w.id=" . $this->_id;*/
       hide_border = %20, hide_pbcap = %21, color_btn_newsletter = %22, 
       color_btn_newsletter_bg = %23, newsletter_text = %24, 
       color_newsletter_text = %25, style_rules = %26, override = %27, 
-      custom_template = %28 where id = %29";
+      custom_template = %28, show_pb_perc = %29 where id = %30";
       
-      $params += array(29 => array($this->_id, 'Integer'),);
+      $params += array(30 => array($this->_id, 'Integer'),);
     }
     else {
       $sql = "INSERT INTO civicrm_wci_widget (title, logo_image, image, 
@@ -322,9 +333,9 @@ where w.id=" . $this->_id;*/
       color_progress_bar, color_progress_bar_bg, color_widget_bg, color_description, color_border, 
       color_button, color_button_bg, hide_title, hide_border, hide_pbcap, 
       color_btn_newsletter, color_btn_newsletter_bg, newsletter_text, 
-      color_newsletter_text, style_rules, override, custom_template) 
+      color_newsletter_text, style_rules, override, custom_template, show_pb_perc) 
       VALUES (%1, %2, %3, %4, %5, %6, %7, %8, %9, %10, %11, %12, %13, 
-      %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28)";
+      %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29)";
     }
 
     $errorScope = CRM_Core_TemporaryErrorScope::useException();

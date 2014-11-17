@@ -229,6 +229,12 @@ class CRM_Wci_DAO_Widget extends CRM_Core_DAO
    */
   public $hide_pbcap;
   /**
+   * if true then shows pb in % else in collected amount
+   *
+   * @var boolean
+   */
+  public $show_pb_perc;
+  /**
    * Custom template
    *
    * @var string
@@ -454,6 +460,12 @@ class CRM_Wci_DAO_Widget extends CRM_Core_DAO
           'title' => ts('Hide pb caption, if 1.', array('domain' => 'org.civicrm.wci')) ,
           'required' => false,
         ) ,
+        'show_pb_perc' => array(
+          'name' => 'show_pb_perc',
+          'type' => CRM_Utils_Type::T_BOOLEAN,
+          'title' => ts('pb in %(1) or amount(0).', array('domain' => 'org.civicrm.wci')) ,
+          'required' => false,
+        ) ,
         'custom_template' => array(
           'name' => 'custom_template',
           'type' => CRM_Utils_Type::T_TEXT,
@@ -528,6 +540,7 @@ class CRM_Wci_DAO_Widget extends CRM_Core_DAO
         'hide_title' => 'hide_title',
         'hide_border' => 'hide_border',
         'hide_pbcap' => 'hide_pbcap',
+        'show_pb_perc' => 'show_pb_perc',
         'custom_template' => 'custom_template',
       );
     }

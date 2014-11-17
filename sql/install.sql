@@ -45,6 +45,7 @@ CREATE TABLE IF NOT EXISTS civicrm_wci_widget (
   hide_title tinyint(4) NOT NULL DEFAULT '0' COMMENT 'Hide title, if 1.',
   hide_border tinyint(4) NOT NULL DEFAULT '0' COMMENT 'Hide widget border, if 1.',
   hide_pbcap tinyint(4) NOT NULL DEFAULT '0' COMMENT 'Hide pb caption, if 1.',
+  show_pb_perc tinyint(4) NOT NULL DEFAULT '1' COMMENT 'show pb in %(1) or amt(0)',
   color_btn_newsletter varchar(10) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Newsletter Button text color',
   color_btn_newsletter_bg varchar(10) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Newsletter Button color',
   newsletter_text varchar(64) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Newsletter text',

@@ -34,20 +34,31 @@ class CRM_Wci_Upgrader extends CRM_Wci_Upgrader_Base {
    *
   public function disable() {
     CRM_Core_DAO::executeQuery('UPDATE foo SET is_active = 0 WHERE bar = "whiz"');
-  }
+  } // */
 
   /**
    * Example: Run a couple simple queries
    *
    * @return TRUE on success
    * @throws Exception
-   *
-  public function upgrade_4200() {
-    $this->ctx->log->info('Applying update 4200');
-    CRM_Core_DAO::executeQuery('UPDATE foo SET bar = "whiz"');
-    CRM_Core_DAO::executeQuery('DELETE FROM bang WHERE willy = wonka(2)');
+   */
+  public function upgrade_1000() {
+    $this->ctx->log->info('Applying update 1000');
+    CRM_Core_DAO::executeQuery('
+      ALTER TABLE `civicrm_wci_widget`
+      ADD `show_pb_perc` TINYINT(4) NOT NULL DEFAULT "1"
+      COMMENT "show pb in percentage or amount"
+      AFTER  `hide_pbcap`
+    ');
+    CRM_Core_DAO::executeQuery('
+      ALTER TABLE `civicrm_wci_widget`
+      ADD `color_progress_bar_bg` VARCHAR(10) COLLATE utf8_unicode_ci NOT NULL
+      COMMENT "Progress bar background color."
+      AFTER  `color_progress_bar`
+    ');
+
     return TRUE;
-  } // */
+  } 
 
 
   /**

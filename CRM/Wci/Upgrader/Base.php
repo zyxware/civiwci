@@ -39,7 +39,7 @@ class CRM_Wci_Upgrader_Base {
     if (! self::$instance) {
       // FIXME auto-generate
       self::$instance = new CRM_Wci_Upgrader(
-        'civicrm-wci',
+        'org.civicrm.wci',
         realpath(__DIR__ .'/../../../')
       );
     }

@@ -41,8 +41,7 @@ require_once '../../../civicrm.config.php';
 
 $wciembed_js = '
 /*    
-        @licstart  The following is the entire license notice for the 
-        JavaScript code in this page.
+        @licstart  
 
         Copyright (C) 2014  Zyxware Technologies
 
@@ -54,8 +53,7 @@ $wciembed_js = '
         without even the implied warranty of MERCHANTABILITY or FITNESS
         FOR A PARTICULAR PURPOSE.  See the GNU AGPL for more details.
 
-        @licend  The above is the entire license notice
-        for the JavaScript code in this page.
+        @licend
         */
 
 // Cleanup functions for the document ready method

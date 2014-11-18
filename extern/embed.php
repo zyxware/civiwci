@@ -32,15 +32,10 @@
  * $Id$
  */
 
-
-/*
-<script type="text/javascript" src="http://drupal.local/sites/all/modules/civicrm/extensions/civicrm-wci/extern/wciwidget.php?widgetId=1"></script>
-*/  
-
 require_once '../../../civicrm.config.php';
 
-$wciembed_js = '
-/*    
+$license_text = '
+        /*    
         @licstart  
 
         Copyright (C) 2014  Zyxware Technologies
@@ -55,7 +50,8 @@ $wciembed_js = '
 
         @licend
         */
-
+        ';
+$wciembed_js = '
 // Cleanup functions for the document ready method
 if ( document.addEventListener ) {
     DOMContentLoaded = function() {
@@ -100,9 +96,11 @@ $config = CRM_Core_Config::singleton();
 
 $embedId = CRM_Utils_Request::retrieve('id', 'Positive', CRM_Core_DAO::$_nullObject);
 $preview = CRM_Utils_Request::retrieve('preview', 'Positive', CRM_Core_DAO::$_nullObject);
-$output = 'var wciwidgetcode =  ' . CRM_Wci_WidgetCode::get_widget_code($embedId, $preview) . ';';
 
-$output = $output . $wciembed_js;
+$output  = $license_text;
+$output .= 'var wciwidgetcode =  ' . CRM_Wci_WidgetCode::get_widget_code($embedId, $preview) . ';';
+$output .= $wciembed_js;
+
 echo $output;
 
 CRM_Utils_System::civiExit();

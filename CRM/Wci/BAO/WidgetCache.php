@@ -113,37 +113,39 @@ class CRM_Wci_BAO_WidgetCache extends CRM_Wci_DAO_WidgetCache {
   }
 
   public static function setWidgetCache($widgetId, $code) {
-    $query = "DELETE from civicrm_wci_widget_cache WHERE widget_id = %1";
-    CRM_Core_DAO::executeQuery($query, array(1=>array($widgetId, 'Integer')), 
-        TRUE, 'CRM_Wci_DAO_WidgetCache');
-        
-    $query = "INSERT into civicrm_wci_widget_cache (widget_id, widget_code) VALUES (%1, %2)";
-    $params = array(1=>array($widgetId, 'Integer'),
-          2=>array($code, 'String'),);
+    $cacheTime = civicrm_api3('setting', 'getValue',
+      array('group' => 'Wci Preference', 'name' => 'widget_cache_timeout'));
+    $expire_on = time() + ($cacheTime * 60);
+    $query = "INSERT INTO civicrm_wci_widget_cache (widget_id, widget_code, expire)
+    VALUES (%1, %2, %3)
+    ON DUPLICATE KEY UPDATE widget_id = %1, widget_code = %2, expire = %3";
+    $params = array(
+      1 => array($widgetId, 'Integer'),
+      2 => array($code, 'String'),
+      3 => array($expire_on, 'Integer')
+    );
     CRM_Core_DAO::executeQuery($query, $params, TRUE, 'CRM_Wci_DAO_WidgetCache');
-  }
-  public static function getCurrentTsDiff($widgetId) {
-    $tsDiff = 0;
-    $query = "SELECT TIMESTAMPDIFF(MINUTE, `ts`, NOW()) as tsDiff FROM 
-      civicrm_wci_widget_cache where widget_id = %1";
-    $dao = CRM_Core_DAO::executeQuery($query, array(1=>array($widgetId, 'Integer')), 
-        TRUE, 'CRM_Wci_DAO_WidgetCache');
-    if ($dao->fetch()) {
-      $tsDiff = $dao->tsDiff;
-    } else {
-      $tsDiff = PHP_INT_MAX;
-    }
-    return $tsDiff;
   }
   
   public static function getWidgetCache($widgetId) {
     $code = "";
-    $query = "SELECT widget_code FROM civicrm_wci_widget_cache where widget_id = %1";
-    $dao = CRM_Core_DAO::executeQuery($query, array(1=>array($widgetId, 'Integer')), 
-        TRUE, 'CRM_Wci_DAO_WidgetCache');
+    $query = "SELECT widget_code FROM civicrm_wci_widget_cache where widget_id = %1
+    AND expire >= %2";
+    $cacheTime = civicrm_api3('setting', 'getValue',
+      array('group' => 'Wci Preference', 'name' => 'widget_cache_timeout'));
+    $expire_on = time() + ($cacheTime * 60);
+    $dao = CRM_Core_DAO::executeQuery($query, array(1 => array($widgetId, 'Integer'),
+      2 => array($expire_on, 'Integer')), TRUE, 'CRM_Wci_DAO_WidgetCache');
     if ($dao->fetch()) {
       $code = $dao->widget_code;
     }  
     return $code;
+  }
+
+  public static function deleteWidgetCache($widgetId) {
+    $code = "";
+    $query = "DELETE FROM civicrm_wci_widget_cache where widget_id = %1";
+    $dao = CRM_Core_DAO::executeQuery($query,
+      array(1 => array($widgetId, 'Integer')), TRUE, 'CRM_Wci_DAO_WidgetCache');
   }
 }

@@ -345,10 +345,16 @@ where w.id=" . $this->_id;*/
       CRM_Core_DAO::executeQuery($sql, $params);
       CRM_Core_DAO::executeQuery("SET foreign_key_checks = 1;");
       $transaction->commit();
+      if (isset($this->_id)) {
+        $widget_id = $this->_id;
+        CRM_Wci_BAO_WidgetCache::deleteWidgetCache($widget_id);
+      }
+      else {
+        $widget_id = CRM_Core_DAO::singleValueQuery('SELECT LAST_INSERT_ID()');
+      }
       CRM_Core_Session::setStatus(ts('Widget created successfuly'), '', 'success');
+      
       if(isset($_REQUEST['_qf_CreateWidget_next'])) {
-        (isset($this->_id)) ? $widget_id = $this->_id : 
-              $widget_id = CRM_Core_DAO::singleValueQuery('SELECT LAST_INSERT_ID()');
         CRM_Utils_System::redirect('?action=update&reset=1&id=' . $widget_id);
       } else {
         CRM_Utils_System::redirect('widget?reset=1');

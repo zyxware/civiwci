@@ -134,16 +134,10 @@ class CRM_Wci_DAO_WidgetCache extends CRM_Core_DAO
   {
     if (!(self::$_fields)) {
       self::$_fields = array(
-        'widget_cache_id' => array(
-          'name' => 'id',
-          'type' => CRM_Utils_Type::T_INT,
-          'title' => ts('cahce Id', array('domain' => 'org.civicrm.wci')) ,
-          'required' => true,
-        ) ,
         'widget_id' => array(
           'name' => 'widget_id',
           'type' => CRM_Utils_Type::T_INT,
-          'required' => false,
+          'required' => true,
         ) ,
         'widget_code' => array(
           'name' => 'widget_code',
@@ -151,12 +145,11 @@ class CRM_Wci_DAO_WidgetCache extends CRM_Core_DAO
           'title' => ts('widget code', array('domain' => 'org.civicrm.wci')) ,
           'required' => false,
         ) ,
-        'ts' => array(
+        'expire' => array(
           'name' => 'ts',
-          'type' => CRM_Utils_Type::T_TIMESTAMP,
+          'type' => CRM_Utils_Type::T_INT,
           'title' => ts('timestamp', array('domain' => 'org.civicrm.wci')) ,
           'required' => false,
-          'maxlength' => 64,
         ) ,
 
 
@@ -175,10 +168,9 @@ class CRM_Wci_DAO_WidgetCache extends CRM_Core_DAO
   {
     if (!(self::$_fieldKeys)) {
       self::$_fieldKeys = array(
-        'id' => 'widget_cache_id',
         'widget_id' => 'widget_id',
         'widget_code' => 'widget_code',
-        'ts' => 'ts',
+        'expire' => 'expire',
       );
     }
     return self::$_fieldKeys;

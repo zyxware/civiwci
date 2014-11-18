@@ -3,7 +3,7 @@ require_once '../wci-helper-functions.php';
 
 class CRM_Wci_WidgetCode {
 
-  static function get_widget_realtime_code($widgetId, $preview) {
+  static function generate_widget_code($widgetId, $preview = 0) {
     $data = CRM_Wci_BAO_Widget::getWidgetData($widgetId);
     $template = CRM_Core_Smarty::singleton();
     $template->assign('wciform', $data);
@@ -17,27 +17,24 @@ class CRM_Wci_WidgetCode {
       $wcidata = $template->fetch('string:' . html_entity_decode($data['custom_template']));
     }
     $code = json_encode($wcidata);
-    CRM_Wci_BAO_WidgetCache::setWidgetCache($widgetId, $code);
     return $code;
   }
   
-  static function get_widget_code($embedId, $preview=0) {
-    
-    if($preview) {
-      /**On preview time controller is called from create widget 
-          form so id will be widget id */
-      $code = CRM_Wci_WidgetCode::get_widget_realtime_code($embedId, $preview);
-    } else {
+  static function get_widget_code($embedId, $preview = 0) {
+    $code = '';
+    if ($preview) {
+      return CRM_Wci_WidgetCode::generate_widget_code($embedId, $preview);
+    }
+    else {
       $widgetId = CRM_Wci_BAO_EmbedCode::getWidgetId($embedId);
       $code = CRM_Wci_BAO_WidgetCache::getWidgetCache($widgetId);
-
-      $tsDiff = CRM_Wci_BAO_WidgetCache::getCurrentTsDiff($widgetId);
-      $cacheTime = civicrm_api3('setting', 'getValue', 
-          array('group' => 'Wci Preference', 'name' => 'widget_cache_timeout'));
-      if(($tsDiff > $cacheTime)||(empty($code))) {
-        $code = CRM_Wci_WidgetCode::get_widget_realtime_code($widgetId, $preview);
-      }
     }
+    
+    if (!$code) {
+      $code = CRM_Wci_WidgetCode::generate_widget_code($widgetId);
+      CRM_Wci_BAO_WidgetCache::setWidgetCache($widgetId, $code);
+    }
+
     return $code;
   }
 }

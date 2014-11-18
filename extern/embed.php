@@ -38,12 +38,25 @@
 */  
 
 require_once '../../../civicrm.config.php';
-require_once '../wci-helper-functions.php';
-require_once 'CRM/Core/Config.php';
-require_once 'CRM/Contribute/BAO/Widget.php';
-require_once 'CRM/Utils/Request.php';
 
-$wciembed_js = '// Cleanup functions for the document ready method
+$wciembed_js = '
+/*    
+        @licstart  
+
+        Copyright (C) 2014  Zyxware Technologies
+
+        The JavaScript code in this page is free software: you can
+        redistribute it and/or modify it under the terms of the GNU Affero
+        General Public License (GNU AGPL) as published by the Free Software
+        Foundation, either version 3 of the License, or (at your option)
+        any later version.  The code is distributed WITHOUT ANY WARRANTY;
+        without even the implied warranty of MERCHANTABILITY or FITNESS
+        FOR A PARTICULAR PURPOSE.  See the GNU AGPL for more details.
+
+        @licend
+        */
+
+// Cleanup functions for the document ready method
 if ( document.addEventListener ) {
     DOMContentLoaded = function() {
         document.removeEventListener( "DOMContentLoaded", DOMContentLoaded, false );
@@ -84,37 +97,12 @@ function onReady( ) {
 }';
 
 $config = CRM_Core_Config::singleton();
-$template = CRM_Core_Smarty::singleton();
 
-$widgetId = CRM_Utils_Request::retrieve('widgetId', 'Positive', CRM_Core_DAO::$_nullObject);
-if(empty($widgetId)) {
-  $embed = CRM_Utils_Request::retrieve('id', 'Positive', CRM_Core_DAO::$_nullObject);
-  $widgetId = CRM_Wci_BAO_EmbedCode::getWidgetId($embed);
-
-  if(empty($widgetId)) {
-    $widgetId = civicrm_api3('setting', 'getValue', array('group' => 'Wci Preference', 'name' => 'default_wci_widget'));
-  }
-}
+$embedId = CRM_Utils_Request::retrieve('id', 'Positive', CRM_Core_DAO::$_nullObject);
 $preview = CRM_Utils_Request::retrieve('preview', 'Positive', CRM_Core_DAO::$_nullObject);
+$output = 'var wciwidgetcode =  ' . CRM_Wci_WidgetCode::get_widget_code($embedId, $preview) . ';';
 
-if (isset($format)) {
-  $jsonvar .= $cpageId;
-} else {
-  $data = CRM_Wci_BAO_Widget::getWidgetData($widgetId);
-  $template->assign('wciform', $data);
-  $template->assign('cpageId', $data['button_link_to']);
-  $template->assign('preview', $preview);
-
-  if ($data["override"] == '0') {
-    $template->template_dir[] = getWciWidgetTemplatePath();
-    $wcidata = $template->fetch('wciwidget.tpl');
-  } else {
-    $wcidata = $template->fetch('string:' . html_entity_decode($data['custom_template']));
-  }
-  $output = 'var wciwidgetcode =  ' . json_encode($wcidata) . ';';
-  
-  $output = $output . $wciembed_js;
-  echo $output;
-}
+$output = $output . $wciembed_js;
+echo $output;
 
 CRM_Utils_System::civiExit();

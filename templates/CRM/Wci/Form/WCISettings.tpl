@@ -9,8 +9,13 @@
 {foreach from=$elementNames item=elementName}
   <div class="crm-section">
     <div class="label">{$form.$elementName.label}</div>
-    <div class="content">{$form.$elementName.html}</div>
-    <div class="content"><small>This profile id will be used for newsletter signup. User's mail id will be added to this group when they click subscribe button.'<small></div>
+    <div class="content">{$form.$elementName.html} {if "widget_cache_timeout" == $form.$elementName.id} Minutes{/if}</div>
+{if "default_profile" == $form.$elementName.id}
+    <div class="content"><small>This profile id will be used for newsletter signup. User's mail id will be added to this group when they click subscribe button.'</small></div>
+{/if}
+{if "widget_cache_timeout" == $form.$elementName.id}
+    <div class="content"><small>Cache will be cleared after specified minites.</small></div>
+{/if}
     <div class="clear"></div>
   </div>
 {/foreach}

@@ -60,6 +60,19 @@ class CRM_Wci_Upgrader extends CRM_Wci_Upgrader_Base {
     return TRUE;
   } 
 
+  public function upgrade_1001() {
+    $this->ctx->log->info('Applying update 1001');
+    CRM_Core_DAO::executeQuery('
+      CREATE TABLE IF NOT EXISTS civicrm_wci_widget_cache (
+        id int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT "cache Id.",
+        widget_id int(10) unsigned DEFAULT NULL COMMENT "widget id.",
+        widget_code text DEFAULT NULL COMMENT "Widget code.",
+        ts TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        PRIMARY KEY (`id`)
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+    ');
+    return TRUE;
+  }
 
   /**
    * Example: Run an external SQL script

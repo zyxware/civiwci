@@ -24,6 +24,18 @@ return array(
     'description' => 'Default profile id',
     'help_text' => 'Sets default profile id',
   ),
+  'widget_cache_timeout' => array(
+    'group_name' => 'Wci Preference',
+    'group' => 'wci',
+    'name' => 'widget_cache_timeout',
+    'type' => 'Integer',
+    'default' => 0,
+    'add' => '4.3',
+    'is_domain' => 1,
+    'is_contact' => 0,
+    'description' => 'widget timeout',
+    'help_text' => 'widget timeout',
+  ),
  );
 
 

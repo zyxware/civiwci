@@ -3,12 +3,12 @@ require_once '../wci-helper-functions.php';
 
 class CRM_Wci_WidgetCode {
 
-  static function get_widget_realtime_code($widgetId) {
+  static function get_widget_realtime_code($widgetId, $preview) {
     $data = CRM_Wci_BAO_Widget::getWidgetData($widgetId);
     $template = CRM_Core_Smarty::singleton();
     $template->assign('wciform', $data);
     $template->assign('cpageId', $data['button_link_to']);
-//    $template->assign('preview', $preview);
+    $template->assign('preview', $preview);
 
     if ($data["override"] == '0') {
       $template->template_dir[] = getWciWidgetTemplatePath();
@@ -26,7 +26,7 @@ class CRM_Wci_WidgetCode {
     if($preview) {
       /**On preview time controller is called from create widget 
           form so id will be widget id */
-      $code = CRM_Wci_WidgetCode::get_widget_realtime_code($embedId);
+      $code = CRM_Wci_WidgetCode::get_widget_realtime_code($embedId, $preview);
     } else {
       $widgetId = CRM_Wci_BAO_EmbedCode::getWidgetId($embedId);
       $code = CRM_Wci_BAO_WidgetCache::getWidgetCache($widgetId);
@@ -35,7 +35,7 @@ class CRM_Wci_WidgetCode {
       $cacheTime = civicrm_api3('setting', 'getValue', 
           array('group' => 'Wci Preference', 'name' => 'widget_cache_timeout'));
       if(($tsDiff > $cacheTime)||(empty($code))) {
-        $code = CRM_Wci_WidgetCode::get_widget_realtime_code($widgetId);
+        $code = CRM_Wci_WidgetCode::get_widget_realtime_code($widgetId, $preview);
       }
     }
     return $code;

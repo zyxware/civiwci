@@ -387,13 +387,13 @@ where w.id=" . $this->_id;*/
     );
     
     $result = civicrm_api3('group', 'get', array(
-      'group_type' => '2'
+      'group_type' => '2' // group type of newsletter(2)
     ));
-    
-    foreach ($result['values'] as $group) {
-      $options[$group['id']] = $group['title'];
-    }
-    
+    if (0 != $result['count']) {
+      foreach ($result['values'] as $group) {
+        $options[$group['id']] = $group['title'];
+      }
+    }    
     return $options;
   }
 

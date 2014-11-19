@@ -178,13 +178,16 @@
       color:{/literal}{$wciform.color_newsletter_text}{literal};
     }
 </style>
-
+{/literal}
+{if $wciform.style_rules}
+{literal}
 <style>
 {/literal}
   {$wciform.style_rules}
 {literal}
 </style>
 {/literal}
+{/if} 
 
 {if (1 == $wciform.hide_border)}
 <div id="crm_wid_{$wciform.widgetId}" class="crm-wci-widget {$wciform.size_variant}">

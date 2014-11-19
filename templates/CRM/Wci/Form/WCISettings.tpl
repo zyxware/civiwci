@@ -11,7 +11,7 @@
     <div class="label">{$form.$elementName.label}</div>
     <div class="content">{$form.$elementName.html} {if "widget_cache_timeout" == $form.$elementName.id} Minutes{/if}</div>
 {if "default_profile" == $form.$elementName.id}
-    <div class="content"><small>This profile id will be used for newsletter signup. User's mail id will be added to this group when they click subscribe button.'</small></div>
+    <div class="content"><small>Enter public profile id where user can signup for newsletter. User's mail id will be added to the group configured for the widget when they click subscribe button.'</small></div>
 {/if}
 {if "widget_cache_timeout" == $form.$elementName.id}
     <div class="content"><small>Cache will be cleared after specified minites.</small></div>

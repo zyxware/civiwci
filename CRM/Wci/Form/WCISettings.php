@@ -9,25 +9,8 @@ require_once 'CRM/Core/Form.php';
  */
 class CRM_Wci_Form_WCISettings extends CRM_Core_Form {
   function buildQuickForm() {
-
-    // add form elements
-    /*$this->add(
-      'select', // field type
-      'default_profile', // field name
-      'Default profile', // field label
-      $this->getProfiles(), // list of options
-      true // is required
-    );*/
-   
-    /*$this->add(
-      'select', // field type
-      'default_widget', // field name
-      'Default widget', // field label
-      $this->getWidgets(), // list of options
-      false // is required
-    );*/
-    
     $this->add('text', 'default_profile', ts('Default profile'),true)->setSize(45);
+    $this->add('text', 'widget_cache_timeout', ts('Widget cache timeout'),true)->setSize(45);
     $this->addButtons(array(
       array(
         'type' => 'submit',
@@ -35,14 +18,16 @@ class CRM_Wci_Form_WCISettings extends CRM_Core_Form {
         'isDefault' => TRUE,
       ),
     ));
-
-    $widgetId = civicrm_api3('setting', 'getValue', array('group' => 'Wci Preference', 'name' => 'default_wci_widget'));
-    $defProf = civicrm_api3('setting', 'getValue', array('group' => 'Wci Preference', 'name' => 'default_wci_profile'));
-
+$cacheTime = 1;
+    $cacheTime = civicrm_api3('setting', 'getValue', array('group' => 'Wci Preference', 'name' => 'widget_cache_timeout'));
+    $defProf =   civicrm_api3('setting', 'getValue', array('group' => 'Wci Preference', 'name' => 'default_wci_profile'));
     /*$this->setDefaults(array(
               'default_widget' => $widgetId));*/
     $this->setDefaults(array(
               'default_profile' => $defProf));
+    $this->setDefaults(array(
+              'widget_cache_timeout' => $cacheTime));
+
     // export form elements
     $this->assign('elementNames', $this->getRenderableElementNames());
 
@@ -54,7 +39,8 @@ class CRM_Wci_Form_WCISettings extends CRM_Core_Form {
   function postProcess() {
     $values = $this->exportValues();
     /*civicrm_api3('setting', 'create', array('domain_id' => 1, 'default_wci_widget' => $values['default_widget'],));*/
-    civicrm_api3('setting', 'create', array('domain_id' => 1, 'default_wci_profile' => $values['default_profile'],));
+    civicrm_api3('setting', 'create', array('sequential' => 1, 'default_wci_profile' => $values['default_profile']));
+    civicrm_api3('setting', 'create', array('sequential' => 1, 'widget_cache_timeout' => $values['widget_cache_timeout']));
     CRM_Core_Session::setStatus(ts('Widget settings are saved to database'), '', 'success');
     parent::postProcess();
   }

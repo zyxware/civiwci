@@ -18,15 +18,6 @@
       if(isset($_REQUEST['id'])) {
         $emb_id = $_REQUEST['id'];
         $wid_id = CRM_Wci_BAO_EmbedCode::getWidgetId($emb_id);
-        $data = CRM_Wci_BAO_Widget::getWidgetData($wid_id);
-        $template = CRM_Core_Smarty::singleton();
-        $template->assign('wciform', $data);
-        if($data["override"] == 0) {
-          $template->template_dir[] = getWciWidgetTemplatePath();
-          $wcidata = $template->fetch('wciwidget.tpl');
-        } else {
-          $wcidata = $template->fetch('string:' . $wid_page[$dao->id]['custom_template']);
-        }
         $widget_controller_path = getWciWidgetControllerPath();
         $extension_root_path = getExtensionRootPath();
       }
@@ -41,7 +32,7 @@
           <div class="description">
             Click <strong>Save &amp; Preview</strong> to save any changes to your settings, and preview the widget again on this page.
           </div>
-          <script type="text/javascript" src="{php}echo $widget_controller_path;{/php}?id={php}echo $emb_id;{/php}&embed=0&referal_id=2442"></script></script>
+          <script type="text/javascript" src="{php}echo $widget_controller_path;{/php}?id={php}echo $wid_id;{/php}&preview=1"></script></script>
   <div id='widgetwci'></div>
         </div>
         <div class="col2">

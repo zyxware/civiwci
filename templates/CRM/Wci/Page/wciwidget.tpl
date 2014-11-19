@@ -111,6 +111,9 @@
         color:{/literal}{$wciform.color_description}{literal} /* other color*/
     }
 
+    .pointer {
+      cursor: pointer;
+    }
     .crm-wci-button {
         display:block;
         background-color:#CECECE;
@@ -124,6 +127,12 @@
         color:#556C82;
         padding:2px;
         font-size:13px;
+        width:120px;
+        margin-left: auto;
+        margin-right: auto;
+        border: 1px solid #20538D;
+        border-radius: 4px 4px 4px 4px;
+        box-shadow: 0 1px 0 rgba(255, 255, 255, 0.4) inset, 0 1px 1px rgba(0, 0, 0, 0.2);
     }
 
     .crm-home-url {
@@ -137,9 +146,10 @@
     }
 
     .crm-wci-button-inner { /* button text color */
-        padding:2px;
+        /*padding:2px;*/
         display:block;
         color:{/literal}{$wciform.color_button}{literal};
+        cursor: pointer;
     }
     #crm_wci_image_container {
       text-align: center;
@@ -161,6 +171,8 @@
     input.btnNL, button.btnNL {
        color:{/literal}{$wciform.color_btn_newsletter}{literal};
        background:{/literal}{$wciform.color_btn_newsletter_bg}{literal};
+       width:120px;
+       margin-top: 2px;
     }
     #newsletter_msg {
       color:{/literal}{$wciform.color_newsletter_text}{literal};
@@ -229,8 +241,8 @@
     <div id="crm_wid_{$wciform.widgetId}_campaign" class="crm-campaign">
     </div>
     {if $wciform.button_title && $cpageId}
-    <div class="crm-wci-button-wrapper" id="crm_wid_{$wciform.widgetId}_button">
-        <a href='{crmURL p="civicrm/contribute/transact" q="reset=1&id=$cpageId" h=0 a=1 fe=1}' class="crm-wci-button"><span class="crm-wci-button-inner" id="crm_wid_{$wciform.widgetId}_btn_txt">{$wciform.button_title}</span></a>
+    <div class="crm-wci-button-wrapper" id="crm_wid_{$wciform.widgetId}_button"> 
+        <a href='{crmURL p="civicrm/contribute/transact" q="reset=1&id=$cpageId" h=0 a=1 fe=1}' class="crm-wci-button pointer"><span class="crm-wci-button-inner" id="crm_wid_{$wciform.widgetId}_btn_txt">{$wciform.button_title}</span></a>
     </div>
         {if $wciform.email_signup_group_id}
         <hr>
@@ -248,9 +260,9 @@
         </p>
         <p id="newsletter_submit">
           {if $preview eq 0 }
-            <input class ="btnNL" type="submit" name="_qf_Edit_next" value="Subscribe me">
+            <input class ="crm-wci-button btnNL pointer" type="submit" name="_qf_Edit_next" value="Subscribe me">
           {else}
-            <button class ="btnNL" type="button" name="_qf_Edit_next" value="Subscribe me">Subscribe me</button>
+            <button class ="crm-wci-button btnNL pointer" type="button" name="_qf_Edit_next" value="Subscribe me">Subscribe me</button>
           {/if}
         </p>
         <div>

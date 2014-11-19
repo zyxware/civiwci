@@ -237,10 +237,10 @@
     </div>
     <div id="crm_wid_{$wciform.widgetId}_donors" class="crm-donors">
     </div>
+    {/if}
     <div id="crm_wid_{$wciform.widgetId}_comments" class="crm-comments">
       {$wciform.description}
-    </div>
-  {/if}
+    </div> 
     <div id="crm_wid_{$wciform.widgetId}_campaign" class="crm-campaign">
     </div>
     {if $wciform.button_title && $cpageId}

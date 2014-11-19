@@ -35,22 +35,24 @@
 require_once '../../../civicrm.config.php';
 
 $license_text = '
-        /*    
-        @licstart  
-
-        Copyright (C) 2014  Zyxware Technologies
-
-        The JavaScript code in this page is free software: you can
-        redistribute it and/or modify it under the terms of the GNU Affero
-        General Public License (GNU AGPL) as published by the Free Software
-        Foundation, either version 3 of the License, or (at your option)
-        any later version.  The code is distributed WITHOUT ANY WARRANTY;
-        without even the implied warranty of MERCHANTABILITY or FITNESS
-        FOR A PARTICULAR PURPOSE.  See the GNU AGPL for more details.
-
-        @licend
-        */
-        ';
+/**
+ * @licstart The following is the entire license notice for the JavaScript
+ * code included by CiviCRM WCI extension.
+ *
+ * Copyright (C) 2014 Zyxware Technologies.
+ *
+ * This JavaScript is part of the  CiviCRM WCI extension for CiviCRM. This
+ * JavaScript is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU Affero General Public License (GNU AGPL) as published by the
+ * Free Software Foundation, either version 3 of the License, or (at your option)
+ * any later version. The code is distributed WITHOUT ANY WARRANTY; without even
+ * the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU AGPL for more details.
+ *
+ * @licend The above is the entire license notice for the JavaScript
+ * code included by CiviCRM WCI extension.
+ */
+';
 $wciembed_js = '
 // Cleanup functions for the document ready method
 if ( document.addEventListener ) {

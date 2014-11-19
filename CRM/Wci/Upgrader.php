@@ -67,6 +67,7 @@ class CRM_Wci_Upgrader extends CRM_Wci_Upgrader_Base {
         `widget_id` int(10) unsigned NOT NULL COMMENT "widget id.",
         `widget_code` text DEFAULT NULL COMMENT "Widget code.",
         `expire` int(10) DEFAULT 0 COMMENT "A Unix timestamp indicating when the cache entry should expire.",
+        `createdtime` int(10) DEFAULT 0 COMMENT "A Unix timestamp indicating create time.",
         PRIMARY KEY (`widget_id`)
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
     ');

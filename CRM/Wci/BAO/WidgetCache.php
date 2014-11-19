@@ -115,14 +115,16 @@ class CRM_Wci_BAO_WidgetCache extends CRM_Wci_DAO_WidgetCache {
   public static function setWidgetCache($widgetId, $code) {
     $cacheTime = civicrm_api3('setting', 'getValue',
       array('group' => 'Wci Preference', 'name' => 'widget_cache_timeout'));
-    $expire_on = time() + ($cacheTime * 60);
-    $query = "INSERT INTO civicrm_wci_widget_cache (widget_id, widget_code, expire)
-    VALUES (%1, %2, %3)
-    ON DUPLICATE KEY UPDATE widget_id = %1, widget_code = %2, expire = %3";
+    $timenow = time();
+    $expire_on = $timenow + ($cacheTime * 60);
+    $query = "INSERT INTO civicrm_wci_widget_cache (widget_id, widget_code, expire, createdtime)
+    VALUES (%1, %2, %3, %4)
+    ON DUPLICATE KEY UPDATE widget_id = %1, widget_code = %2, expire = %3, createdtime = %4";
     $params = array(
       1 => array($widgetId, 'Integer'),
       2 => array($code, 'String'),
-      3 => array($expire_on, 'Integer')
+      3 => array($expire_on, 'Integer'),
+      4 => array($timenow, 'Integer')
     );
     CRM_Core_DAO::executeQuery($query, $params, TRUE, 'CRM_Wci_DAO_WidgetCache');
   }
@@ -131,11 +133,8 @@ class CRM_Wci_BAO_WidgetCache extends CRM_Wci_DAO_WidgetCache {
     $code = "";
     $query = "SELECT widget_code FROM civicrm_wci_widget_cache where widget_id = %1
     AND expire >= %2";
-    $cacheTime = civicrm_api3('setting', 'getValue',
-      array('group' => 'Wci Preference', 'name' => 'widget_cache_timeout'));
-    $expire_on = time() + ($cacheTime * 60);
     $dao = CRM_Core_DAO::executeQuery($query, array(1 => array($widgetId, 'Integer'),
-      2 => array($expire_on, 'Integer')), TRUE, 'CRM_Wci_DAO_WidgetCache');
+      2 => array(time(), 'Integer')), TRUE, 'CRM_Wci_DAO_WidgetCache');
     if ($dao->fetch()) {
       $code = $dao->widget_code;
     }  

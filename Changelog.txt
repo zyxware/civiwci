@@ -1,5 +1,10 @@
-Release Notes for civicrm-wci CiciCRM extension. Beta - II
+Release Notes for civicrm-wci CiciCRM extension. 1.0-rc1
 ===========================================================
+
+1.0-rc1, 11/19/2014
+---------------------
+1. Implemented widget cache system.
+2. Beta - 3 bug fixes.
 
 Beta - 3, 11/16/2014
 ---------------------

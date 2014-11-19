@@ -20,7 +20,7 @@ class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
   protected $_id;
   
   function preProcess() {
-    CRM_Core_Resources::singleton()->addScriptFile('org.civicrm.wci', 'createwidget.js');
+    CRM_Core_Resources::singleton()->addScriptFile('org.civicrm.wci', 'js/createwidget.js');
     parent::preProcess();
     $this->_id = CRM_Utils_Request::retrieve('id', 'Positive', $this, 
           FALSE, NULL, 'REQUEST' );

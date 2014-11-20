@@ -14,7 +14,7 @@
     <div class="content"><small>Enter public profile id where user can signup for newsletter. User's mail id will be added to the group configured for the widget when they click subscribe button.'</small></div>
 {/if}
 {if "widget_cache_timeout" == $form.$elementName.id}
-    <div class="content"><small>Cache will be cleared after specified minites.</small></div>
+    <div class="content"><small>Cache will be cleared after specified minutes. Widgets with static content (with out a progress bar) will be cached till it is modified. </small></div>
 {/if}
     <div class="clear"></div>
   </div>

@@ -34,17 +34,20 @@
 
 class CRM_Wci_BAO_WidgetCache extends CRM_Wci_DAO_WidgetCache {
 
-  public static function setWidgetCache($widgetId, $code) {
-    $cacheTime = civicrm_api3('setting', 'getValue',
-      array('group' => 'Wci Preference', 'name' => 'widget_cache_timeout'));
+  public static function setWidgetCache($widgetId, $widget) {
     $timenow = time();
-    $expire_on = $timenow + ($cacheTime * 60);
+    $expire_on = PHP_INT_MAX;
+    if ($widget['dynamic'] == TRUE) {
+      $cacheTime = civicrm_api3('setting', 'getValue',
+        array('group' => 'Wci Preference', 'name' => 'widget_cache_timeout'));
+      $expire_on = $timenow + ($cacheTime * 60);
+    }
     $query = "INSERT INTO civicrm_wci_widget_cache (widget_id, widget_code, expire, createdtime)
     VALUES (%1, %2, %3, %4)
     ON DUPLICATE KEY UPDATE widget_id = %1, widget_code = %2, expire = %3, createdtime = %4";
     $params = array(
       1 => array($widgetId, 'Integer'),
-      2 => array($code, 'String'),
+      2 => array($widget['code'], 'String'),
       3 => array($expire_on, 'Integer'),
       4 => array($timenow, 'Integer')
     );

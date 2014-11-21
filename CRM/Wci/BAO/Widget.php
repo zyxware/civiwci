@@ -1,27 +1,24 @@
 <?php
 /*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.4                                                |
+ | CiviCRM Widget Creation Interface (WCI) Version 1.0                |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2013                                |
+ | Copyright Zyxware Technologies (c) 2014                            |
  +--------------------------------------------------------------------+
- | This file is a part of CiviCRM.                                    |
+ | This file is a part of CiviCRM WCI.                                |
  |                                                                    |
- | CiviCRM is free software; you can copy, modify, and distribute it  |
- | under the terms of the GNU Affero General Public License           |
- | Version 3, 19 November 2007 and the CiviCRM Licensing Exception.   |
+ | CiviCRM WCI is free software; you can copy, modify, and distribute |
+ | it under the terms of the GNU Affero General Public License        |
+ | Version 3, 19 November 2007.                                       |
  |                                                                    |
- | CiviCRM is distributed in the hope that it will be useful, but     |
- | WITHOUT ANY WARRANTY; without even the implied warranty of         |
+ | CiviCRM WCI is distributed in the hope that it will be useful,     |
+ | but WITHOUT ANY WARRANTY; without even the implied warranty of     |
  | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.               |
  | See the GNU Affero General Public License for more details.        |
  |                                                                    |
  | You should have received a copy of the GNU Affero General Public   |
- | License and the CiviCRM Licensing Exception along                  |
- | with this program; if not, contact CiviCRM LLC                     |
- | at info[AT]civicrm[DOT]org. If you have questions about the        |
- | GNU Affero General Public License or the licensing of CiviCRM,     |
- | see the CiviCRM license FAQ at http://civicrm.org/licensing        |
+ | License along with this program; if not, contact Zyxware           |
+ | Technologies at info[AT]zyxware[DOT]com.                           |
  +--------------------------------------------------------------------+
 */
 
@@ -35,10 +32,10 @@
 class CRM_Wci_BAO_Widget extends CRM_Wci_DAO_Widget {
 
   public static function getWidgetData($widgetId) {
-  
+
     $query = "SELECT * FROM civicrm_wci_widget where id=".$widgetId;
     $params = array();
-    
+
     $dao = CRM_Core_DAO::executeQuery($query, $params, TRUE, 'CRM_Wci_DAO_Widget');
 
     $data = array();
@@ -46,12 +43,12 @@ class CRM_Wci_BAO_Widget extends CRM_Wci_DAO_Widget {
       $data["title"] = $dao->title;
       $data["logo_image"] = $dao->logo_image;
       $data["image"] = $dao->image;
-      
-      (empty($dao->button_title)) ? $contrin_title = "Donate" : 
+
+      (empty($dao->button_title)) ? $contrin_title = "Donate" :
       $contrin_title = $dao->button_title;
-      
+
       $data["button_title"] = $contrin_title;
-      
+
       $data["button_link_to"] = $dao->button_link_to;
       $data["progress_bar_id"] = $dao->progress_bar_id;
       $data["description"] = $dao->description;
@@ -90,12 +87,12 @@ class CRM_Wci_BAO_Widget extends CRM_Wci_DAO_Widget {
    * Fields : id, name
    * @return widget array
    * @access public
-   */  
+   */
   public static function getWidgetList() {
     $query = "SELECT * FROM civicrm_wci_widget";
     $params = array();
     $widgList = array();
-    
+
     $dao = CRM_Core_DAO::executeQuery($query, $params, TRUE, 'CRM_Wci_DAO_Widget');
 
     while ($dao->fetch()) {

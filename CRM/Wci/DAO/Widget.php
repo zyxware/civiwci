@@ -1,29 +1,27 @@
 <?php
 /*
-+--------------------------------------------------------------------+
-| CiviCRM version 4.4                                                |
-+--------------------------------------------------------------------+
-| Copyright CiviCRM LLC (c) 2004-2013                                |
-+--------------------------------------------------------------------+
-| This file is a part of CiviCRM.                                    |
-|                                                                    |
-| CiviCRM is free software; you can copy, modify, and distribute it  |
-| under the terms of the GNU Affero General Public License           |
-| Version 3, 19 November 2007 and the CiviCRM Licensing Exception.   |
-|                                                                    |
-| CiviCRM is distributed in the hope that it will be useful, but     |
-| WITHOUT ANY WARRANTY; without even the implied warranty of         |
-| MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.               |
-| See the GNU Affero General Public License for more details.        |
-|                                                                    |
-| You should have received a copy of the GNU Affero General Public   |
-| License and the CiviCRM Licensing Exception along                  |
-| with this program; if not, contact CiviCRM LLC                     |
-| at info[AT]civicrm[DOT]org. If you have questions about the        |
-| GNU Affero General Public License or the licensing of CiviCRM,     |
-| see the CiviCRM license FAQ at http://civicrm.org/licensing        |
-+--------------------------------------------------------------------+
+ +--------------------------------------------------------------------+
+ | CiviCRM Widget Creation Interface (WCI) Version 1.0                |
+ +--------------------------------------------------------------------+
+ | Copyright Zyxware Technologies (c) 2014                            |
+ +--------------------------------------------------------------------+
+ | This file is a part of CiviCRM WCI.                                |
+ |                                                                    |
+ | CiviCRM WCI is free software; you can copy, modify, and distribute |
+ | it under the terms of the GNU Affero General Public License        |
+ | Version 3, 19 November 2007.                                       |
+ |                                                                    |
+ | CiviCRM WCI is distributed in the hope that it will be useful,     |
+ | but WITHOUT ANY WARRANTY; without even the implied warranty of     |
+ | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.               |
+ | See the GNU Affero General Public License for more details.        |
+ |                                                                    |
+ | You should have received a copy of the GNU Affero General Public   |
+ | License along with this program; if not, contact Zyxware           |
+ | Technologies at info[AT]zyxware[DOT]com.                           |
+ +--------------------------------------------------------------------+
 */
+
 /**
  *
  * @package CRM
@@ -240,35 +238,35 @@ class CRM_Wci_DAO_Widget extends CRM_Core_DAO
    * @var string
    */
   public $custom_template;
-  
+
   /**
    * Newsletter Button text color
    *
    * @var string
    */
   public $color_btn_newsletter;
-  
+
   /**
    * Newsletter Button color
    *
    * @var string
    */
-  public $color_btn_newsletter_bg;  
-  
+  public $color_btn_newsletter_bg;
+
    /**
    * Newsletter text
    *
    * @var string
    */
   public $newsletter_text;
-  
+
   /**
    * Newsletter msg text color
    *
    * @var string
    */
   public $color_newsletter_text;
-     
+
   function __construct()
   {
     $this->__table = 'civicrm_wci_widget';
@@ -441,7 +439,7 @@ class CRM_Wci_DAO_Widget extends CRM_Core_DAO
           'type' => CRM_Utils_Type::T_BOOLEAN,
           'title' => ts('Override default template', array('domain' => 'org.civicrm.wci')) ,
           'required' => false,
-        ) , 
+        ) ,
         'hide_title' => array(
           'name' => 'hide_title',
           'type' => CRM_Utils_Type::T_BOOLEAN,
@@ -472,7 +470,7 @@ class CRM_Wci_DAO_Widget extends CRM_Core_DAO
           'title' => ts('Widget custom template', array('domain' => 'org.civicrm.wci')) ,
           'required' => false,
         ) ,
-        
+
         'color_btn_newsletter' => array(
           'name' => 'color_btn_newsletter',
           'type' => CRM_Utils_Type::T_STRING,
@@ -528,8 +526,8 @@ class CRM_Wci_DAO_Widget extends CRM_Core_DAO
         'size_variant' => 'size_variant',
         'color_title' => 'color_title',
         'color_title_bg' => 'color_title_bg',
-        'color_progress_bar' => 'color_progress_bar', 
-        'color_progress_bar_bg' => 'color_progress_bar_bg', 
+        'color_progress_bar' => 'color_progress_bar',
+        'color_progress_bar_bg' => 'color_progress_bar_bg',
         'color_widget_bg' => 'color_widget_bg',
         'color_description' => 'color_description',
         'color_border' => 'color_border',

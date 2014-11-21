@@ -1,10 +1,32 @@
 <?php
-
+/*
+ +--------------------------------------------------------------------+
+ | CiviCRM Widget Creation Interface (WCI) Version 1.0                |
+ +--------------------------------------------------------------------+
+ | Copyright Zyxware Technologies (c) 2014                            |
+ +--------------------------------------------------------------------+
+ | This file is a part of CiviCRM WCI.                                |
+ |                                                                    |
+ | CiviCRM WCI is free software; you can copy, modify, and distribute |
+ | it under the terms of the GNU Affero General Public License        |
+ | Version 3, 19 November 2007.                                       |
+ |                                                                    |
+ | CiviCRM WCI is distributed in the hope that it will be useful,     |
+ | but WITHOUT ANY WARRANTY; without even the implied warranty of     |
+ | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.               |
+ | See the GNU Affero General Public License for more details.        |
+ |                                                                    |
+ | You should have received a copy of the GNU Affero General Public   |
+ | License along with this program; if not, contact Zyxware           |
+ | Technologies at info[AT]zyxware[DOT]com.                           |
+ +--------------------------------------------------------------------+
+*/
 require_once 'CRM/Core/Page.php';
 require_once 'CRM/Wci/DAO/ProgressBar.php';
 
 class CRM_Wci_Page_ProgressBarList extends CRM_Core_Page {
   private static $_actionLinks;
+
   function run() {
     // get the requested action
     $action = CRM_Utils_Request::retrieve('action', 'String',
@@ -25,7 +47,7 @@ class CRM_Wci_Page_ProgressBarList extends CRM_Core_Page {
       $controller->set('id', $id);
       $controller->process();
       return $controller->run();
-    } 
+    }
     elseif ($action & CRM_Core_Action::DELETE) {
       $errorScope = CRM_Core_TemporaryErrorScope::useException();
       try {
@@ -33,7 +55,7 @@ class CRM_Wci_Page_ProgressBarList extends CRM_Core_Page {
         $sql = "DELETE FROM civicrm_wci_progress_bar_formula where progress_bar_id = %1";
         $params = array(1 => array($id, 'Integer'));
         CRM_Core_DAO::executeQuery($sql, $params);
-        
+
         $sql = "DELETE FROM civicrm_wci_progress_bar where id = %1";
         $params = array(1 => array($id, 'Integer'));
         CRM_Core_DAO::executeQuery($sql, $params);
@@ -42,22 +64,22 @@ class CRM_Wci_Page_ProgressBarList extends CRM_Core_Page {
       catch (Exception $e) {
         $errmgs = $e->getMessage() . ts('. Check whether progressbar is used by any widget or not');
         CRM_Core_Session::setStatus($errmgs, '', 'error');
-        $transaction->rollback();      
-      } 
+        $transaction->rollback();
+      }
     }
     // Example: Set the page-title dynamically; alternatively, declare a static title in xml/Menu/*.xml
     CRM_Utils_System::setTitle(ts('Progress Bar List'));
 
     $query = "SELECT * FROM civicrm_wci_progress_bar";
     $params = array();
-    
+
     $dao = CRM_Core_DAO::executeQuery($query, $params, TRUE, 'CRM_Wci_DAO_ProgressBar');
 
     while ($dao->fetch()) {
       $con_page[$dao->id] = array();
       CRM_Core_DAO::storeValues($dao, $con_page[$dao->id]);
-     
-      $action = array_sum(array_keys($this->actionLinks())); 
+
+      $action = array_sum(array_keys($this->actionLinks()));
       //build the normal action links.
       $con_page[$dao->id]['action'] = CRM_Core_Action::formLink(self::actionLinks(),
         $action, array('id' => $dao->id));
@@ -68,7 +90,7 @@ class CRM_Wci_Page_ProgressBarList extends CRM_Core_Page {
     }
     return parent::run();
   }
-  
+
   function &actionLinks() {
     // check if variable _actionsLinks is populated
     if (!isset(self::$_actionLinks)) {

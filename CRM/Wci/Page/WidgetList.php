@@ -1,10 +1,32 @@
 <?php
-
+/*
+ +--------------------------------------------------------------------+
+ | CiviCRM Widget Creation Interface (WCI) Version 1.0                |
+ +--------------------------------------------------------------------+
+ | Copyright Zyxware Technologies (c) 2014                            |
+ +--------------------------------------------------------------------+
+ | This file is a part of CiviCRM WCI.                                |
+ |                                                                    |
+ | CiviCRM WCI is free software; you can copy, modify, and distribute |
+ | it under the terms of the GNU Affero General Public License        |
+ | Version 3, 19 November 2007.                                       |
+ |                                                                    |
+ | CiviCRM WCI is distributed in the hope that it will be useful,     |
+ | but WITHOUT ANY WARRANTY; without even the implied warranty of     |
+ | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.               |
+ | See the GNU Affero General Public License for more details.        |
+ |                                                                    |
+ | You should have received a copy of the GNU Affero General Public   |
+ | License along with this program; if not, contact Zyxware           |
+ | Technologies at info[AT]zyxware[DOT]com.                           |
+ +--------------------------------------------------------------------+
+*/
 require_once 'CRM/Core/Page.php';
 require_once 'CRM/Wci/DAO/Widget.php';
 
 class CRM_Wci_Page_WidgetList extends CRM_Core_Page {
   private static $_actionLinks;
+
   function run() {
     // get the requested action
     $action = CRM_Utils_Request::retrieve('action', 'String',
@@ -25,27 +47,26 @@ class CRM_Wci_Page_WidgetList extends CRM_Core_Page {
       $controller->set('id', $id);
       $controller->process();
       return $controller->run();
-    } 
+    }
     elseif ($action & CRM_Core_Action::DELETE) {
       try {
         $transaction = new CRM_Core_Transaction();
-        
+
         $sql = "DELETE FROM civicrm_wci_widget where id = %1";
         $params = array(1 => array($id, 'Integer'));
         CRM_Core_DAO::executeQuery($sql, $params);
         $transaction->commit();
       }
       catch (Exception $e) {
-        //TODO
-        print_r($e->getMessage());
-        $transaction->rollback();      
-      } 
-    }  
-  
+        CRM_Core_Session::setStatus(ts('Failed to delete widget. ') . $e->getMessage(), '', 'error');
+        $transaction->rollback();
+      }
+    }
+
     CRM_Utils_System::setTitle(ts('Widget List'));
     $query = "SELECT * FROM civicrm_wci_widget";
     $params = array();
-    
+
     $dao = CRM_Core_DAO::executeQuery($query, $params, TRUE, 'CRM_Wci_DAO_Widget');
 
     while ($dao->fetch()) {
@@ -54,20 +75,20 @@ class CRM_Wci_Page_WidgetList extends CRM_Core_Page {
       $wid_page[$dao->id]['title'] = $wid_page[$dao->id]['title'];
       $description = $wid_page[$dao->id]['description'];
       $wid_page[$dao->id]['description'] = strip_tags($description);
-     
-      $action = array_sum(array_keys($this->actionLinks())); 
+
+      $action = array_sum(array_keys($this->actionLinks()));
       //build the normal action links.
       $wid_page[$dao->id]['action'] = CRM_Core_Action::formLink(self::actionLinks(),
         $action, array('id' => $dao->id));
     }
-   
+
     if (isset($wid_page)) {
       $this->assign('rows', $wid_page);
     }
-    
+
     parent::run();
   }
-  
+
   function &actionLinks() {
     // check if variable _actionsLinks is populated
     if (!isset(self::$_actionLinks)) {

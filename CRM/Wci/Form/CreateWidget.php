@@ -1,5 +1,26 @@
 <?php
-
+/*
+ +--------------------------------------------------------------------+
+ | CiviCRM Widget Creation Interface (WCI) Version 1.0                |
+ +--------------------------------------------------------------------+
+ | Copyright Zyxware Technologies (c) 2014                            |
+ +--------------------------------------------------------------------+
+ | This file is a part of CiviCRM WCI.                                |
+ |                                                                    |
+ | CiviCRM WCI is free software; you can copy, modify, and distribute |
+ | it under the terms of the GNU Affero General Public License        |
+ | Version 3, 19 November 2007.                                       |
+ |                                                                    |
+ | CiviCRM WCI is distributed in the hope that it will be useful,     |
+ | but WITHOUT ANY WARRANTY; without even the implied warranty of     |
+ | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.               |
+ | See the GNU Affero General Public License for more details.        |
+ |                                                                    |
+ | You should have received a copy of the GNU Affero General Public   |
+ | License along with this program; if not, contact Zyxware           |
+ | Technologies at info[AT]zyxware[DOT]com.                           |
+ +--------------------------------------------------------------------+
+*/
 require_once 'CRM/Core/Form.php';
 require_once 'wci-helper-functions.php';
 require_once 'CRM/Wci/BAO/ProgressBar.php';
@@ -10,7 +31,7 @@ require_once 'CRM/Wci/BAO/ProgressBar.php';
  * @see http://wiki.civicrm.org/confluence/display/CRMDOC43/QuickForm+Reference
  */
 class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
-  
+
   /**
    * the widget id saved to the session for an update
    *
@@ -18,11 +39,11 @@ class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
    * @access protected
    */
   protected $_id;
-  
+
   function preProcess() {
     CRM_Core_Resources::singleton()->addScriptFile('org.civicrm.wci', 'js/createwidget.js');
     parent::preProcess();
-    $this->_id = CRM_Utils_Request::retrieve('id', 'Positive', $this, 
+    $this->_id = CRM_Utils_Request::retrieve('id', 'Positive', $this,
           FALSE, NULL, 'REQUEST' );
 
     $this->_colorFields = array('color_title' => array(ts('Title Text Color'),
@@ -123,7 +144,6 @@ class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
     $this->addWysiwyg('description', ts('Description'), '');
     $this->add('select', 'email_signup_group_id', ts('Newsletter signup'), $this->getGroupOptions());
     $this->add('select', 'size_variant', ts('Size variant'), $this->getSizeOptions());
-    // $fieldset = $this->addElement('fieldset')->setLabel('Advanced Settings');
     $this->add('checkbox', 'hide_title', ts('Hide Title'));
     $this->add('checkbox', 'hide_border', ts('Hide border'));
     $this->add('checkbox', 'hide_pbcap', ts('Hide progress bar caption'));
@@ -154,14 +174,10 @@ class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
     // export form elements
     $this->assign('elementNames', $this->getRenderableElementNames());
     if (isset($this->_id)) {
-      /** Updating existing widget*/
-      
-      /*$query = "SELECT pb.id as pbid, w.*  FROM civicrm_wci_widget w INNER JOIN civicrm_wci_progress_bar pb on pb.id = w.progress_bar_id 
-where w.id=" . $this->_id;*/
 
       $query = "SELECT * FROM civicrm_wci_widget WHERE id=%1";
       $params = array(1 => array($this->_id, 'Integer'));
-      
+
       $dao = CRM_Core_DAO::executeQuery($query, $params, TRUE, 'CRM_Wci_DAO_Widget');
 
       while ($dao->fetch()) {
@@ -178,7 +194,7 @@ where w.id=" . $this->_id;*/
         $this->setDefaults(array(
               'button_title' => $wid_page[$dao->id]['button_title']));
         $this->setDefaults(array(
-              'progress_bar' => $dao->progress_bar_id/*$dao->pbid*/));
+              'progress_bar' => $dao->progress_bar_id));
         $description = $wid_page[$dao->id]['description'];
         $this->setDefaults(array(
               'description' => $description));
@@ -225,7 +241,7 @@ where w.id=" . $this->_id;*/
               'newsletter_text' => $wid_page[$dao->id]['newsletter_text']));
         $this->setDefaults(array(
               'color_newsletter_text' => $wid_page[$dao->id]['color_newsletter_text']));
-                            
+
         if(true == $wid_page[$dao->id]['override']) {
           $cust_templ =  html_entity_decode($wid_page[$dao->id]['custom_template']);
           $this->setDefaults(array(
@@ -308,33 +324,33 @@ where w.id=" . $this->_id;*/
       25 => array($values['color_newsletter_text'], 'String'),
       26 => array($values['style_rules'], 'String'),
       27 => array($override, 'Integer'),
-      28 => array($values['custom_template'], 'String'), 
+      28 => array($values['custom_template'], 'String'),
       29 => array($values['show_pb_perc'], 'Integer'),);
 
     if (isset($this->_id)) {
-      $sql = "UPDATE civicrm_wci_widget SET title = %1, logo_image =%2, 
-      image = %3, button_title =%4, button_link_to =%5, 
+      $sql = "UPDATE civicrm_wci_widget SET title = %1, logo_image =%2,
+      image = %3, button_title =%4, button_link_to =%5,
       progress_bar_id = %6, description = %7, email_signup_group_id = %8,
-      size_variant = %9, color_title = %10, color_title_bg = %11, 
-      color_progress_bar = %12, color_progress_bar_bg = %13, 
-      color_widget_bg=%14, color_description=%15, color_border = %16, 
-      color_button = %17, color_button_bg = %18, hide_title = %19, 
-      hide_border = %20, hide_pbcap = %21, color_btn_newsletter = %22, 
-      color_btn_newsletter_bg = %23, newsletter_text = %24, 
-      color_newsletter_text = %25, style_rules = %26, override = %27, 
+      size_variant = %9, color_title = %10, color_title_bg = %11,
+      color_progress_bar = %12, color_progress_bar_bg = %13,
+      color_widget_bg=%14, color_description=%15, color_border = %16,
+      color_button = %17, color_button_bg = %18, hide_title = %19,
+      hide_border = %20, hide_pbcap = %21, color_btn_newsletter = %22,
+      color_btn_newsletter_bg = %23, newsletter_text = %24,
+      color_newsletter_text = %25, style_rules = %26, override = %27,
       custom_template = %28, show_pb_perc = %29 where id = %30";
-      
+
       $params += array(30 => array($this->_id, 'Integer'),);
     }
     else {
-      $sql = "INSERT INTO civicrm_wci_widget (title, logo_image, image, 
-      button_title, button_link_to, progress_bar_id, description, 
-      email_signup_group_id, size_variant, color_title, color_title_bg, 
-      color_progress_bar, color_progress_bar_bg, color_widget_bg, color_description, color_border, 
-      color_button, color_button_bg, hide_title, hide_border, hide_pbcap, 
-      color_btn_newsletter, color_btn_newsletter_bg, newsletter_text, 
-      color_newsletter_text, style_rules, override, custom_template, show_pb_perc) 
-      VALUES (%1, %2, %3, %4, %5, %6, %7, %8, %9, %10, %11, %12, %13, 
+      $sql = "INSERT INTO civicrm_wci_widget (title, logo_image, image,
+      button_title, button_link_to, progress_bar_id, description,
+      email_signup_group_id, size_variant, color_title, color_title_bg,
+      color_progress_bar, color_progress_bar_bg, color_widget_bg, color_description, color_border,
+      color_button, color_button_bg, hide_title, hide_border, hide_pbcap,
+      color_btn_newsletter, color_btn_newsletter_bg, newsletter_text,
+      color_newsletter_text, style_rules, override, custom_template, show_pb_perc)
+      VALUES (%1, %2, %3, %4, %5, %6, %7, %8, %9, %10, %11, %12, %13,
       %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29)";
     }
 
@@ -353,22 +369,22 @@ where w.id=" . $this->_id;*/
         $widget_id = CRM_Core_DAO::singleValueQuery('SELECT LAST_INSERT_ID()');
       }
       CRM_Core_Session::setStatus(ts('Widget created successfuly'), '', 'success');
-      
+
       if(isset($_REQUEST['_qf_CreateWidget_next'])) {
         CRM_Utils_System::redirect('?action=update&reset=1&id=' . $widget_id);
       } else {
         CRM_Utils_System::redirect('widget?reset=1');
       }
-    }    
+    }
     catch (Exception $e) {
       CRM_Core_Session::setStatus(ts('Failed to create widget. ').
       $e->getMessage(), '', 'error');
       $transaction->rollback();
     }
-     
+
     parent::postProcess();
   }
-  
+
   function getProgressBars() {
     $options = array(
       0 => ts('- select -'),
@@ -385,15 +401,15 @@ where w.id=" . $this->_id;*/
     $options = array(
       0 => ts('- select -'),
     );
-    
+
     $result = civicrm_api3('group', 'get', array(
-      'group_type' => '2' // group type of newsletter(2)
+      'group_type' => '2' // 2 is for group type - newsletter
     ));
     if (0 != $result['count']) {
       foreach ($result['values'] as $group) {
         $options[$group['id']] = $group['title'];
       }
-    }    
+    }
     return $options;
   }
 
@@ -403,7 +419,7 @@ where w.id=" . $this->_id;*/
       'normal' => ts('Normal (200px)'),
       'wide' => ts('Wide (250px)'),
     );
-    
+
     return $options;
   }
 

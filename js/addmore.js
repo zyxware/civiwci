@@ -1,6 +1,27 @@
-// Updated to wait until the document is loaded. addmore_link
+/*
+ +--------------------------------------------------------------------+
+ | CiviCRM Widget Creation Interface (WCI) Version 1.0                |
+ +--------------------------------------------------------------------+
+ | Copyright Zyxware Technologies (c) 2014                            |
+ +--------------------------------------------------------------------+
+ | This file is a part of CiviCRM WCI.                                |
+ |                                                                    |
+ | CiviCRM WCI is free software; you can copy, modify, and distribute |
+ | it under the terms of the GNU Affero General Public License        |
+ | Version 3, 19 November 2007.                                       |
+ |                                                                    |
+ | CiviCRM WCI is distributed in the hope that it will be useful,     |
+ | but WITHOUT ANY WARRANTY; without even the implied warranty of     |
+ | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.               |
+ | See the GNU Affero General Public License for more details.        |
+ |                                                                    |
+ | You should have received a copy of the GNU Affero General Public   |
+ | License along with this program; if not, contact Zyxware           |
+ | Technologies at info[AT]zyxware[DOT]com.                           |
+ +--------------------------------------------------------------------+
+*/
 
-cj(function ( $ ) { 
+cj(function ( $ ) {
   $(document).ready(function(){
     var count = parseInt($('input[name=contrib_count]').val());
     for ( var i = 2; i <= count; i++ ) {
@@ -66,20 +87,20 @@ cj(function ( $ ) {
     $( "#contribution_page_" + count).rules( "add", {
       required: true
     });
-    
+
     $( "#percentage_" + count).rules( "add", {
       required: true,
       max: 100,
       number: true
     });
-    
+
     $('input[name=contrib_count]').val(count);
-    
+
   });
 
   $(document).on('click', '#remove_link', function( e ) {
     e.preventDefault();
-    
+
     var rem_name = e.target.name;
     //assuming that - is the delimiter. second string will be the count
     var rem_name_ar = rem_name.split('-');

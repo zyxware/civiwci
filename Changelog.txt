@@ -1,5 +1,11 @@
-Release Notes for civicrm-wci CiciCRM extension. 1.0-rc1
+Release Notes for civicrm-wci CiciCRM extension. 1.0-rc2
 ===========================================================
+
+1.0-rc2, 11/21/2014
+---------------------
+1. 1.0-rc1 bug fixes.
+2. Added help texts and layout fixes
+3. Code cleanup.
 
 1.0-rc1, 11/19/2014
 ---------------------
@@ -8,7 +14,7 @@ Release Notes for civicrm-wci CiciCRM extension. 1.0-rc1
 
 Beta - 3, 11/16/2014
 ---------------------
-1. Fixed db error due to invalid data type in select widgets. 
+1. Fixed db error due to invalid data type in select widgets.
 
 Beta - 2, 11/13/2014
 ------------------------------------------
@@ -31,7 +37,7 @@ Alpha - 3, 10/30/2014
 
 Alpha - 2, 10/23/2014
 ------------------------------------------
-1. Newsletter signup feature 
+1. Newsletter signup feature
 2. Added preview button
 3. Widget properties specified the creation form applied to widget
 
@@ -47,4 +53,3 @@ Alpha - 1, 10/16/2014
 8. Edit widget
 9. Preview progressbar in create widget form
 10. Embed progessbar external clients
-

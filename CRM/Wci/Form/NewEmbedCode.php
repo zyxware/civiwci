@@ -1,5 +1,26 @@
 <?php
-
+/*
+ +--------------------------------------------------------------------+
+ | CiviCRM Widget Creation Interface (WCI) Version 1.0                |
+ +--------------------------------------------------------------------+
+ | Copyright Zyxware Technologies (c) 2014                            |
+ +--------------------------------------------------------------------+
+ | This file is a part of CiviCRM WCI.                                |
+ |                                                                    |
+ | CiviCRM WCI is free software; you can copy, modify, and distribute |
+ | it under the terms of the GNU Affero General Public License        |
+ | Version 3, 19 November 2007.                                       |
+ |                                                                    |
+ | CiviCRM WCI is distributed in the hope that it will be useful,     |
+ | but WITHOUT ANY WARRANTY; without even the implied warranty of     |
+ | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.               |
+ | See the GNU Affero General Public License for more details.        |
+ |                                                                    |
+ | You should have received a copy of the GNU Affero General Public   |
+ | License along with this program; if not, contact Zyxware           |
+ | Technologies at info[AT]zyxware[DOT]com.                           |
+ +--------------------------------------------------------------------+
+*/
 require_once 'CRM/Core/Form.php';
 require_once 'wci-helper-functions.php';
 require_once 'CRM/Wci/DAO/NewEmbedCode.php';
@@ -13,10 +34,10 @@ class CRM_Wci_Form_NewEmbedCode extends CRM_Core_Form {
   protected $_id;
 
   function preProcess() {
-      $this->_id = CRM_Utils_Request::retrieve('id', 'Positive', $this, 
+      $this->_id = CRM_Utils_Request::retrieve('id', 'Positive', $this,
           FALSE, NULL, 'REQUEST' );
   }
-          
+
   function buildQuickForm() {
     $this->add('text', 'title', ts('Title'),true, true)->setSize(45);
     // add form elements
@@ -42,7 +63,7 @@ class CRM_Wci_Form_NewEmbedCode extends CRM_Core_Form {
     if (isset($this->_id)) {
       $query = "SELECT * FROM civicrm_wci_embed_code WHERE id= %1";
       $params = array(1 => array($this->_id, 'Integer'));
-      
+
       $dao = CRM_Core_DAO::executeQuery($query, $params, TRUE, 'CRM_Wci_DAO_EmbedCode');
 
       while ($dao->fetch()) {
@@ -59,7 +80,7 @@ class CRM_Wci_Form_NewEmbedCode extends CRM_Core_Form {
     }
     else {
       CRM_Utils_System::setTitle(ts('New embed code'));
-    }  
+    }
     // export form elements
     $this->assign('elementNames', $this->getRenderableElementNames());
     parent::buildQuickForm();
@@ -69,35 +90,37 @@ class CRM_Wci_Form_NewEmbedCode extends CRM_Core_Form {
     $values = $this->exportValues();
 
     $title = str_replace("'", "''", $values['title']);
-    
+    $params = array(1 => array($title, 'String'),
+      2 => array($values['widget'], 'Integer'),
+    );
     if (isset($this->_id)) {
-      $sql = "UPDATE civicrm_wci_embed_code SET name = '" . $title 
-      . "', widget_id = '" . $values['widget'] . "' where id =" . $this->_id ;
+      $params += array(3 => array($this->_id, 'Integer'),);
+      $sql = "UPDATE civicrm_wci_embed_code SET name = %1, widget_id = %2 where id = %3" ;
     }
     else {
-      $sql = "INSERT INTO civicrm_wci_embed_code (name, widget_id)VALUES ('" 
-      . $title . "','" . $values['widget'] . "')";
+      $sql = "INSERT INTO civicrm_wci_embed_code (name, widget_id)VALUES (%1, %2)";
     }
     $errorScope = CRM_Core_TemporaryErrorScope::useException();
     try {
       $transaction = new CRM_Core_Transaction();
-      CRM_Core_DAO::executeQuery($sql);
+      CRM_Core_DAO::executeQuery($sql, $params);
       $transaction->commit();
       CRM_Core_Session::setStatus(ts('Embed code created successfuly'), '', 'success');
       if(isset($_REQUEST['_qf_NewEmbedCode_next'])) {
-        (isset($this->_id)) ? $embed_id = $this->_id : 
+        (isset($this->_id)) ? $embed_id = $this->_id :
               $embed_id = CRM_Core_DAO::singleValueQuery('SELECT LAST_INSERT_ID()');
         CRM_Utils_System::redirect('?action=update&reset=1&id=' . $embed_id);
       } else {
         CRM_Utils_System::redirect('embed-code?reset=1');
       }
-    }    
+    }
     catch (Exception $e) {
       CRM_Core_Session::setStatus(ts('Failed to create embed code'), '', 'error');
       $transaction->rollback();
     }
     parent::postProcess();
   }
+
   function getWidgets() {
     $options = array(
       '' => ts('- select -'),

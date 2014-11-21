@@ -1,5 +1,26 @@
 <?php
-
+/*
+ +--------------------------------------------------------------------+
+ | CiviCRM Widget Creation Interface (WCI) Version 1.0                |
+ +--------------------------------------------------------------------+
+ | Copyright Zyxware Technologies (c) 2014                            |
+ +--------------------------------------------------------------------+
+ | This file is a part of CiviCRM WCI.                                |
+ |                                                                    |
+ | CiviCRM WCI is free software; you can copy, modify, and distribute |
+ | it under the terms of the GNU Affero General Public License        |
+ | Version 3, 19 November 2007.                                       |
+ |                                                                    |
+ | CiviCRM WCI is distributed in the hope that it will be useful,     |
+ | but WITHOUT ANY WARRANTY; without even the implied warranty of     |
+ | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.               |
+ | See the GNU Affero General Public License for more details.        |
+ |                                                                    |
+ | You should have received a copy of the GNU Affero General Public   |
+ | License along with this program; if not, contact Zyxware           |
+ | Technologies at info[AT]zyxware[DOT]com.                           |
+ +--------------------------------------------------------------------+
+*/
 require_once 'wci.civix.php';
 
 /**
@@ -108,14 +129,14 @@ function wci_civicrm_alterSettingsFolders(&$metaDataFolders = NULL) {
 }
 
 function wci_civicrm_navigationMenu( &$params ) {
- 
+
   $navId = CRM_Core_DAO::singleValueQuery("SELECT max(id) FROM civicrm_navigation");
   if (is_integer($navId)) {
     $navId++;
   }
   // Find the Help menu
   $helpID = CRM_Core_DAO::getFieldValue('CRM_Core_DAO_Navigation', 'Help', 'id', 'name');
-  $params[$navId] = $params[$helpID]; 
+  $params[$navId] = $params[$helpID];
   // inserting WCI menu at the place of old help location
   $params[$helpID] = array (
     'attributes' => array (
@@ -125,7 +146,7 @@ function wci_civicrm_navigationMenu( &$params ) {
     'permission' => 'access CiviReport,access CiviContribute',
     'operator' => 'OR',
     'separator' => 0,
-    'parentID' => 0, 
+    'parentID' => 0,
     'navID' => $navId,
     'active' => 1),
     'child' =>  array (
@@ -137,22 +158,22 @@ function wci_civicrm_navigationMenu( &$params ) {
         'permission' => 'access CiviReport,access CiviContribute',
         'operator' => 'OR',
         'separator' => 1,
-        'parentID' => $navId, 
+        'parentID' => $navId,
         'navID' => $navId+1,
         'active' => 1)),
-        
+
         '2' => array (
         'attributes' => array (
-        'label' => ts('Manage Widget'),
+        'label' => ts('Manage Widgets'),
         'name' => 'manage_widget',
         'url' => 'civicrm/wci/widget?reset=1',
         'permission' => 'access CiviReport,access CiviContribute',
         'operator' => 'OR',
         'separator' => 1,
-        'parentID' => $navId, 
+        'parentID' => $navId,
         'navID' => $navId+2,
         'active' => 1)),
-        
+
         '3' => array (
         'attributes' => array (
         'label' => ts('New Progress Bar'),
@@ -161,22 +182,22 @@ function wci_civicrm_navigationMenu( &$params ) {
         'permission' => 'access CiviReport,access CiviContribute',
         'operator' => 'OR',
         'separator' => 1,
-        'parentID' => $navId, 
+        'parentID' => $navId,
         'navID' => $navId+3,
         'active' => 1)),
-        
+
         '4' => array (
         'attributes' => array (
-        'label' => ts('Manage Progress Bar'),
+        'label' => ts('Manage Progress Bars'),
         'name' => 'manage_progress_bar',
         'url' => 'civicrm/wci/progress-bar?reset=1',
         'permission' => 'access CiviReport,access CiviContribute',
         'operator' => 'OR',
         'separator' => 1,
-        'parentID' => $navId, 
+        'parentID' => $navId,
         'navID' => $navId+4,
         'active' => 1)),
-        
+
         '5' => array (
         'attributes' => array (
         'label' => ts('New Embed Code'),
@@ -185,7 +206,7 @@ function wci_civicrm_navigationMenu( &$params ) {
         'permission' => 'access CiviReport,access CiviContribute',
         'operator' => 'OR',
         'separator' => 1,
-        'parentID' => $navId, 
+        'parentID' => $navId,
         'navID' => $navId+5,
         'active' => 1)),
 
@@ -197,10 +218,10 @@ function wci_civicrm_navigationMenu( &$params ) {
         'permission' => 'access CiviReport,access CiviContribute',
         'operator' => 'OR',
         'separator' => 1,
-        'parentID' => $navId, 
+        'parentID' => $navId,
         'navID' => $navId+6,
         'active' => 1)),
-        
+
         '7' => array (
         'attributes' => array (
         'label' => ts('Widget Settings'),
@@ -209,10 +230,9 @@ function wci_civicrm_navigationMenu( &$params ) {
         'permission' => 'access CiviReport,access CiviContribute',
         'operator' => 'OR',
         'separator' => 1,
-        'parentID' => $navId, 
+        'parentID' => $navId,
         'navID' => $navId+7,
         'active' => 1)),
         ),
   );
 }
-

@@ -1,3 +1,25 @@
+{*
+ +--------------------------------------------------------------------+
+ | CiviCRM Widget Creation Interface (WCI) Version 1.0                |
+ +--------------------------------------------------------------------+
+ | Copyright Zyxware Technologies (c) 2014                            |
+ +--------------------------------------------------------------------+
+ | This file is a part of CiviCRM WCI.                                |
+ |                                                                    |
+ | CiviCRM WCI is free software; you can copy, modify, and distribute |
+ | it under the terms of the GNU Affero General Public License        |
+ | Version 3, 19 November 2007.                                       |
+ |                                                                    |
+ | CiviCRM WCI is distributed in the hope that it will be useful,     |
+ | but WITHOUT ANY WARRANTY; without even the implied warranty of     |
+ | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.               |
+ | See the GNU Affero General Public License for more details.        |
+ |                                                                    |
+ | You should have received a copy of the GNU Affero General Public   |
+ | License along with this program; if not, contact Zyxware           |
+ | Technologies at info[AT]zyxware[DOT]com.                           |
+ +--------------------------------------------------------------------+
+*}
 {literal}
 <style>
     .crm-wci-widget {
@@ -13,7 +35,7 @@
     .crm-wci-widget-border {
         border: 4px solid {/literal}{$wciform.color_border}{literal};
     }
-    
+
     .crm-wci-widget hr {
       text-align:center;
       display: block; height: 1px;
@@ -23,15 +45,15 @@
     .crm-wci-widget.thin {
       width: 150px;
     }
-    
+
     .crm-wci-widget.normal {
       width: 200px;
     }
-    
+
     .crm-wci-widget.wide {
       width: 250px;
     }
-    
+
     .crm-wci-widget-title {
         font-size:14px;
         padding:3px;
@@ -187,7 +209,7 @@
 {literal}
 </style>
 {/literal}
-{/if} 
+{/if}
 
 {if (1 == $wciform.hide_border)}
 <div id="crm_wid_{$wciform.widgetId}" class="crm-wci-widget {$wciform.size_variant}">
@@ -240,11 +262,11 @@
     {/if}
     <div id="crm_wid_{$wciform.widgetId}_comments" class="crm-comments">
       {$wciform.description}
-    </div> 
+    </div>
     <div id="crm_wid_{$wciform.widgetId}_campaign" class="crm-campaign">
     </div>
     {if $wciform.button_title && $cpageId}
-    <div class="crm-wci-button-wrapper" id="crm_wid_{$wciform.widgetId}_button"> 
+    <div class="crm-wci-button-wrapper" id="crm_wid_{$wciform.widgetId}_button">
         <a href='{crmURL p="civicrm/contribute/transact" q="reset=1&id=$cpageId" h=0 a=1 fe=1}' class="crm-wci-button pointer"><span class="crm-wci-button-inner" id="crm_wid_{$wciform.widgetId}_btn_txt">{$wciform.button_title}</span></a>
     </div>
         {if $wciform.email_signup_group_id}

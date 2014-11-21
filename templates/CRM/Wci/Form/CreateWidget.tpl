@@ -1,3 +1,25 @@
+{*
+ +--------------------------------------------------------------------+
+ | CiviCRM Widget Creation Interface (WCI) Version 1.0                |
+ +--------------------------------------------------------------------+
+ | Copyright Zyxware Technologies (c) 2014                            |
+ +--------------------------------------------------------------------+
+ | This file is a part of CiviCRM WCI.                                |
+ |                                                                    |
+ | CiviCRM WCI is free software; you can copy, modify, and distribute |
+ | it under the terms of the GNU Affero General Public License        |
+ | Version 3, 19 November 2007.                                       |
+ |                                                                    |
+ | CiviCRM WCI is distributed in the hope that it will be useful,     |
+ | but WITHOUT ANY WARRANTY; without even the implied warranty of     |
+ | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.               |
+ | See the GNU Affero General Public License for more details.        |
+ |                                                                    |
+ | You should have received a copy of the GNU Affero General Public   |
+ | License along with this program; if not, contact Zyxware           |
+ | Technologies at info[AT]zyxware[DOT]com.                           |
+ +--------------------------------------------------------------------+
+*}
 {* HEADER *}
 <div class="crm-block crm-form-block ">
   <div class="crm-submit-buttons">
@@ -5,7 +27,7 @@
   </div>
 
   {if $form.title.value != ""}
-    {php} 
+    {php}
       if(isset($_REQUEST['id'])) {
         $widget_controller_path = getWciWidgetControllerPath();
         $extension_root_path = getExtensionRootPath();
@@ -21,7 +43,7 @@
             Click <strong>Save &amp; Preview</strong> to save any changes to your settings, and preview the widget again on this page.
           </div>
           <script type="text/javascript" src="{php}echo $widget_controller_path;{/php}?id={php}echo $_REQUEST['id'];{/php}&preview=1"></script>
-  <div id='widgetwci'></div>
+  <div id='widgetwci'></div>{help id="preview" file="CRM/Wci/Form/CreateWidget"}
         </div>
     </div>
           <div class="clear"></div>
@@ -32,12 +54,12 @@
   <div class="label">{$form.title.label}</div>
   <div class="content">{$form.title.html}</div>
   <div class="clear"></div>
-</div>  
+</div>
 <div class="crm-section">
   <div class="label">{$form.logo_image.label}</div>
   <div class="content">{$form.logo_image.html} {help id="logo_image" file="CRM/Wci/Form/CreateWidget"}</div>
   <div class="clear"></div>
-</div>  
+</div>
 <div class="crm-section">
   <div class="label">{$form.image.label}</div>
   <div class="content">{$form.image.html} {help id="image" file="CRM/Wci/Form/CreateWidget"}</div>
@@ -55,7 +77,7 @@
 </div>
 <div class="crm-section">
   <div class="label">{$form.progress_bar.label}</div>
-  <div class="content">{$form.progress_bar.html}</div>
+  <div class="content">{$form.progress_bar.html}{help id="add-new-pb" file="CRM/Wci/Form/CreateWidget"}</div>
   <div class="clear"></div>
 </div>
 <div class="crm-section">
@@ -92,16 +114,16 @@
 <table class="form-layout-compressed">
   <tr>
    <td>{$form.hide_title.html}</td>
-   <td>{$form.hide_title.label}</td> 
+   <td>{$form.hide_title.label}</td>
   </tr>
   <tr>
    <td>{$form.hide_border.html}</td>
    <td>{$form.hide_border.label} {help id="hide-border" file="CRM/Wci/Form/CreateWidget"}</td>
-  </tr>  
+  </tr>
   <tr>
    <td>{$form.hide_pbcap.html}</td>
    <td>{$form.hide_pbcap.label}</td>
-  </tr>  
+  </tr>
 </table>
   </div>
 </div>

@@ -1,3 +1,25 @@
+{*
+ +--------------------------------------------------------------------+
+ | CiviCRM Widget Creation Interface (WCI) Version 1.0                |
+ +--------------------------------------------------------------------+
+ | Copyright Zyxware Technologies (c) 2014                            |
+ +--------------------------------------------------------------------+
+ | This file is a part of CiviCRM WCI.                                |
+ |                                                                    |
+ | CiviCRM WCI is free software; you can copy, modify, and distribute |
+ | it under the terms of the GNU Affero General Public License        |
+ | Version 3, 19 November 2007.                                       |
+ |                                                                    |
+ | CiviCRM WCI is distributed in the hope that it will be useful,     |
+ | but WITHOUT ANY WARRANTY; without even the implied warranty of     |
+ | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.               |
+ | See the GNU Affero General Public License for more details.        |
+ |                                                                    |
+ | You should have received a copy of the GNU Affero General Public   |
+ | License along with this program; if not, contact Zyxware           |
+ | Technologies at info[AT]zyxware[DOT]com.                           |
+ +--------------------------------------------------------------------+
+*}
 {* HEADER *}
 <div class="crm-block crm-form-block">
 <div class="crm-submit-buttons">
@@ -14,7 +36,7 @@
   </div>
 {/foreach}
   {if $form.title.value != ""}
-    {php} 
+    {php}
       if(isset($_REQUEST['id'])) {
         $emb_id = $_REQUEST['id'];
         $wid_id = CRM_Wci_BAO_EmbedCode::getWidgetId($emb_id);
@@ -39,7 +61,7 @@
           <div class="description">
             Add this widget to any web page by copying and pasting the code below.
           </div>
-          <textarea rows="8" cols="40" name="widget_code" id="widget_code"><script type="text/javascript" src="{php}echo $widget_controller_path;{/php}?id={php}echo $emb_id;{/php}&referal_id=2442"> </script> 
+          <textarea rows="8" cols="40" name="widget_code" id="widget_code"><script type="text/javascript" src="{php}echo $widget_controller_path;{/php}?id={php}echo $emb_id;{/php}&referal_id=2442"> </script>
 <div id='widgetwci'></div></textarea>
           <br>
           <strong>

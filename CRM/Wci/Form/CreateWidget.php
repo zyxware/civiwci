@@ -247,7 +247,7 @@ class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
           $this->setDefaults(array(
               'custom_template' => $cust_templ));
         } else {
-          $output = file_get_contents('templates/CRM/Wci/Page/wciwidget.tpl',FILE_USE_INCLUDE_PATH);
+          $output = file_get_contents('templates/CRM/Wci/Page/WCIWidget.tpl', FILE_USE_INCLUDE_PATH);
           $elem = $this->getElement('custom_template');
           $elem->setValue($output);
         }
@@ -256,7 +256,7 @@ class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
     }
     else {
       CRM_Utils_System::setTitle(ts('Create Widget'));
-      $output = file_get_contents('templates/CRM/Wci/Page/wciwidget.tpl',FILE_USE_INCLUDE_PATH);
+      $output = file_get_contents('templates/CRM/Wci/Page/WCIWidget.tpl', FILE_USE_INCLUDE_PATH);
       $elem = $this->getElement('custom_template');
       $elem->setValue($output);
     }

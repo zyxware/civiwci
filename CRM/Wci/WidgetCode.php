@@ -37,7 +37,7 @@ class CRM_Wci_WidgetCode {
 
     if ($data["override"] == '0') {
       $template->template_dir[] = getWciWidgetTemplatePath();
-      $wcidata = $template->fetch('wciwidget.tpl');
+      $wcidata = $template->fetch('WCIWidget.tpl');
     } else {
       $wcidata = $template->fetch('string:' . html_entity_decode($data['custom_template']));
     }

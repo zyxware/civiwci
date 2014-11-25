@@ -1,5 +1,11 @@
-Release Notes for civicrm-wci CiciCRM extension. 1.0-rc2
+Release Notes for civicrm-wci CiciCRM extension. 1.0-rc3
 ===========================================================
+
+1.0-rc3, 11/25/2014
+---------------------
+1. Updated Readme
+2. Changed module name to com.zyxware.civiwci
+3. 1.0-rc2 bug fixes.
 
 1.0-rc2, 11/21/2014
 ---------------------

@@ -36,7 +36,7 @@ class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
 
   function preProcess() {
     $this->_id = CRM_Utils_Request::retrieve('id', 'Positive', $this, FALSE, NULL, 'REQUEST');
-    CRM_Core_Resources::singleton()->addScriptFile('org.civicrm.wci', 'js/addmore.js');
+    CRM_Core_Resources::singleton()->addScriptFile('com.zyxware.civiwci', 'js/addmore.js');
     parent::preProcess();
   }
 

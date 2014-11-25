@@ -139,25 +139,25 @@ class CRM_Wci_DAO_ProgressBarFormula extends CRM_Core_DAO
         'progress_bar_formula_id' => array(
           'name' => 'id',
           'type' => CRM_Utils_Type::T_INT,
-          'title' => ts('WCI Progress Bar Formula Entry Id', array('domain' => 'org.civicrm.wci')) ,
+          'title' => ts('WCI Progress Bar Formula Entry Id', array('domain' => 'com.zyxware.civiwci')) ,
           'required' => true,
         ) ,
         'contribution_page_id' => array(
           'name' => 'contribution_page_id',
           'type' => CRM_Utils_Type::T_INT,
-          'title' => ts('Contribution Page Reference Id', array('domain' => 'org.civicrm.wci')) ,
+          'title' => ts('Contribution Page Reference Id', array('domain' => 'com.zyxware.civiwci')) ,
           'required' => true,
         ) ,
         'progress_bar_id' => array(
           'name' => 'progress_bar_id',
           'type' => CRM_Utils_Type::T_INT,
-          'title' => ts('Progress Bar Reference Id', array('domain' => 'org.civicrm.wci')) ,
+          'title' => ts('Progress Bar Reference Id', array('domain' => 'com.zyxware.civiwci')) ,
           'required' => true,
         ) ,
         'percentage' => array(
           'name' => 'percentage',
           'type' => CRM_Utils_Type::T_FLOAT,
-          'title' => ts('Percentage Amount', array('domain' => 'org.civicrm.wci')) ,
+          'title' => ts('Percentage Amount', array('domain' => 'com.zyxware.civiwci')) ,
           'required' => true,
         ) ,
       );

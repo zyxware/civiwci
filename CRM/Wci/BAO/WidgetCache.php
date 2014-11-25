@@ -70,10 +70,10 @@ class CRM_Wci_BAO_WidgetCache extends CRM_Wci_DAO_WidgetCache {
       array(1 => array($widgetId, 'Integer')), TRUE, 'CRM_Wci_DAO_WidgetCache');
   }
 
-  public static function clearCache($pbId) {
+  public static function deleteWidgetCacheByProgressbar($pbId) {
     $query = "SELECT wc.widget_id FROM civicrm_wci_widget_cache as wc INNER JOIN civicrm_wci_widget w on w.id = wc.widget_id WHERE w.progress_bar_id =%1";
     $dao = CRM_Core_DAO::executeQuery($query, array(1 => array($pbId, 'Integer')), TRUE, 'CRM_Wci_DAO_WidgetCache');
-    if ($dao->fetch()) {
+    while ($dao->fetch()) {
       $widget_id = $dao->widget_id;
       CRM_Wci_BAO_WidgetCache::deleteWidgetCache($widget_id);
     }

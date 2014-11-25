@@ -129,13 +129,13 @@ class CRM_Wci_DAO_EmbedCode extends CRM_Core_DAO
         'embed_code_id' => array(
           'name' => 'id',
           'type' => CRM_Utils_Type::T_INT,
-          'title' => ts('WCI embed code Id', array('domain' => 'org.civicrm.wci')) ,
+          'title' => ts('WCI embed code Id', array('domain' => 'com.zyxware.civiwci')) ,
           'required' => true,
         ) ,
         'name' => array(
           'name' => 'name',
           'type' => CRM_Utils_Type::T_STRING,
-          'title' => ts('embed cide Name', array('domain' => 'org.civicrm.wci')) ,
+          'title' => ts('embed cide Name', array('domain' => 'com.zyxware.civiwci')) ,
           'required' => true,
           'maxlength' => 64,
         ) ,

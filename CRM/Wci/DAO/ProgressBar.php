@@ -128,13 +128,13 @@ class CRM_Wci_DAO_ProgressBar extends CRM_Core_DAO
         'progress_bar_id' => array(
           'name' => 'id',
           'type' => CRM_Utils_Type::T_INT,
-          'title' => ts('WCI Progress Bar Id', array('domain' => 'org.civicrm.wci')) ,
+          'title' => ts('WCI Progress Bar Id', array('domain' => 'com.zyxware.civiwci')) ,
           'required' => true,
         ) ,
         'name' => array(
           'name' => 'name',
           'type' => CRM_Utils_Type::T_STRING,
-          'title' => ts('Progress Bar Name', array('domain' => 'org.civicrm.wci')) ,
+          'title' => ts('Progress Bar Name', array('domain' => 'com.zyxware.civiwci')) ,
           'required' => true,
           'maxlength' => 64,
         ) ,

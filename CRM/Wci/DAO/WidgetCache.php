@@ -139,13 +139,13 @@ class CRM_Wci_DAO_WidgetCache extends CRM_Core_DAO
         'widget_code' => array(
           'name' => 'widget_code',
           'type' => CRM_Utils_Type::T_TEXT,
-          'title' => ts('widget code', array('domain' => 'org.civicrm.wci')) ,
+          'title' => ts('widget code', array('domain' => 'com.zyxware.civiwci')) ,
           'required' => false,
         ) ,
         'expire' => array(
           'name' => 'ts',
           'type' => CRM_Utils_Type::T_INT,
-          'title' => ts('timestamp', array('domain' => 'org.civicrm.wci')) ,
+          'title' => ts('timestamp', array('domain' => 'com.zyxware.civiwci')) ,
           'required' => false,
         ) ,
 

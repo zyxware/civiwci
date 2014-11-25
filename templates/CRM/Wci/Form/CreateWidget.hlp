@@ -45,5 +45,7 @@
 {/htxt}
 
 {htxt id="add-new-pb"}
-{ts}If no progressbars availavle, create one.{/ts}
+{capture assign="createPBURL"}{crmURL p="civicrm/wci/progress-bar/add" q="reset=1"}{/capture}
+{ts 1=$createPBURL}If no progressbars availavle, <a href='%1'>create</a> one.
+{/ts}
 {/htxt}

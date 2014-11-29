@@ -368,7 +368,7 @@ class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
       else {
         $widget_id = CRM_Core_DAO::singleValueQuery('SELECT LAST_INSERT_ID()');
       }
-      CRM_Core_Session::setStatus(ts('Widget created successfuly'), '', 'success');
+      CRM_Core_Session::setStatus(ts('Widget created successfully'), '', 'success');
 
       if(isset($_REQUEST['_qf_CreateWidget_next'])) {
         CRM_Utils_System::redirect('?action=update&reset=1&id=' . $widget_id);

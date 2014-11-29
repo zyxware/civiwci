@@ -5,8 +5,8 @@
   <description>Widget Creation Interface, CiviCRM CMS independent Widget Creation Interface.</description>
   <license>AGPL-3.0</license>
   <maintainer>
-    <author>Manoj K, Jagadees Pillai</author>
-    <email>manoj.k@zyxware.com, jagadees.pillai@zyxware.com</email>
+    <author>Manoj K, Jagadees Pillai, Vimal Joseph</author>
+    <email>manoj.k@zyxware.com, jagadees.pillai@zyxware.com, vimal.joseph@zyxware.com</email>
   </maintainer>
   <releaseDate>2014-11-25</releaseDate>
   <version>1.0-rc3</version>

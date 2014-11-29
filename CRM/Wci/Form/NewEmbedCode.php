@@ -105,7 +105,7 @@ class CRM_Wci_Form_NewEmbedCode extends CRM_Core_Form {
       $transaction = new CRM_Core_Transaction();
       CRM_Core_DAO::executeQuery($sql, $params);
       $transaction->commit();
-      CRM_Core_Session::setStatus(ts('Embed code created successfuly'), '', 'success');
+      CRM_Core_Session::setStatus(ts('Embed code created successfully'), '', 'success');
       if(isset($_REQUEST['_qf_NewEmbedCode_next'])) {
         (isset($this->_id)) ? $embed_id = $this->_id :
               $embed_id = CRM_Core_DAO::singleValueQuery('SELECT LAST_INSERT_ID()');

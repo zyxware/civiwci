@@ -48,4 +48,10 @@
     <title>ManageEmbedCode</title>
     <access_arguments>access CiviCRM</access_arguments>
   </item>
+  <item>
+    <path>civicrm/wci/embed</path>
+    <page_callback>CRM_Wci_Page_Embed</page_callback>
+    <title>Embed</title>
+    <access_arguments>access CiviCRM</access_arguments>
+  </item>
 </menu>

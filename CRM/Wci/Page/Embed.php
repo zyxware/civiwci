@@ -4,6 +4,7 @@
  | CiviCRM Widget Creation Interface (WCI) Version 1.0                |
  +--------------------------------------------------------------------+
  | Copyright Zyxware Technologies (c) 2014                            |
+ | Copyright (C) 2014 David Thompson <davet@gnu.org>                  |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM WCI.                                |
  |                                                                    |
@@ -21,16 +22,12 @@
  | Technologies at info[AT]zyxware[DOT]com.                           |
  +--------------------------------------------------------------------+
 */
-/**
- *
- * @package CRM
- * @copyright CiviCRM LLC (c) 2004-2013
- * $Id$
- */
 
-require_once '../../../civicrm.config.php';
+require_once 'CRM/Core/Page.php';
 
-$license_text = '
+class CRM_Wci_Page_Embed extends CRM_Core_Page {
+  function run() {
+    $license_text = '
 /**
  * @licstart The following is the entire license notice for the JavaScript
  * code included by CiviCRM WCI extension.
@@ -49,7 +46,8 @@ $license_text = '
  * code included by CiviCRM WCI extension.
  */
 ';
-$wciembed_js = '
+
+    $wciembed_js = '
 // Cleanup functions for the document ready method
 if ( document.addEventListener ) {
     DOMContentLoaded = function() {
@@ -90,15 +88,17 @@ function onReady( ) {
   document.getElementById("widgetwci").innerHTML = wciwidgetcode;
 }';
 
-$config = CRM_Core_Config::singleton();
+    $config = CRM_Core_Config::singleton();
 
-$embedId = CRM_Utils_Request::retrieve('id', 'Positive', CRM_Core_DAO::$_nullObject);
-$preview = CRM_Utils_Request::retrieve('preview', 'Positive', CRM_Core_DAO::$_nullObject);
+    $embedId = CRM_Utils_Request::retrieve('id', 'Positive', CRM_Core_DAO::$_nullObject);
+    $preview = CRM_Utils_Request::retrieve('preview', 'Positive', CRM_Core_DAO::$_nullObject);
 
-$output  = $license_text;
-$output .= 'var wciwidgetcode =  ' . CRM_Wci_WidgetCode::get_widget_code($embedId, $preview) . ';';
-$output .= $wciembed_js;
+    $output  = $license_text;
+    $output .= 'var wciwidgetcode =  ' . CRM_Wci_WidgetCode::get_widget_code($embedId, $preview) . ';';
+    $output .= $wciembed_js;
 
-echo $output;
-
-CRM_Utils_System::civiExit();
+    header('Content-Type: text/javascript');
+    echo $output;
+    CRM_Utils_System::civiExit();
+  }
+}

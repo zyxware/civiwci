@@ -34,6 +34,10 @@ class CRM_Wci_Form_NewEmbedCode extends CRM_Core_Form {
   protected $_id;
 
   function preProcess() {
+      if(isset($_REQUEST['id'])) {
+        $this->assign('emb_id', $_REQUEST['id']);
+      }
+
       $this->_id = CRM_Utils_Request::retrieve('id', 'Positive', $this,
           FALSE, NULL, 'REQUEST' );
   }

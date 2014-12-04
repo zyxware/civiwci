@@ -1,5 +1,11 @@
-Release Notes for civicrm-wci CiciCRM extension. 1.0-rc3
+Release Notes for civicrm-wci CiciCRM extension. 1.0-rc4
 ===========================================================
+
+1.0-rc4, 12/04/2014
+---------------------
+1. Access permission for CiviWCI
+2. Moved Embed.php to civicrm-wci/CRM/Wci/Page folder and wrapped old code in CRM_Wci_Page_Embed
+3. Removed db query to get menu id max and iterated params array to get the max value.
 
 1.0-rc3, 11/25/2014
 ---------------------

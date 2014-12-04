@@ -41,8 +41,7 @@ For getting better performance WCI widget uses a cache system. A timeout value c
 ### Permission
 
 There are 2 permissions associated with CiviWCI.
-'Administer CiviWCI' : All WCI menu items are available for user of this permission. Please enable it in your CMS permission page.
-
-'Access CiviWCI Widget' : To see the widget the user should have this permission. Enable this to anonymous users too, if they want to view the widget.
+- 'Administer CiviWCI' : All WCI menu items are available for user of this permission. Please enable it in your CMS permission page.
+- 'Access CiviWCI Widget' : To see the widget the user should have this permission. Enable this to anonymous users too, if they want to view the widget.
 
 CiviCRM-WCI development is sponsored by [Zyxware Tehnologies](http://www.zyxware.com).

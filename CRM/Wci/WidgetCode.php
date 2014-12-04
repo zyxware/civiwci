@@ -22,7 +22,7 @@
  +--------------------------------------------------------------------+
 */
 
-require_once '../wci-helper-functions.php';
+require_once 'wci-helper-functions.php';
 
 class CRM_Wci_WidgetCode {
 

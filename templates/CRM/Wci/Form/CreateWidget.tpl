@@ -3,6 +3,7 @@
  | CiviCRM Widget Creation Interface (WCI) Version 1.0                |
  +--------------------------------------------------------------------+
  | Copyright Zyxware Technologies (c) 2014                            |
+ | Copyright (C) 2014 David Thompson <davet@gnu.org>                  |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM WCI.                                |
  |                                                                    |
@@ -27,13 +28,6 @@
   </div>
 
   {if $form.title.value != ""}
-    {php}
-      if(isset($_REQUEST['id'])) {
-        $widget_controller_path = getWciWidgetControllerPath();
-        $extension_root_path = getExtensionRootPath();
-      }
-    {/php}
-
     <div class="crm-section">
       <div class="label">Widget Preview</div>
         <div class="content">
@@ -42,7 +36,7 @@
           <div class="description">
             Click <strong>Save &amp; Preview</strong> to save any changes to your settings, and preview the widget again on this page.
           </div>
-          <script type="text/javascript" src="{php}echo $widget_controller_path;{/php}?id={php}echo $_REQUEST['id'];{/php}&preview=1"></script>
+          <script type="text/javascript" src="{crmURL p='civicrm/wci/embed' q="id=`$emb_id`&preview=1"}"></script>
   <div id='widgetwci'></div>{help id="preview" file="CRM/Wci/Form/CreateWidget"}
         </div>
     </div>

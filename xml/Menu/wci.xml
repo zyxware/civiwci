@@ -4,48 +4,54 @@
     <path>civicrm/wci/widget/add</path>
     <page_callback>CRM_Wci_Form_CreateWidget</page_callback>
     <title>Create Widget</title>
-    <access_arguments>access CiviCRM</access_arguments>
+    <access_arguments>administer CiviWCI</access_arguments>
   </item>
   <item>
     <path>civicrm/wci/progress-bar/add</path>
     <page_callback>CRM_Wci_Form_ProgressBar</page_callback>
     <title>ProgressBar</title>
-    <access_arguments>access CiviCRM</access_arguments>
+    <access_arguments>administer CiviWCI</access_arguments>
   </item>
   <item>
     <path>civicrm/wci/test-bar/testadd</path>
     <page_callback>CRM_Wci_Form_TestBar</page_callback>
     <title>TestBar</title>
-    <access_arguments>access CiviCRM</access_arguments>
+    <access_arguments>administer CiviWCI</access_arguments>
   </item>
   <item>
     <path>civicrm/wci/progress-bar</path>
     <page_callback>CRM_Wci_Page_ProgressBarList</page_callback>
     <title>ProgressBarList</title>
-    <access_arguments>access CiviCRM</access_arguments>
+    <access_arguments>administer CiviWCI</access_arguments>
   </item>
   <item>
     <path>civicrm/wci/widget</path>
     <page_callback>CRM_Wci_Page_WidgetList</page_callback>
     <title>Widget List</title>
-    <access_arguments>access CiviCRM</access_arguments>
+    <access_arguments>administer CiviWCI</access_arguments>
   </item>
   <item>
     <path>civicrm/wci/settings</path>
     <page_callback>CRM_Wci_Form_WCISettings</page_callback>
     <title>WCISettings</title>
-    <access_arguments>access CiviCRM</access_arguments>
+    <access_arguments>administer CiviWCI</access_arguments>
   </item>
   <item>
     <path>civicrm/wci/embed-code/add</path>
     <page_callback>CRM_Wci_Form_NewEmbedCode</page_callback>
     <title>NewEmbedCode</title>
-    <access_arguments>access CiviCRM</access_arguments>
+    <access_arguments>administer CiviWCI</access_arguments>
   </item>
   <item>
     <path>civicrm/wci/embed-code</path>
     <page_callback>CRM_Wci_Page_ManageEmbedCode</page_callback>
     <title>ManageEmbedCode</title>
-    <access_arguments>access CiviCRM</access_arguments>
+    <access_arguments>administer CiviWCI</access_arguments>
+  </item>
+  <item>
+    <path>civicrm/wci/embed</path>
+    <page_callback>CRM_Wci_Page_Embed</page_callback>
+    <title>Embed</title>
+    <access_arguments>access CiviWCI Widget</access_arguments>
   </item>
 </menu>

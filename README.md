@@ -38,4 +38,11 @@ Mailing list subscription feature also exposed though widget. To use that first 
 
 For getting better performance WCI widget uses a cache system. A timeout value can be provided 'Widget cache timeout' field for saving the widget in database for that specified time. Static widgets (widgets with out progress bar) will be caches permanently unless there is any change in the widget.
 
+### Permission
+
+There are 2 permissions associated with CiviWCI.
+'Administer CiviWCI' : All WCI menu items are available for user of this permission. Please enable it in your CMS permission page.
+
+'Access CiviWCI Widget' : To see the widget the user should have this permission. Enable this to anonymous users too, if they want to view the widget.
+
 CiviCRM-WCI development is sponsored by [Zyxware Tehnologies](http://www.zyxware.com).

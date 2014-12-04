@@ -128,15 +128,30 @@ function wci_civicrm_alterSettingsFolders(&$metaDataFolders = NULL) {
   _wci_civix_civicrm_alterSettingsFolders($metaDataFolders);
 }
 
+function _getMenuKeyMax($menuArray) {
+  $max = array(max(array_keys($menuArray)));
+  foreach($menuArray as $v) {
+    if (!empty($v['child'])) {
+      $max[] = _getMenuKeyMax($v['child']);
+    }
+  }
+  return max($max);
+}
+
+function wci_civicrm_permission(&$permissions) {
+  $prefix = ts('CiviWCI') . ': '; // name of extension or module
+  $permissions += array(
+    'access CiviWCI Widget' => $prefix . ts('Access CiviWCI Widget'),
+    'administer CiviWCI' => $prefix . ts('Administer CiviWCI'),
+  );
+}
+
 function wci_civicrm_navigationMenu( &$params ) {
 
-  $navId = CRM_Core_DAO::singleValueQuery("SELECT max(id) FROM civicrm_navigation");
-  if (is_integer($navId)) {
-    $navId++;
-  }
+  $maxKey = _getMenuKeyMax($params);
   // Find the Help menu
   $helpID = CRM_Core_DAO::getFieldValue('CRM_Core_DAO_Navigation', 'Help', 'id', 'name');
-  $params[$navId] = $params[$helpID];
+  $params[$maxKey] = $params[$helpID];
   // inserting WCI menu at the place of old help location
   $params[$helpID] = array (
     'attributes' => array (
@@ -147,7 +162,7 @@ function wci_civicrm_navigationMenu( &$params ) {
     'operator' => 'OR',
     'separator' => 0,
     'parentID' => 0,
-    'navID' => $navId,
+    'navID' => $maxKey,
     'active' => 1),
     'child' =>  array (
         '1' => array (
@@ -155,11 +170,11 @@ function wci_civicrm_navigationMenu( &$params ) {
         'label' => ts('New Widget'),
         'name' => 'new_widget',
         'url' => 'civicrm/wci/widget/add',
-        'permission' => 'access CiviReport,access CiviContribute',
+        'permission' => 'administer CiviWCI',
         'operator' => 'OR',
         'separator' => 1,
-        'parentID' => $navId,
-        'navID' => $navId+1,
+        'parentID' => $maxKey,
+        'navID' => $maxKey+1,
         'active' => 1)),
 
         '2' => array (
@@ -167,11 +182,11 @@ function wci_civicrm_navigationMenu( &$params ) {
         'label' => ts('Manage Widgets'),
         'name' => 'manage_widget',
         'url' => 'civicrm/wci/widget?reset=1',
-        'permission' => 'access CiviReport,access CiviContribute',
+        'permission' => 'administer CiviWCI',
         'operator' => 'OR',
         'separator' => 1,
-        'parentID' => $navId,
-        'navID' => $navId+2,
+        'parentID' => $maxKey,
+        'navID' => $maxKey+2,
         'active' => 1)),
 
         '3' => array (
@@ -179,11 +194,11 @@ function wci_civicrm_navigationMenu( &$params ) {
         'label' => ts('New Progress Bar'),
         'name' => 'new_progress_bar',
         'url' => 'civicrm/wci/progress-bar/add',
-        'permission' => 'access CiviReport,access CiviContribute',
+        'permission' => 'administer CiviWCI',
         'operator' => 'OR',
         'separator' => 1,
-        'parentID' => $navId,
-        'navID' => $navId+3,
+        'parentID' => $maxKey,
+        'navID' => $maxKey+3,
         'active' => 1)),
 
         '4' => array (
@@ -191,11 +206,11 @@ function wci_civicrm_navigationMenu( &$params ) {
         'label' => ts('Manage Progress Bars'),
         'name' => 'manage_progress_bar',
         'url' => 'civicrm/wci/progress-bar?reset=1',
-        'permission' => 'access CiviReport,access CiviContribute',
+        'permission' => 'administer CiviWCI',
         'operator' => 'OR',
         'separator' => 1,
-        'parentID' => $navId,
-        'navID' => $navId+4,
+        'parentID' => $maxKey,
+        'navID' => $maxKey+4,
         'active' => 1)),
 
         '5' => array (
@@ -203,11 +218,11 @@ function wci_civicrm_navigationMenu( &$params ) {
         'label' => ts('New Embed Code'),
         'name' => 'new_embed-code',
         'url' => 'civicrm/wci/embed-code/add',
-        'permission' => 'access CiviReport,access CiviContribute',
+        'permission' => 'administer CiviWCI',
         'operator' => 'OR',
         'separator' => 1,
-        'parentID' => $navId,
-        'navID' => $navId+5,
+        'parentID' => $maxKey,
+        'navID' => $maxKey+5,
         'active' => 1)),
 
         '6' => array (
@@ -215,11 +230,11 @@ function wci_civicrm_navigationMenu( &$params ) {
         'label' => ts('Manage Embed Code'),
         'name' => 'manage-emebed-code',
         'url' => 'civicrm/wci/embed-code?reset=1',
-        'permission' => 'access CiviReport,access CiviContribute',
+        'permission' => 'administer CiviWCI',
         'operator' => 'OR',
         'separator' => 1,
-        'parentID' => $navId,
-        'navID' => $navId+6,
+        'parentID' => $maxKey,
+        'navID' => $maxKey+6,
         'active' => 1)),
 
         '7' => array (
@@ -227,11 +242,11 @@ function wci_civicrm_navigationMenu( &$params ) {
         'label' => ts('Widget Settings'),
         'name' => 'widget-settings',
         'url' => 'civicrm/wci/settings?reset=1',
-        'permission' => 'access CiviReport,access CiviContribute',
+        'permission' => 'administer CiviWCI',
         'operator' => 'OR',
         'separator' => 1,
-        'parentID' => $navId,
-        'navID' => $navId+7,
+        'parentID' => $maxKey,
+        'navID' => $maxKey+7,
         'active' => 1)),
         ),
   );

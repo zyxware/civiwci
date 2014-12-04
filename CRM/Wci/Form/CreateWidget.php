@@ -43,6 +43,11 @@ class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
   function preProcess() {
     CRM_Core_Resources::singleton()->addScriptFile('com.zyxware.civiwci', 'js/createwidget.js');
     parent::preProcess();
+
+    if(isset($_REQUEST['id'])) {
+      $this->assign('emb_id', $_REQUEST['id']);
+    }
+
     $this->_id = CRM_Utils_Request::retrieve('id', 'Positive', $this,
           FALSE, NULL, 'REQUEST' );
 

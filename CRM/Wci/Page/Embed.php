@@ -46,8 +46,8 @@ class CRM_Wci_Page_Embed extends CRM_Core_Page {
  * PARTICULAR PURPOSE.  See the GNU Affero General Public License
  * for more details.
  *
- * You should have received a copy of the GNU General Public
- * License along with FSF Member Dashboard.  If not, see
+ * You should have received a copy of the GNU Affero General Public
+ * License along with this program.  If not, see
  * <http://www.gnu.org/licenses/>.
  *
  * @licend The above is the entire license notice for the

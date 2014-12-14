@@ -13,6 +13,8 @@ CREATE TABLE IF NOT EXISTS civicrm_wci_progress_bar_formula (
   id int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Formula entry Id.',
   contribution_page_id int(10) unsigned NOT NULL COMMENT 'Reference contribution page id.',
   progress_bar_id int(10) unsigned DEFAULT NULL COMMENT 'Custom Progress bar reference id.',
+  start_date DATE NULL DEFAULT NULL COMMENT 'Contribtuion start date.',
+  end_date DATE NULL DEFAULT NULL COMMENT 'Contribtuion end date.',
   percentage float unsigned NULL COMMENT 'Percentage amount.',
   PRIMARY KEY (`id`),
   CONSTRAINT FK_civicrm_wci_progress_bar_formula_progress_bar_id FOREIGN KEY (`progress_bar_id`) REFERENCES `civicrm_wci_progress_bar`(`id`) ON DELETE SET NULL

@@ -96,4 +96,21 @@ class CRM_Wci_Upgrader extends CRM_Wci_Upgrader_Base {
     return TRUE;
   }
 
+   public function upgrade_1002() {
+    $this->ctx->log->info('Applying update 1002');
+    CRM_Core_DAO::executeQuery('
+      ALTER TABLE `civicrm_wci_progress_bar_formula`
+      ADD `start_date` DATE NULL DEFAULT NULL
+      COMMENT "Contribtuion start date"
+      AFTER `progress_bar_id`
+    ');
+    CRM_Core_DAO::executeQuery('
+      ALTER TABLE `civicrm_wci_progress_bar_formula`
+      ADD `end_date` DATE NULL DEFAULT NULL
+      COMMENT "Contribtuion end date"
+      AFTER `start_date`
+    ');
+    return TRUE;
+  }
+
 }

@@ -64,11 +64,7 @@ class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
       $params = array(1 => array($this->_id, 'Integer'));
 
       $dao = CRM_Core_DAO::executeQuery($query, $params, TRUE, 'CRM_Wci_DAO_ProgressBarFormula');
-
       while ($dao->fetch()) {
-        $for_page[$dao->id] = array();
-        CRM_Core_DAO::storeValues($dao, $for_page[$dao->id]);
-
         $this->add(
           'select', // field type
           'contribution_page_'.$count, // field name
@@ -77,19 +73,33 @@ class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
           false // is required
         );
         $this->add(
+          'text',
+          'contribution_start_date_' . $count ,
+          ts('Start Date')
+        );
+        $this->add(
+          'text',
+          'contribution_end_date_' . $count,
+          ts('End Date')
+        );
+        $this->add(
           'text', // field type
           'percentage_'.$count, // field name
           'Percentage of contribution taken', // field label
           false // is required
         );
         //save formula id
-        $this->addElement('hidden', 'contrib_elem_'.$count , $for_page[$dao->id]['id']);
+        $this->addElement('hidden', 'contrib_elem_'.$count , $dao->id);
 
         $this->setDefaults(array(
-              'contribution_page_'.$count => $for_page[$dao->id]['contribution_page_id']));
+              'contribution_page_'.$count => $dao->contribution_page_id));
         $this->setDefaults(array(
-              'percentage_'.$count => $for_page[$dao->id]['percentage']));
-
+              'percentage_'.$count => $dao->percentage));
+        $this->setDefaults(array(
+              'contribution_start_date_'.$count => $dao->start_date));
+        $this->setDefaults(array(
+              'contribution_end_date_'.$count => $dao->end_date));
+        //set default for start date and end date.
         $count++;
       }
       CRM_Utils_System::setTitle(ts('Edit Progress Bar'));
@@ -103,6 +113,16 @@ class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
         'Contribution page', // field label
         getContributionPageOptions(), // list of options
         true // is required
+      );
+      $this->add(
+        'text',
+        'contribution_start_date_1',
+        ts('Start Date')
+      );
+      $this->add(
+        'text',
+        'contribution_end_date_1',
+        ts('End Date')
       );
       $this->add(
         'text', // field type
@@ -177,18 +197,28 @@ class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
         for($i = 1; $i <= (int)$_REQUEST['contrib_count']; $i++) {
           $page = 'contribution_page_' . (string)$i;
           $perc = 'percentage_' . (string)$i;
+          $sdate = 'contribution_start_date_' . (string)$i;
+          $edate = 'contribution_end_date_' . (string)$i;
 
           $sql = "INSERT INTO civicrm_wci_progress_bar_formula
-            (contribution_page_id, progress_bar_id, percentage)
-            VALUES (%1, %2, %3)";
-
+            (contribution_page_id, progress_bar_id, start_date, end_date, percentage)
+            VALUES (%1, %2, %3, %4, %5)";
+            $start = NULL;
+            $end = NULL;
+            if (!empty($_REQUEST[$sdate])) {
+              $start = CRM_Utils_Date::processDate($_REQUEST[$sdate], NULL, FALSE, "Ymd");
+            }
+            if (!empty($_REQUEST[$edate])) {
+              $end = CRM_Utils_Date::processDate($_REQUEST[$edate], NULL, FALSE, "Ymd");
+            }
           CRM_Core_DAO::executeQuery($sql,
             array(1 => array($_REQUEST[$page], 'Integer'),
-            2 => array($this->_id, 'Integer'),
-            3 => array($_REQUEST[$perc], 'Float'),
-          ));
+              2 => array($this->_id, 'Integer'),
+              3 => array($start, 'Date'),
+              4 => array($end, 'Date'),
+              5 => array($_REQUEST[$perc], 'Float')
+            ));
         }
-
         $transaction->commit();
         CRM_Wci_BAO_WidgetCache::deleteWidgetCacheByProgressbar($this->_id);
         CRM_Core_Session::setStatus(ts('Progress bar created successfully'), '', 'success');

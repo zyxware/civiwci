@@ -60,30 +60,22 @@ class CRM_Wci_BAO_ProgressBar extends CRM_Wci_DAO_ProgressBar {
    * @access public
    */
   public static function getPBCollectedAmount($pbId) {
-    $bp = 0;
-    $query = "SELECT * FROM civicrm_wci_progress_bar_formula WHERE progress_bar_id =" . $pbId;
+    $amount = 0;
+    $query = "SELECT sum((civicontrib.net_amount * wcipb.percentage) / 100) as amount
+      FROM civicrm_wci_progress_bar_formula wcipb
+      JOIN civicrm_contribution civicontrib
+      ON wcipb.contribution_page_id = civicontrib.contribution_page_id
+      WHERE
+        civicontrib.contribution_status_id = 1
+        AND (DATE(civicontrib.receive_date) >= if(wcipb.start_date is not NULL, wcipb.start_date, '0000-00-00')
+        AND DATE(civicontrib.receive_date) <= if(wcipb.end_date is not NULL, wcipb.end_date, DATE(now())))
+        AND wcipb.progress_bar_id =" . $pbId;
     $params = array();
-
-    $daoPbf = CRM_Core_DAO::executeQuery($query, $params, TRUE, 'CRM_Wci_DAO_ProgressBarFormula');
-      while ($daoPbf->fetch()) {
-        $for_page[$daoPbf->id] = array();
-        CRM_Core_DAO::storeValues($daoPbf, $for_page[$daoPbf->id]);
-        $px = $for_page[$daoPbf->id]['percentage'];
-
-        $query = "SELECT * FROM civicrm_contribution where contribution_page_id =" . $for_page[$daoPbf->id]['contribution_page_id'];
-        $params = array();
-
-        $daoCon = CRM_Core_DAO::executeQuery($query, $params, TRUE, 'CRM_Contribute_DAO_Contribution');
-
-        while ($daoCon->fetch()) {
-          $contributions[$daoCon->id] = array();
-          CRM_Core_DAO::storeValues($daoCon, $contributions[$daoCon->id]);
-          $bx = $contributions[$daoCon->id]['total_amount'];
-
-          $bp += $bx * $px / 100;
-        }
-     }
-     return floor($bp);
+    $daoPbf = CRM_Core_DAO::executeQuery($query, $params);
+    if ($daoPbf->fetch()) {
+      $amount = $daoPbf->amount;
+    }
+    return round($amount);
   }
 
   public static function getProgressbarInfo($pbId) {

@@ -104,6 +104,10 @@ class CRM_Wci_DAO_ProgressBarFormula extends CRM_Core_DAO
    * @var float
    */
   public $percentage;
+
+  public $start_date;
+
+  public $end_date;
   function __construct()
   {
     $this->__table = 'civicrm_wci_progress_bar_formula';
@@ -154,12 +158,22 @@ class CRM_Wci_DAO_ProgressBarFormula extends CRM_Core_DAO
           'title' => ts('Progress Bar Reference Id', array('domain' => 'com.zyxware.civiwci')) ,
           'required' => true,
         ) ,
+        'start_date' => array(
+          'name' => 'start_date',
+          'type' => CRM_Utils_Type::T_DATE,
+          'title' => ts('Start date', array('domain' => 'com.zyxware.civiwci'))
+        ),
+        'end_date' => array(
+          'name' => 'end_date',
+          'type' => CRM_Utils_Type::T_DATE,
+          'title' => ts('End date', array('domain' => 'com.zyxware.civiwci'))
+        ),
         'percentage' => array(
           'name' => 'percentage',
           'type' => CRM_Utils_Type::T_FLOAT,
           'title' => ts('Percentage Amount', array('domain' => 'com.zyxware.civiwci')) ,
           'required' => true,
-        ) ,
+        )
       );
     }
     return self::$_fields;
@@ -178,7 +192,9 @@ class CRM_Wci_DAO_ProgressBarFormula extends CRM_Core_DAO
         'id' => 'progress_bar_formula_id',
         'contribution_page_id' => 'contribution_page_id',
         'progress_bar_id' => 'progress_bar_id',
-        'percentage' => 'percentage',
+        'start_date' => 'start_date',
+        'end_date' => 'end_date',
+        'percentage' => 'percentage'
       );
     }
     return self::$_fieldKeys;

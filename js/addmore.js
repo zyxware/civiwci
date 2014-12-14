@@ -30,6 +30,8 @@ cj(function ( $ ) {
       '<a id=\"remove_link\" class=\"form-link\" href=\"remove\" name=\"remove_link-' + i + '\"> Remove</a>');
       $('#' + "contribution_page_" + i).parent().parent().attr("id", "crm-section-con-" + i);
       $('#' + "percentage_" + i).parent().parent().attr("id", 'crm-section-per-' + i);
+      $('#' + "contribution_start_date_" + i).parent().parent().attr("id", 'crm-section-startdate-' + i);
+      $('#' + "contribution_end_date_" + i).parent().parent().attr("id", 'crm-section-enddate-' + i);
     }
     $('#goal_amount').parent().after('<div class="crm-wci-pb"><hr></div><label><SMALL>Progressbar shows the sum of each percentage of contributions done on each selected contribution page</SMALL></label>');
   });
@@ -75,6 +77,26 @@ cj(function ( $ ) {
     $('#' + id_content).append('<a id=\"remove_link\" class=\"form-link\" href=\"remove\" name=\"remove_link-' + count + '\"> Remove</a>');
     $('#' + id_section).append("</div>");
 
+    id_section = "crm-section-startdate-" + count;
+    sect_tag = "<div class=\"crm-section\" id=" + id_section + "> <div class=\"label\"><label>Start Date</label>";
+    $('#addmore_link').parent().parent().before(sect_tag);
+
+    id_content = "content_startdate-" + count;
+    $('#' + id_section).append("<div class=\"content\" id="+ id_content + ">");
+    $('#' + id_content).append('<input type="text" size="20" id = "startdate_' + count + '" name="startdate_' + count +'" value="" />');
+    $('#' + id_content).append('<span class=\"description\">(Format YYYY-MM-DD)</span><br><span class=\"description\">Date from which contributions to be added to this progress bar. Keep it empty to select contributions from the beginning.</span>');
+    $('#' + id_section).append("</div");
+
+    id_section = "crm-section-enddate-" + count;
+    sect_tag = "<div class=\"crm-section\" id=" + id_section + "> <div class=\"label\"><label>End Date</label>";
+    $('#addmore_link').parent().parent().before(sect_tag);
+
+    id_content = "content_enddate-" + count;
+    $('#' + id_section).append("<div class=\"content\" id="+ id_content + ">");
+    $('#' + id_content).append('<input type="text" size="20" id = "enddate_' + count + '" name="enddate_' + count +'" value="" />');
+    $('#' + id_content).append('<span class=\"description\">(Format YYYY-MM-DD)</span><br><span class=\"description\">Date to which contributions to be added to this progress bar. Keep it empty to select contributions up to today</span>');
+    $('#' + id_section).append("</div");
+
     id_section = "crm-section-per-" + count;
     sect_tag = "<div class=\"crm-section\" id=" + id_section + "> <div class=\"label\"><label>Percentage</label>";
     $('#addmore_link').parent().parent().before(sect_tag);
@@ -107,6 +129,8 @@ cj(function ( $ ) {
     var contri_page = "\"#percentage_" + rem_name_ar[1] + "\"";
     $('#crm-section-con-'+ rem_name_ar[1] +'').remove();
     $('#crm-section-per-'+ rem_name_ar[1] +'').remove();
+    $('#crm-section-startdate-'+ rem_name_ar[1] +'').remove();
+    $('#crm-section-enddate-'+ rem_name_ar[1] +'').remove();
     var count = parseInt($('input[name=contrib_count]').val());
     count--;
     $('input[name=contrib_count]').val(count);

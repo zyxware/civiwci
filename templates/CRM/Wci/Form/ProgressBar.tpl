@@ -36,22 +36,28 @@
   {include file="CRM/common/formButtons.tpl" location="top"}
   </div>
 
-  {* FIELD EXAMPLE: OPTION 1 (AUTOMATIC LAYOUT) *}
-
   {foreach from=$elementNames item=elementName}
     <div class="crm-section">
       <div class="label">{$form.$elementName.label}</div>
-      <div class="content">{$form.$elementName.html}</div>
+      {if substr($elementName, 0, 23)  eq 'contribution_start_date'}
+        <div class="content">{$form.$elementName.html}
+          <span class="description">(Format YYYY-MM-DD)</span>
+          <br>
+          <span class="description">{ts}Date from which contributions to be added to this progressbar. Keep it empty to select contributions from the beginning.{/ts}</span>
+        </div>
+      {elseif substr($elementName, 0, 21)  eq 'contribution_end_date'}
+        <div class="content">{$form.$elementName.html}
+          <span class="description">(Format YYYY-MM-DD)</span>
+          <br>
+          <span class="description">{ts}Date to which contributions to be added to this progressbar. Keep it empty to select contributions up to today{/ts}</span>
+        </div>
+      {else}
+        <div class="content">{$form.$elementName.html}</div>
+      {/if}
       <div class="clear"></div>
     </div>
   {/foreach}
 
-  {* FIELD EXAMPLE: OPTION 2 (MANUAL LAYOUT)
-
-    <div>
-      <span>{$form.favorite_color.label}</span>
-      <span>{$form.favorite_color.html}</span>
-    </div>
 
   {* FOOTER *}
   <div class="crm-submit-buttons">

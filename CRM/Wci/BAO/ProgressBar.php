@@ -61,7 +61,7 @@ class CRM_Wci_BAO_ProgressBar extends CRM_Wci_DAO_ProgressBar {
    */
   public static function getPBCollectedAmount($pbId) {
     $amount = 0;
-    $query = "SELECT sum((civicontrib.net_amount * wcipb.percentage) / 100) as amount
+    $query = "SELECT sum((civicontrib.total_amount * wcipb.percentage) / 100) as amount
       FROM civicrm_wci_progress_bar_formula wcipb
       JOIN civicrm_contribution civicontrib
       ON wcipb.contribution_page_id = civicontrib.contribution_page_id

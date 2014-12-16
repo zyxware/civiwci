@@ -112,15 +112,13 @@ class CRM_Wci_BAO_ProgressBar extends CRM_Wci_DAO_ProgressBar {
 
   public static function getProgressbarData($pbId, &$pbData) {
     if(0 != $pbId) {
-      $pbInfo = array();
-      $pbData["pb_percentage"] = CRM_Wci_BAO_ProgressBar::getProgressbarPercentage($pbId, $pbInfo);
-      $pbData["starting_amount"] = floor($pbInfo['starting_amount']);
-      $pbData["goal_amount"] = ceil($pbInfo['goal_amount']);
-
-      ($pbData["show_pb_perc"]) ? $pbData["pb_caption"] = $pbData["pb_percentage"]
-        : $pbData["pb_caption"] = CRM_Wci_BAO_ProgressBar::getPBCollectedAmount($pbId)
-        + $pbData["starting_amount"];
-
+      $pbInfo = CRM_Wci_BAO_ProgressBar::getProgressbarInfo($pbId);
+      $amount_collected = CRM_Wci_BAO_ProgressBar::getPBCollectedAmount($pbId);
+      $amount_raised = $amount_collected + $pbInfo['starting_amount'];
+      $goal = $pbInfo['goal_amount'];
+      $pbData['pb_collected'] = $amount_raised;
+      $pbData["pb_percentage"] = ($amount_raised / $goal) * 100;
+      $pbData["goal_amount"] = $goal;
       $pbData["no_pb"] = False;
     } else {
       $pbData["no_pb"] = True;

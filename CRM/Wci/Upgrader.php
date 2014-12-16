@@ -113,4 +113,13 @@ class CRM_Wci_Upgrader extends CRM_Wci_Upgrader_Base {
     return TRUE;
   }
 
+  public function upgrade_1003() {
+    $this->ctx->log->info('Applying update to allow -ve values to sarting amount');
+    CRM_Core_DAO::executeQuery('
+      ALTER TABLE `civicrm_wci_progress_bar`
+      CHANGE `starting_amount` `starting_amount` FLOAT NULL DEFAULT NULL
+      COMMENT "Arbitrary starting amount for progress bar."'
+    );
+    return TRUE;
+  }
 }

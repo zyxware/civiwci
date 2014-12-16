@@ -49,15 +49,13 @@ class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
 
       $dao = CRM_Core_DAO::executeQuery($query, $params, TRUE, 'CRM_Wci_DAO_ProgressBar');
 
-      while ($dao->fetch()) {
-        $con_page[$dao->id] = array();
-        CRM_Core_DAO::storeValues($dao, $con_page[$dao->id]);
+      if ($dao->fetch()) {
         $this->setDefaults(array(
-              'progressbar_name' => $con_page[$dao->id]['name']));
+          'progressbar_name' => $dao->name));
         $this->setDefaults(array(
-              'starting_amount' => $con_page[$dao->id]['starting_amount']));
+          'starting_amount' => $dao->starting_amount));
         $this->setDefaults(array(
-              'goal_amount' => $con_page[$dao->id]['goal_amount']));
+          'goal_amount' => $dao->goal_amount));
       }
 
       $query = "SELECT * FROM civicrm_wci_progress_bar_formula WHERE progress_bar_id =%1";

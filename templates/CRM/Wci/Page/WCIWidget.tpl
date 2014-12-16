@@ -73,7 +73,6 @@
         -khtml-border-radius:   4px;
         border-radius:      4px;
         margin-top:.8em;
-        margin-bottom:.8em;
         /*text-align:left;*/
         margin-left: auto;
         margin-right: auto;
@@ -89,7 +88,13 @@
         -khtml-border-radius:   4px;
         border-radius:      4px;
         text-align:left;
-        width: {/literal}{$wciform.pb_percentage}{literal}%; /* progress bar percentage */
+        {/literal}
+        {if $wciform.pb_percentage > 100}
+          width:100%
+        {else}
+          width:{$wciform.pb_percentage}%
+        {/if}
+        {literal}
     }
     .crm-amount-raised-wrapper {
         margin-bottom:.8em;
@@ -221,20 +226,19 @@
     </div>
   {/if}
   {if false == $wciform.no_pb}
-  {if (false == $wciform.hide_pbcap)}
-    <div class="crm-amounts">
-        <div id="crm_wid_{$wciform.widgetId}_amt_hi" class="crm-amount-high">${$wciform.goal_amount}</div>
-        <div id="crm_wid_{$wciform.widgetId}_amt_low" class="crm-amount-low">${$wciform.starting_amount}</div>
-        {if (true == $wciform.show_pb_perc)}
-        <div id="crm_wid_{$wciform.widgetId}_percentage" class="crm-percentage">{$wciform.pb_caption}%</div>
-        {else}
-        <div id="crm_wid_{$wciform.widgetId}_percentage" class="crm-percentage">${$wciform.pb_caption}</div>
-        {/if}
-    </div>
-  {/if}
     <div class="crm-amount-bar">
         <div class="crm-amount-fill" id="crm_wid_{$wciform.widgetId}_amt_fill"></div>
     </div>
+    {if (false == $wciform.hide_pbcap)}
+    <div class="crm-amounts">
+        <div id="crm_wid_{$wciform.widgetId}_amt_hi" class="crm-amount-high">Goal: ${$wciform.goal_amount|number_format}</div>
+        {if (true == $wciform.show_pb_perc)}
+        <div id="crm_wid_{$wciform.widgetId}_low" class="crm-amount-low">{$wciform.pb_percentage}% raised</div>
+        {else}
+        <div id="crm_wid_{$wciform.widgetId}_low" class="crm-amount-low">${$wciform.pb_collected|number_format} raised</div>
+        {/if}
+    </div>
+  {/if}
     <div id="crm_wid_{$wciform.widgetId}_donors" class="crm-donors">
     </div>
     {/if}

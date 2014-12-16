@@ -91,6 +91,8 @@
         {/literal}
         {if $wciform.pb_percentage > 100}
           width:100%
+        {elseif $wciform.pb_percentage < 0}
+          width:0%
         {else}
           width:{$wciform.pb_percentage}%
         {/if}

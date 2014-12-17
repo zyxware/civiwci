@@ -235,7 +235,7 @@
     <div class="crm-amounts">
         <div id="crm_wid_{$wciform.widgetId}_amt_hi" class="crm-amount-high">Goal: ${$wciform.goal_amount|number_format}</div>
         {if (true == $wciform.show_pb_perc)}
-        <div id="crm_wid_{$wciform.widgetId}_low" class="crm-amount-low">{$wciform.pb_percentage}% raised</div>
+        <div id="crm_wid_{$wciform.widgetId}_low" class="crm-amount-low">{$wciform.pb_percentage|number_format}% raised</div>
         {else}
         <div id="crm_wid_{$wciform.widgetId}_low" class="crm-amount-low">${$wciform.pb_collected|number_format} raised</div>
         {/if}

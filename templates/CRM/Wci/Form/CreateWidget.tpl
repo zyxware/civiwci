@@ -37,7 +37,11 @@
             Click <strong>Save &amp; Preview</strong> to save any changes to your settings, and preview the widget again on this page.
           </div>
           <script type="text/javascript" src="{crmURL p='civicrm/wci/embed' q="id=`$emb_id`&preview=1"}"></script>
-  <div id='widgetwci'></div>{help id="preview" file="CRM/Wci/Form/CreateWidget"}
+          <div id='widgetwci'></div>
+          <div class="description">
+            To embed widget on a page, <a href='embed-code/add'>create</a> an embed code and associate it with the widget.
+          </div>
+
         </div>
     </div>
           <div class="clear"></div>

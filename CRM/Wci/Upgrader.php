@@ -122,4 +122,20 @@ class CRM_Wci_Upgrader extends CRM_Wci_Upgrader_Base {
     );
     return TRUE;
   }
+
+  public function upgrade_1004() {
+    $this->ctx->log->info('Applying update to add financial type to progress bar');
+    CRM_Core_DAO::executeQuery('
+      ALTER TABLE `civicrm_wci_progress_bar_formula`
+      ADD `financial_type_id` INT NULL DEFAULT NULL
+      COMMENT "Financial type"
+      AFTER `contribution_page_id`
+    ');
+    CRM_Core_DAO::executeQuery('
+      ALTER TABLE `civicrm_wci_progress_bar_formula`
+      CHANGE `contribution_page_id` `contribution_page_id` INT NULL DEFAULT NULL
+      COMMENT "Contribution page id"
+    ');
+    return TRUE;
+  }
 }

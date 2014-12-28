@@ -35,6 +35,18 @@
     return $options;
   }
 
+  function getFinancialTypes() {
+    $query = "SELECT id, name FROM civicrm_financial_type";
+    $dao = CRM_Core_DAO::executeQuery($query);
+    $options = array(
+      0 => ts('- select -'),
+    );
+
+    while ($dao->fetch()) {
+      $options[$dao->id] = $dao->name;
+    }
+    return $options;
+  }
   function getWciWidgetTemplatePath() {
     $widget_tpl_path = __DIR__ . '/templates/CRM/Wci/Page';
 

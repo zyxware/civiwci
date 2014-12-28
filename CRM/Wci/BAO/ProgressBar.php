@@ -65,6 +65,7 @@ class CRM_Wci_BAO_ProgressBar extends CRM_Wci_DAO_ProgressBar {
       FROM civicrm_wci_progress_bar_formula wcipb
       JOIN civicrm_contribution civicontrib
       ON wcipb.contribution_page_id = civicontrib.contribution_page_id
+      OR wcipb.financial_type_id = civicontrib.financial_type_id
       WHERE
         civicontrib.contribution_status_id = 1
         AND (DATE(civicontrib.receive_date) >= if(wcipb.start_date is not NULL, wcipb.start_date, '0000-00-00')

@@ -29,6 +29,7 @@ cj(function ( $ ) {
       $('#' + "contribution_page_" + i).after(
       '<a id=\"remove_link\" class=\"form-link\" href=\"remove\" name=\"remove_link-' + i + '\"> Remove</a>');
       $('#' + "contribution_page_" + i).parent().parent().attr("id", "crm-section-con-" + i);
+      $('#' + "financial_type_" + i).parent().parent().attr("id", "crm-section-type-" + i);
       $('#' + "percentage_" + i).parent().parent().attr("id", 'crm-section-per-' + i);
       $('#' + "contribution_start_date_" + i).parent().parent().attr("id", 'crm-section-startdate-' + i);
       $('#' + "contribution_end_date_" + i).parent().parent().attr("id", 'crm-section-enddate-' + i);
@@ -75,6 +76,18 @@ cj(function ( $ ) {
     $('#' + id_section).append("<div class=\"content\" id="+ id_content + ">");
     $('#' + id_content).append(c_page_sel);
     $('#' + id_content).append('<a id=\"remove_link\" class=\"form-link\" href=\"remove\" name=\"remove_link-' + count + '\"> Remove</a>');
+    $('#' + id_section).append("</div>");
+
+    var f_type_sel = $('select[name=financial_type_1]').clone().attr('id', "financial_type_" + count);
+    f_type_sel.attr("name", "financial_type_" + count);
+
+    var id_section = "crm-section-type-" + count;
+    var sect_tag = "<div class=\"crm-section crm-wci-pb\" id=" + id_section + "><div class=\"label\"><label>Financial Type</label>";
+    $('#addmore_link').parent().parent().before(sect_tag);
+
+    var id_content = "content_type-" + count;
+    $('#' + id_section).append("<div class=\"content\" id="+ id_content + ">");
+    $('#' + id_content).append(f_type_sel);
     $('#' + id_section).append("</div>");
 
     id_section = "crm-section-startdate-" + count;
@@ -128,6 +141,7 @@ cj(function ( $ ) {
     var rem_name_ar = rem_name.split('-');
     var contri_page = "\"#percentage_" + rem_name_ar[1] + "\"";
     $('#crm-section-con-'+ rem_name_ar[1] +'').remove();
+    $('#crm-section-type-'+ rem_name_ar[1] +'').remove();
     $('#crm-section-per-'+ rem_name_ar[1] +'').remove();
     $('#crm-section-startdate-'+ rem_name_ar[1] +'').remove();
     $('#crm-section-enddate-'+ rem_name_ar[1] +'').remove();

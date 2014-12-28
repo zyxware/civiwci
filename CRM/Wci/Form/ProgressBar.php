@@ -71,6 +71,13 @@ class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
           false // is required
         );
         $this->add(
+          'select', // field type
+          'financial_type_'.$count, // field name
+          'Financial type', // field label
+          getFinancialTypes(), // list of options
+          false // is required
+        );
+        $this->add(
           'text',
           'contribution_start_date_' . $count ,
           ts('Start Date')
@@ -92,6 +99,8 @@ class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
         $this->setDefaults(array(
               'contribution_page_'.$count => $dao->contribution_page_id));
         $this->setDefaults(array(
+              'financial_type_'.$count => $dao->financial_type_id));
+        $this->setDefaults(array(
               'percentage_'.$count => $dao->percentage));
         $this->setDefaults(array(
               'contribution_start_date_'.$count => $dao->start_date));
@@ -112,6 +121,13 @@ class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
         getContributionPageOptions(), // list of options
         true // is required
       );
+      $this->add(
+          'select', // field type
+          'financial_type_'.$count, // field name
+          'Financial type', // field label
+          getFinancialTypes(), // list of options
+          false // is required
+        );
       $this->add(
         'text',
         'contribution_start_date_1',
@@ -194,27 +210,30 @@ class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
 
         for($i = 1; $i <= (int)$_REQUEST['contrib_count']; $i++) {
           $page = 'contribution_page_' . (string)$i;
+          $type = 'financial_type_' . (string)$i;
           $perc = 'percentage_' . (string)$i;
           $sdate = 'contribution_start_date_' . (string)$i;
           $edate = 'contribution_end_date_' . (string)$i;
 
           $sql = "INSERT INTO civicrm_wci_progress_bar_formula
-            (contribution_page_id, progress_bar_id, start_date, end_date, percentage)
-            VALUES (%1, %2, %3, %4, %5)";
-            $start = NULL;
-            $end = NULL;
-            if (!empty($_REQUEST[$sdate])) {
-              $start = CRM_Utils_Date::processDate($_REQUEST[$sdate], NULL, FALSE, "Ymd");
-            }
-            if (!empty($_REQUEST[$edate])) {
-              $end = CRM_Utils_Date::processDate($_REQUEST[$edate], NULL, FALSE, "Ymd");
-            }
+            (contribution_page_id, financial_type_id, progress_bar_id, start_date, end_date, percentage)
+            VALUES (%1, %2, %3, %4, %5, %6)";
+          $start = NULL;
+          $end = NULL;
+          if (!empty($_REQUEST[$sdate])) {
+            $start = CRM_Utils_Date::processDate($_REQUEST[$sdate], NULL, FALSE, "Ymd");
+          }
+          if (!empty($_REQUEST[$edate])) {
+            $end = CRM_Utils_Date::processDate($_REQUEST[$edate], NULL, FALSE, "Ymd");
+          }
           CRM_Core_DAO::executeQuery($sql,
-            array(1 => array($_REQUEST[$page], 'Integer'),
-              2 => array($this->_id, 'Integer'),
-              3 => array($start, 'Date'),
-              4 => array($end, 'Date'),
-              5 => array($_REQUEST[$perc], 'Float')
+            array(
+              1 => array($_REQUEST[$page], 'Integer'),
+              2 => array($_REQUEST[$type], 'Integer'),
+              3 => array($this->_id, 'Integer'),
+              4 => array($start, 'Date'),
+              5 => array($end, 'Date'),
+              6 => array($_REQUEST[$perc], 'Float')
             ));
         }
         $transaction->commit();
@@ -239,20 +258,34 @@ class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
           3=>array($_REQUEST['goal_amount'], 'Float'),
         ));
         $progressbar_id = CRM_Core_DAO::singleValueQuery('SELECT LAST_INSERT_ID()');
-        for($i = 1; $i <= (int)$_REQUEST['contrib_count']; $i++):
+        for($i = 1; $i <= (int)$_REQUEST['contrib_count']; $i++) {
           $page = 'contribution_page_' . (string)$i;
+          $type = 'financial_type_' . (string)$i;
           $perc = 'percentage_' . (string)$i;
+          $sdate = 'contribution_start_date_' . (string)$i;
+          $edate = 'contribution_end_date_' . (string)$i;
 
           $sql = "INSERT INTO civicrm_wci_progress_bar_formula
-          (contribution_page_id, progress_bar_id, percentage)
-          VALUES (%1, %2, %3)";
-
+            (contribution_page_id, financial_type_id, progress_bar_id, start_date, end_date, percentage)
+            VALUES (%1, %2, %3, %4, %5, %6)";
+          $start = NULL;
+          $end = NULL;
+          if (!empty($_REQUEST[$sdate])) {
+            $start = CRM_Utils_Date::processDate($_REQUEST[$sdate], NULL, FALSE, "Ymd");
+          }
+          if (!empty($_REQUEST[$edate])) {
+            $end = CRM_Utils_Date::processDate($_REQUEST[$edate], NULL, FALSE, "Ymd");
+          }
           CRM_Core_DAO::executeQuery($sql,
-          array(1 => array($_REQUEST[$page], 'Integer'),
-          2 => array($progressbar_id, 'Integer'),
-          3 => array($_REQUEST[$perc], 'Float'),
-          ));
-        endfor;
+            array(
+              1 => array($_REQUEST[$page], 'Integer'),
+              2 => array($_REQUEST[$type], 'Integer'),
+              3 => array($progressbar_id, 'Integer'),
+              4 => array($start, 'Date'),
+              5 => array($end, 'Date'),
+              6 => array($_REQUEST[$perc], 'Float')
+            ));
+        }
         $transaction->commit();
         CRM_Utils_System::redirect('civicrm/wci/progress-bar?reset=1');
       }

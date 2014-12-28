@@ -11,7 +11,8 @@ CREATE TABLE IF NOT EXISTS civicrm_wci_progress_bar (
 -- WCI progress bar formula
 CREATE TABLE IF NOT EXISTS civicrm_wci_progress_bar_formula (
   id int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Formula entry Id.',
-  contribution_page_id int(10) unsigned NOT NULL COMMENT 'Reference contribution page id.',
+  contribution_page_id int(10) NULL DEFAULT NULL COMMENT 'Reference contribution page id.',
+  financial_type_id int(10) NULL DEFAULT NULL COMMENT 'Reference financial_type_id.',
   progress_bar_id int(10) unsigned DEFAULT NULL COMMENT 'Custom Progress bar reference id.',
   start_date DATE NULL DEFAULT NULL COMMENT 'Contribtuion start date.',
   end_date DATE NULL DEFAULT NULL COMMENT 'Contribtuion end date.',
@@ -52,7 +53,7 @@ CREATE TABLE IF NOT EXISTS civicrm_wci_widget (
   color_btn_newsletter_bg varchar(10) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Newsletter Button color',
   newsletter_text varchar(64) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Newsletter text',
   color_newsletter_text varchar(10) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Newsletter text color',
-  
+
   PRIMARY KEY (`id`),
   UNIQUE KEY `unique_wci_title` (`title`),
   CONSTRAINT FK_civicrm_wci_widget_progress_bar_id FOREIGN KEY (`progress_bar_id`) REFERENCES `civicrm_wci_progress_bar`(`id`) ON DELETE RESTRICT

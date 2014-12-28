@@ -47,7 +47,7 @@
           <div class="description">
             Click <strong>Save &amp; Preview</strong> to save any changes to your settings, and preview the widget again on this page.
           </div>
-          <script type="text/javascript" src="{crmURL p='civicrm/wci/embed' q="id=`$emb_id`&preview=1"}"></script>
+          <script type="text/javascript" src="{crmURL p='civicrm/wci/embed' q="id=$widget_id&preview=1"}"></script>
           <div id="widgetwci"></div>
         </div>
         <div class="col2">
@@ -55,7 +55,7 @@
             Add this widget to any web page by copying and pasting the code below.
           </div>
           <textarea rows="8" cols="40" name="widget_code" id="widget_code">
-<script type="text/javascript" src="{crmURL p='civicrm/wci/embed' q="id=`$emb_id`&referral_id=2442" a=1}"></script>
+<script type="text/javascript" src="{crmURL p='civicrm/wci/embed' q="id=`$emb_id`&referral_id=" a=1}"></script>
 <div id="widgetwci"></div>
           </textarea>
           <br>

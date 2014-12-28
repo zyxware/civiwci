@@ -81,6 +81,7 @@ class CRM_Wci_Form_NewEmbedCode extends CRM_Core_Form {
               'widget' => $emb_code[$dao->id]['widget_id']));
       }
       CRM_Utils_System::setTitle(ts('Edit embed code'));
+      $this->assign('widget_id', $emb_code[$dao->id]['widget_id']);
     }
     else {
       CRM_Utils_System::setTitle(ts('New embed code'));

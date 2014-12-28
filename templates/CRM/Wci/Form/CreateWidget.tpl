@@ -71,7 +71,7 @@
 </div>
 <div class="crm-section">
   <div class="label">{$form.progress_bar.label}</div>
-  <div class="content">{$form.progress_bar.html}{help id="add-new-pb" file="CRM/Wci/Form/CreateWidget"}</div>
+  <div class="content">{$form.progress_bar.html} {help id="add-new-pb" file="CRM/Wci/Form/CreateWidget"}</div>
   <div class="clear"></div>
 </div>
 <div class="crm-section">

@@ -27,6 +27,7 @@
        {include file="CRM/common/pager.tpl" location="top"}
              {include file="CRM/common/pagerAToZ.tpl"}
        {include file="CRM/common/jsortable.tpl"}
+       <a class="button" href="embed-code/add"><span><div class="icon add-icon"></div>New Embed Code</span></a>
              <table id="options" class="display">
                <thead>
                <tr>

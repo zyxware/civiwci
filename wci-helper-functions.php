@@ -27,7 +27,9 @@
       0 => ts('- select -'),
     );
 
-    $result = civicrm_api3('contribution_page', 'get');
+    $result = civicrm_api3('contribution_page', 'get', array(
+      'rowCount' => 0 // Fetch all contribution pages.
+    ));
     foreach ($result['values'] as $contribution_page) {
       $options[$contribution_page['id']] = $contribution_page['title'];
     }

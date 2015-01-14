@@ -39,6 +39,7 @@ class CRM_Wci_WidgetCode {
       $template->template_dir[] = getWciWidgetTemplatePath();
       $wcidata = $template->fetch('WCIWidget.tpl');
     } else {
+      $template->security_settings['MODIFIER_FUNCS'] = array('number_format', 'count');
       $wcidata = $template->fetch('string:' . html_entity_decode($data['custom_template']));
     }
 

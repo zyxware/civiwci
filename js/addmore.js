@@ -34,7 +34,7 @@ cj(function ( $ ) {
       $('#' + "contribution_start_date_" + i).parent().parent().attr("id", 'crm-section-startdate-' + i);
       $('#' + "contribution_end_date_" + i).parent().parent().attr("id", 'crm-section-enddate-' + i);
     }
-    $('#goal_amount').parent().after('<div class="crm-wci-pb"><hr></div><label><SMALL>Progressbar shows the sum of each percentage of contributions done on each selected contribution page</SMALL></label>');
+    $('#goal_amount').parent().after('<div class="crm-wci-pb"><hr></div><label><SMALL>Progressbar shows the sum of percentage of contributions done on each selected contribution page or financial type.</SMALL></label>');
   });
   $("#ProgressBar").validate({
     rules: {
@@ -107,7 +107,7 @@ cj(function ( $ ) {
     id_content = "content_enddate-" + count;
     $('#' + id_section).append("<div class=\"content\" id="+ id_content + ">");
     $('#' + id_content).append('<input type="text" size="20" id = "enddate_' + count + '" name="enddate_' + count +'" value="" />');
-    $('#' + id_content).append('<span class=\"description\">(Format YYYY-MM-DD)</span><br><span class=\"description\">Date to which contributions to be added to this progress bar. Keep it empty to select contributions up to today</span>');
+    $('#' + id_content).append('<span class=\"description\">(Format YYYY-MM-DD)</span><br><span class=\"description\">Date to which contributions to be added to this progress bar. Keep it empty to select contributions up to today.</span>');
     $('#' + id_section).append("</div");
 
     id_section = "crm-section-per-" + count;

@@ -49,7 +49,7 @@
         <div class="content">{$form.$elementName.html}
           <span class="description">(Format YYYY-MM-DD)</span>
           <br>
-          <span class="description">{ts}Date to which contributions to be added to this progressbar. Keep it empty to select contributions up to today{/ts}</span>
+          <span class="description">{ts}Date to which contributions to be added to this progressbar. Keep it empty to select contributions up to today.{/ts}</span>
         </div>
       {else}
         <div class="content">{$form.$elementName.html}</div>

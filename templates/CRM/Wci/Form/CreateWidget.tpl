@@ -254,6 +254,9 @@
           <div class="content">
             {$form.custom_template.html}
           </div>
+          <div class="content">
+            The custom template will support Smarty built-in <a href=http://www.smarty.net/docsv2/en/language.modifiers.tpl>variable modifiers</a> and the following PHP functions: count, number_format.
+          </div>
           <div class="clear"></div>
         </div>
         </div><!-- /.crm-block -->

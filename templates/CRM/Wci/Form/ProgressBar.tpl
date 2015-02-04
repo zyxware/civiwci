@@ -31,12 +31,19 @@
 </style>
 {/literal}
 {* HEADER *}
+{if not $PBSource_block}
 <div class="crm-block crm-form-block">
   <div class="crm-submit-buttons">
   {include file="CRM/common/formButtons.tpl" location="top"}
   </div>
-
+{else}
+  <div class="crm-wci-pb"><hr></div>
+{/if}
   {foreach from=$elementNames item=elementName}
+
+    {if $form.$elementName.id eq 'remove_link'}
+
+    {else}
     <div class="crm-section">
       <div class="label">{$form.$elementName.label}</div>
       {if substr($elementName, 0, 23)  eq 'contribution_start_date'}
@@ -56,11 +63,13 @@
       {/if}
       <div class="clear"></div>
     </div>
+    {/if}
   {/foreach}
-
-
   {* FOOTER *}
+
+{if not $PBSource_block}
   <div class="crm-submit-buttons">
   {include file="CRM/common/formButtons.tpl" location="bottom"}
   </div>
 </div>
+{/if}

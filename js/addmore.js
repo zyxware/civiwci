@@ -63,72 +63,19 @@ cj(function ( $ ) {
   $('#addmore_link').on('click', function( e ) {
     e.preventDefault();
     var count = parseInt($('input[name=contrib_count]').val());
+    lastElem = "#percentage_"+ count;
+    eval("fname = $('"+lastElem+"').parent();");
+
     count++;
+    dataUrl = "/F4/civicrm/wci/progress-bar/add?PBSource_block=1&snippet=4&PBblockId=" + count;
 
-    var c_page_sel = $('select[name=contribution_page_1]').clone().attr('id', "contribution_page_" + count);
-    c_page_sel.attr("name", "contribution_page_" + count);
-
-    var id_section = "crm-section-con-" + count;
-    var sect_tag = "<div class=\"crm-section crm-wci-pb\" id=" + id_section + "><hr><div class=\"label\"><label>Contribution Page</label>";
-    $('#addmore_link').parent().parent().before(sect_tag);
-
-    var id_content = "content_con-" + count;
-    $('#' + id_section).append("<div class=\"content\" id="+ id_content + ">");
-    $('#' + id_content).append(c_page_sel);
-    $('#' + id_content).append('<a id=\"remove_link\" class=\"form-link\" href=\"remove\" name=\"remove_link-' + count + '\"> Remove</a>');
-    $('#' + id_section).append("</div>");
-
-    var f_type_sel = $('select[name=financial_type_1]').clone().attr('id', "financial_type_" + count);
-    f_type_sel.attr("name", "financial_type_" + count);
-
-    var id_section = "crm-section-type-" + count;
-    var sect_tag = "<div class=\"crm-section crm-wci-pb\" id=" + id_section + "><div class=\"label\"><label>Financial Type</label>";
-    $('#addmore_link').parent().parent().before(sect_tag);
-
-    var id_content = "content_type-" + count;
-    $('#' + id_section).append("<div class=\"content\" id="+ id_content + ">");
-    $('#' + id_content).append(f_type_sel);
-    $('#' + id_section).append("</div>");
-
-    id_section = "crm-section-startdate-" + count;
-    sect_tag = "<div class=\"crm-section\" id=" + id_section + "> <div class=\"label\"><label>Start Date</label>";
-    $('#addmore_link').parent().parent().before(sect_tag);
-
-    id_content = "content_startdate-" + count;
-    $('#' + id_section).append("<div class=\"content\" id="+ id_content + ">");
-    $('#' + id_content).append('<input type="text" size="20" id = "startdate_' + count + '" name="startdate_' + count +'" value="" />');
-    $('#' + id_content).append('<span class=\"description\">(Format YYYY-MM-DD)</span><br><span class=\"description\">Date from which contributions to be added to this progress bar. Keep it empty to select contributions from the beginning.</span>');
-    $('#' + id_section).append("</div");
-
-    id_section = "crm-section-enddate-" + count;
-    sect_tag = "<div class=\"crm-section\" id=" + id_section + "> <div class=\"label\"><label>End Date</label>";
-    $('#addmore_link').parent().parent().before(sect_tag);
-
-    id_content = "content_enddate-" + count;
-    $('#' + id_section).append("<div class=\"content\" id="+ id_content + ">");
-    $('#' + id_content).append('<input type="text" size="20" id = "enddate_' + count + '" name="enddate_' + count +'" value="" />');
-    $('#' + id_content).append('<span class=\"description\">(Format YYYY-MM-DD)</span><br><span class=\"description\">Date to which contributions to be added to this progress bar. Keep it empty to select contributions up to today.</span>');
-    $('#' + id_section).append("</div");
-
-    id_section = "crm-section-per-" + count;
-    sect_tag = "<div class=\"crm-section\" id=" + id_section + "> <div class=\"label\"><label>Percentage</label>";
-    $('#addmore_link').parent().parent().before(sect_tag);
-
-    id_content = "content_per-" + count;
-    $('#' + id_section).append("<div class=\"content\" id="+ id_content + ">");
-    $('#' + id_content).append('<input type="text" size="20" id = percentage_'+ count + ' name="percentage_' + count +'" value="" />');
-    $('#' + id_section).append("</div");
-
-    $( "#contribution_page_" + count).rules( "add", {
-      required: true
+    cj.ajax({
+        url     : dataUrl,
+        async   : false,
+        success : function(html){
+            cj(fname).after(html);
+        }
     });
-
-    $( "#percentage_" + count).rules( "add", {
-      required: true,
-      max: 100,
-      number: true
-    });
-
     $('input[name=contrib_count]').val(count);
 
   });

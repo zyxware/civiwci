@@ -33,10 +33,18 @@ require_once 'CRM/Wci/DAO/ProgressBarFormula.php';
  */
 class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
   private $_id;
+  private $_PBSource_block;
+  public $_PBblockId;
 
   function preProcess() {
+    $this->_PBSource_block= CRM_Utils_Request::retrieve('PBSource_block',
+      'Positive', $this, FALSE, NULL, 'REQUEST');
+    $this->_PBblockId = CRM_Utils_Request::retrieve('PBblockId', 'Positive',
+      $this, FALSE, NULL, 'REQUEST');
     $this->_id = CRM_Utils_Request::retrieve('id', 'Positive', $this, FALSE, NULL, 'REQUEST');
+    $this->assign('PBSource_block', $this->_PBSource_block);
     CRM_Core_Resources::singleton()->addScriptFile('com.zyxware.civiwci', 'js/addmore.js');
+
     parent::preProcess();
   }
 
@@ -63,36 +71,9 @@ class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
 
       $dao = CRM_Core_DAO::executeQuery($query, $params, TRUE, 'CRM_Wci_DAO_ProgressBarFormula');
       while ($dao->fetch()) {
-        $this->add(
-          'select', // field type
-          'contribution_page_'.$count, // field name
-          'Contribution page', // field label
-          getContributionPageOptions(), // list of options
-          false // is required
-        );
-        $this->add(
-          'select', // field type
-          'financial_type_'.$count, // field name
-          'Financial type', // field label
-          getFinancialTypes(), // list of options
-          false // is required
-        );
-        $this->add(
-          'text',
-          'contribution_start_date_' . $count ,
-          ts('Start Date')
-        );
-        $this->add(
-          'text',
-          'contribution_end_date_' . $count,
-          ts('End Date')
-        );
-        $this->add(
-          'text', // field type
-          'percentage_'.$count, // field name
-          'Percentage of contribution taken', // field label
-          false // is required
-        );
+        /*Create PB source block*/
+        CRM_Wci_Form_PBSource::buildQuickForm($this, $count);
+
         //save formula id
         $this->addElement('hidden', 'contrib_elem_'.$count , $dao->id);
 
@@ -113,37 +94,8 @@ class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
       $count--; // because last iteration increments it to the next
     }
     else {
-      /** New progress bar*/
-      $this->add(
-        'select', // field type
-        'contribution_page_1', // field name
-        'Contribution page', // field label
-        getContributionPageOptions(), // list of options
-        true // is required
-      );
-      $this->add(
-          'select', // field type
-          'financial_type_'.$count, // field name
-          'Financial type', // field label
-          getFinancialTypes(), // list of options
-          false // is required
-        );
-      $this->add(
-        'text',
-        'contribution_start_date_1',
-        ts('Start Date')
-      );
-      $this->add(
-        'text',
-        'contribution_end_date_1',
-        ts('End Date')
-      );
-      $this->add(
-        'text', // field type
-        'percentage_1', // field name
-        'Percentage of contribution taken', // field label
-        true // is required
-      );
+      /*Create PB source block*/
+      CRM_Wci_Form_PBSource::buildQuickForm($this, $count);
       CRM_Utils_System::setTitle(ts('Create Progress Bar'));
     }
 
@@ -151,42 +103,47 @@ class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
   }
 
   function buildQuickForm() {
+    if(isset($this->_PBSource_block)){
+      CRM_Wci_Form_PBSource::buildQuickForm($this, $this->_PBblockId);
+      $this->assign('elementNames', $this->getRenderableElementNames());
+      return;
+    } else {
+      $this->add(
+        'text', // field type
+        'progressbar_name', // field name
+        'Name', // field label
+        true // is required
+      )->setSize(35);
+      $this->add(
+        'text', // field type
+        'starting_amount', // field name
+        'Starting amount', // field label
+        true // is required
+      )->setSize(35);
+      $this->add(
+        'text', // field type
+        'goal_amount', // field name
+        'Goal amount', // field label
+        true // is required
+      )->setSize(35);
 
-    $this->add(
-      'text', // field type
-      'progressbar_name', // field name
-      'Name', // field label
-      true // is required
-    )->setSize(35);
-    $this->add(
-      'text', // field type
-      'starting_amount', // field name
-      'Starting amount', // field label
-      true // is required
-    )->setSize(35);
-    $this->add(
-      'text', // field type
-      'goal_amount', // field name
-      'Goal amount', // field label
-      true // is required
-    )->setSize(35);
+      $this->fillData();
 
-    $this->fillData();
+      $this->addElement('link', 'addmore_link',' ', 'addmore', 'Add another contribution page or financial type.');
 
-    $this->addElement('link', 'addmore_link',' ', 'addmore', 'Add another contribution page or financial type.');
+      $this->addButtons(array(
+        array(
+          'type' => 'submit',
+          'name' => ts('Save'),
+          'isDefault' => TRUE,
+        ),
+      ));
 
-    $this->addButtons(array(
-      array(
-        'type' => 'submit',
-        'name' => ts('Save'),
-        'isDefault' => TRUE,
-      ),
-    ));
+      // export form elements
+      $this->assign('elementNames', $this->getRenderableElementNames());
 
-    // export form elements
-    $this->assign('elementNames', $this->getRenderableElementNames());
-
-    parent::buildQuickForm();
+      parent::buildQuickForm();
+    }
   }
 
   function postProcess() {

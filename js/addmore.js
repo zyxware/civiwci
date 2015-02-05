@@ -34,7 +34,7 @@ cj(function ( $ ) {
       $('#' + "contribution_start_date_" + i).parent().parent().attr("id", 'crm-section-startdate-' + i);
       $('#' + "contribution_end_date_" + i).parent().parent().attr("id", 'crm-section-enddate-' + i);
     }
-    $('#goal_amount').parent().after('<div class="crm-wci-pb"><hr></div><label><SMALL>Progressbar shows the sum of percentage of contributions done on each selected contribution page or financial type.</SMALL></label>');
+    /*$('#goal_amount').parent().after('<div class="crm-wci-pb"><hr></div><label><SMALL>Progressbar shows the sum of percentage of contributions done on each selected contribution page or financial type.</SMALL></label>');*/
   });
   $("#ProgressBar").validate({
     rules: {
@@ -63,8 +63,10 @@ cj(function ( $ ) {
   $('#addmore_link').on('click', function( e ) {
     e.preventDefault();
     var count = parseInt($('input[name=contrib_count]').val());
-    lastElem = "#percentage_"+ count;
-    eval("fname = $('"+lastElem+"').parent();");
+    //lastElem = "#percentage_"+ count;
+    //eval("fname = $('"+lastElem+"').parent().parent().parent();");
+    lastElem = "#addmore_link";
+    eval("fname = $('"+lastElem+"').parent().parent();");
 
     count++;
     dataUrl = "/F4/civicrm/wci/progress-bar/add?PBSource_block=1&snippet=4&PBblockId=" + count;
@@ -73,7 +75,7 @@ cj(function ( $ ) {
         url     : dataUrl,
         async   : false,
         success : function(html){
-            cj(fname).after(html);
+            cj(fname).before(html);
         }
     });
     $('input[name=contrib_count]').val(count);
@@ -86,7 +88,8 @@ cj(function ( $ ) {
     var rem_name = e.target.name;
     //assuming that - is the delimiter. second string will be the count
     var rem_name_ar = rem_name.split('-');
-    var contri_page = "\"#percentage_" + rem_name_ar[1] + "\"";
+    $('#PBSource-'+ rem_name_ar[1] +'').remove();
+/*    var contri_page = "\"#percentage_" + rem_name_ar[1] + "\"";
     $('#crm-section-con-'+ rem_name_ar[1] +'').remove();
     $('#crm-section-type-'+ rem_name_ar[1] +'').remove();
     $('#crm-section-per-'+ rem_name_ar[1] +'').remove();
@@ -94,6 +97,6 @@ cj(function ( $ ) {
     $('#crm-section-enddate-'+ rem_name_ar[1] +'').remove();
     var count = parseInt($('input[name=contrib_count]').val());
     count--;
-    $('input[name=contrib_count]').val(count);
+    $('input[name=contrib_count]').val(count);*/
   });
 });

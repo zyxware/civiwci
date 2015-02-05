@@ -42,6 +42,7 @@ class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
     $this->_PBblockId = CRM_Utils_Request::retrieve('PBblockId', 'Positive',
       $this, FALSE, NULL, 'REQUEST');
     $this->_id = CRM_Utils_Request::retrieve('id', 'Positive', $this, FALSE, NULL, 'REQUEST');
+    $this->assign('PBblockId', $this->_PBblockId);
     $this->assign('PBSource_block', $this->_PBSource_block);
     CRM_Core_Resources::singleton()->addScriptFile('com.zyxware.civiwci', 'js/addmore.js');
 

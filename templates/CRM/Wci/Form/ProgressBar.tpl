@@ -60,10 +60,16 @@
     <label><SMALL>
     Progressbar shows the sum of percentage of contributions done on each selected contribution page or financial type.
     </SMALL></label>
+    {foreach from=$pbSrcs item=idsrc}
+      {assign var=PBblockId value=$idsrc}
+      {include file="CRM/Wci/Form/PBSource.tpl"}
+    {/foreach}
+    {if not $pbSrcs}
+      {include file="CRM/Wci/Form/PBSource.tpl"}
+    {/if}
+  {else}
     {include file="CRM/Wci/Form/PBSource.tpl"}
-{else}
-    {include file="CRM/Wci/Form/PBSource.tpl"}
-{/if}
+  {/if}
 
     <div class="crm-section">
       <div class="label">{$form.addmore_link.label}</div>
@@ -71,42 +77,6 @@
       <div class="clear"></div>
     </div>
 
-
-<!--
-  {foreach from=$elementNames item=elementName}
-
-    <div class="crm-section">
-      <div class="label">{$form.$elementName.label}</div>
-      {if substr($elementName, 0, 23)  eq 'contribution_start_date'}
-        <div class="content">{$form.$elementName.html}
-          <span class="description">(Format YYYY-MM-DD)</span>
-          <br>
-          <span class="description">{ts}Date from which contributions to be added to this progressbar. Keep it empty to select contributions from the beginning.{/ts}</span>
-        </div>
-      {elseif substr($elementName, 0, 21)  eq 'contribution_end_date'}
-        <div class="content">{$form.$elementName.html}
-          <span class="description">(Format YYYY-MM-DD)</span>
-          <br>
-          <span class="description">{ts}Date to which contributions to be added to this progressbar. Keep it empty to select contributions up to today.{/ts}</span>
-        </div>
-      {else}
-        {if substr($form.$elementName.id, 0, 18) eq 'contribution_page_'}
-          <div id="crm-section-con-{$form.$elementName.id|substr:18}">
-          <div class="content">{$form.$elementName.html}
-          <a id="remove_link" class="form-link" href="remove" name="remove_link-{$form.$elementName.id|substr:18}"> Remove</a>
-        {else}
-          <div class="content">{$form.$elementName.html}
-        {/if}
-        </div>
-      {/if}
-      <div class="clear"></div>
-        {if substr($form.$elementName.id, 0, 11) eq 'percentage_'}
-          </div>
-      {/if}
-    </div>
-
-  {/foreach}
--->
   {* FOOTER *}
 
 {if not $PBSource_block}

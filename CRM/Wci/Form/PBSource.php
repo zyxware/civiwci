@@ -25,7 +25,6 @@
 class CRM_Wci_Form_PBSource {
 
   static function buildQuickForm(&$form, $blockId, $blockEdit = FALSE) {
-
       $form->add(
         'select', // field type
         'contribution_page_'.$blockId, // field name
@@ -43,7 +42,7 @@ class CRM_Wci_Form_PBSource {
       $form->add(
         'text',
         'contribution_start_date_'.$blockId,
-        ts('Start Date')
+        ts('Start Date'), true
       );
       $form->add(
         'text',
@@ -56,6 +55,5 @@ class CRM_Wci_Form_PBSource {
         'Percentage of contribution taken', // field label
         true // is required
       );
-      //$form->addElement('link', 'remove_link',' ', 'remove', 'Remove');
   }
 }

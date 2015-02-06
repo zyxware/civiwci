@@ -36,13 +36,13 @@
 {assign var=contribution_end_date value=contribution_end_date_$PBblockId}
 {assign var=percentage value=percentage_$PBblockId}
 <div id="PBSource-{$PBblockId}">
-      {if $PBSource_block}
+      {if 1 < $PBblockId}
         <div class="crm-wci-pb"><hr></div>
       {/if}
     <div class="crm-section">
       <div class="label">{$form.$contribution_page.label}</div>
       <div class="content">{$form.$contribution_page.html}
-      {if $PBSource_block}
+      {if 1 < $PBblockId}
          <a id="remove_link" class="form-link" href="remove" name="remove_link-{$PBblockId}"> Remove</a>
       {/if}
       </div>
@@ -57,13 +57,21 @@
 
     <div class="crm-section">
       <div class="label">{$form.$contribution_start_date.label}</div>
-      <div class="content">{$form.$contribution_start_date.html}</div>
+      <div class="content">{$form.$contribution_start_date.html}
+          <span class="description">(Format YYYY-MM-DD)</span>
+          <br>
+          <span class="description">{ts}Date from which contributions to be added to this progressbar. Keep it empty to select contributions from the beginning.{/ts}</span>
+      </div>
       <div class="clear"></div>
     </div>
 
     <div class="crm-section">
       <div class="label">{$form.$contribution_end_date.label}</div>
-      <div class="content">{$form.$contribution_end_date.html}</div>
+      <div class="content">{$form.$contribution_end_date.html}
+          <span class="description">(Format YYYY-MM-DD)</span>
+          <br>
+          <span class="description">{ts}Date to which contributions to be added to this progressbar. Keep it empty to select contributions up to today.{/ts}</span>
+      </div>
       <div class="clear"></div>
     </div>
 

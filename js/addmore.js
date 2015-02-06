@@ -23,6 +23,7 @@
 
 cj(function ( $ ) {
   $(document).ready(function(){
+/*
     var count = parseInt($('input[name=contrib_count]').val());
     for ( var i = 2; i <= count; i++ ) {
       $('#' + "contribution_page_" + i).parent().parent().before('<div class="crm-wci-pb"><hr></div>');
@@ -89,6 +90,7 @@ cj(function ( $ ) {
     //assuming that - is the delimiter. second string will be the count
     var rem_name_ar = rem_name.split('-');
     $('#PBSource-'+ rem_name_ar[1] +'').remove();
+
 /*    var contri_page = "\"#percentage_" + rem_name_ar[1] + "\"";
     $('#crm-section-con-'+ rem_name_ar[1] +'').remove();
     $('#crm-section-type-'+ rem_name_ar[1] +'').remove();

@@ -35,10 +35,13 @@ class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
   private $_id;
   private $_PBSource_block;
   public $_PBblockId;
+  public $_rem_ids;
 
   function preProcess() {
     $this->_PBSource_block= CRM_Utils_Request::retrieve('PBSource_block',
       'Positive', $this, FALSE, NULL, 'REQUEST');
+    $this->_rem_ids = CRM_Utils_Request::retrieve('rem_ids',
+      'String', $this, FALSE, NULL, 'REQUEST');
     $this->_PBblockId = CRM_Utils_Request::retrieve('PBblockId', 'Positive',
       $this, FALSE, NULL, 'REQUEST');
     $this->_id = CRM_Utils_Request::retrieve('id', 'Positive', $this, FALSE, NULL, 'REQUEST');
@@ -71,10 +74,23 @@ class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
       $params = array(1 => array($this->_id, 'Integer'));
       $pbSrcs = array();
       $dao = CRM_Core_DAO::executeQuery($query, $params, TRUE, 'CRM_Wci_DAO_ProgressBarFormula');
+      $remIds = array();
+
+      if(isset($this->_rem_ids)){
+        $remIds =  explode(',', $this->_rem_ids);
+      }
+
       while ($dao->fetch()) {
+        if(in_array($dao->id, $remIds)) {
+          $count++;
+          continue;
+        }
+
         $pbSrcs[] = $count;
+
         /*Create PB source block*/
         CRM_Wci_Form_PBSource::buildQuickForm($this, $count);
+
 
         //save formula id
         $this->addElement('hidden', 'contrib_elem_'.$count , $dao->id);
@@ -104,6 +120,8 @@ class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
     }
 
     $this->addElement('hidden', 'contrib_count', $count);
+   //removed elem id
+   $this->addElement('hidden', 'rem_ids', '');
   }
 
   function buildQuickForm() {
@@ -169,8 +187,11 @@ class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
         /** Delete existiing formula fields and add fields fresh*/
         CRM_Core_DAO::executeQuery('DELETE FROM civicrm_wci_progress_bar_formula
             WHERE progress_bar_id=%1', array(1 => array($this->_id, 'Integer')));
-
-        for($i = 1; $i <= (int)$_REQUEST['contrib_count']; $i++) {
+        $elem_added = 0;
+        for($i = 1; $elem_added < (int)$_REQUEST['contrib_count']; $i++) {
+          if(!isset($_REQUEST['contribution_page_' . (string)$i])) {
+            continue;
+          }
           $page = 'contribution_page_' . (string)$i;
           $type = 'financial_type_' . (string)$i;
           $perc = 'percentage_' . (string)$i;
@@ -197,6 +218,7 @@ class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
               5 => array($end, 'Date'),
               6 => array($_REQUEST[$perc], 'Float')
             ));
+            $elem_added++;
         }
         $transaction->commit();
         CRM_Wci_BAO_WidgetCache::deleteWidgetCacheByProgressbar($this->_id);
@@ -207,7 +229,6 @@ class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
         CRM_Core_Session::setStatus(ts('Failed to create progress bar'), '', 'error');
         $transaction->rollback();
       }
-
     }
     else {
       $sql = "INSERT INTO civicrm_wci_progress_bar

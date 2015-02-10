@@ -22,21 +22,6 @@
 */
 
 cj(function ( $ ) {
-  $(document).ready(function(){
-/*
-    var count = parseInt($('input[name=contrib_count]').val());
-    for ( var i = 2; i <= count; i++ ) {
-      $('#' + "contribution_page_" + i).parent().parent().before('<div class="crm-wci-pb"><hr></div>');
-      $('#' + "contribution_page_" + i).after(
-      '<a id=\"remove_link\" class=\"form-link\" href=\"remove\" name=\"remove_link-' + i + '\"> Remove</a>');
-      $('#' + "contribution_page_" + i).parent().parent().attr("id", "crm-section-con-" + i);
-      $('#' + "financial_type_" + i).parent().parent().attr("id", "crm-section-type-" + i);
-      $('#' + "percentage_" + i).parent().parent().attr("id", 'crm-section-per-' + i);
-      $('#' + "contribution_start_date_" + i).parent().parent().attr("id", 'crm-section-startdate-' + i);
-      $('#' + "contribution_end_date_" + i).parent().parent().attr("id", 'crm-section-enddate-' + i);
-    }
-    /*$('#goal_amount').parent().after('<div class="crm-wci-pb"><hr></div><label><SMALL>Progressbar shows the sum of percentage of contributions done on each selected contribution page or financial type.</SMALL></label>');*/
-  });
   $("#ProgressBar").validate({
     rules: {
       starting_amount: {
@@ -64,13 +49,11 @@ cj(function ( $ ) {
   $('#addmore_link').on('click', function( e ) {
     e.preventDefault();
     var count = parseInt($('input[name=contrib_count]').val());
-    //lastElem = "#percentage_"+ count;
-    //eval("fname = $('"+lastElem+"').parent().parent().parent();");
     lastElem = "#addmore_link";
     eval("fname = $('"+lastElem+"').parent().parent();");
 
     count++;
-    dataUrl = "/F4/civicrm/wci/progress-bar/add?PBSource_block=1&snippet=4&PBblockId=" + count;
+    dataUrl = "civicrm/wci/progress-bar/add?PBSource_block=1&snippet=4&PBblockId=" + count;
 
     cj.ajax({
         url     : dataUrl,
@@ -89,16 +72,16 @@ cj(function ( $ ) {
     var rem_name = e.target.name;
     //assuming that - is the delimiter. second string will be the count
     var rem_name_ar = rem_name.split('-');
-    $('#PBSource-'+ rem_name_ar[1] +'').remove();
 
-/*    var contri_page = "\"#percentage_" + rem_name_ar[1] + "\"";
-    $('#crm-section-con-'+ rem_name_ar[1] +'').remove();
-    $('#crm-section-type-'+ rem_name_ar[1] +'').remove();
-    $('#crm-section-per-'+ rem_name_ar[1] +'').remove();
-    $('#crm-section-startdate-'+ rem_name_ar[1] +'').remove();
-    $('#crm-section-enddate-'+ rem_name_ar[1] +'').remove();
+    $('input[name=rem_ids]').val($('input[name=contrib_elem_'+ rem_name_ar[1]+']').val() + ',' + $('input[name=rem_ids]').val());
+
+    $('#PBSource-'+ rem_name_ar[1]).remove();
+    $('#contrib_elem_'+ rem_name_ar[1]).remove();
+
+    $('input[name=contrib_elem_'+ rem_name_ar[1]+']').remove();
+
     var count = parseInt($('input[name=contrib_count]').val());
     count--;
-    $('input[name=contrib_count]').val(count);*/
+    $('input[name=contrib_count]').val(count);
   });
 });

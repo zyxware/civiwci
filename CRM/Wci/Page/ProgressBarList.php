@@ -47,6 +47,35 @@ class CRM_Wci_Page_ProgressBarList extends CRM_Core_Page {
       $controller->set('id', $id);
       $controller->process();
       return $controller->run();
+
+    } elseif ($action & CRM_Core_Action::COPY) {
+
+      try {
+        $sql = "INSERT INTO civicrm_wci_progress_bar (name, starting_amount, goal_amount)
+        SELECT concat(name, '-', id), starting_amount, goal_amount FROM civicrm_wci_progress_bar
+        WHERE id=%1";
+
+        CRM_Core_DAO::executeQuery($sql,
+              array(1=>array($id, 'Integer'),
+        ));
+
+        $new_pb_id = CRM_Core_DAO::singleValueQuery('SELECT LAST_INSERT_ID()');
+
+        $sql = "INSERT INTO civicrm_wci_progress_bar_formula
+            (contribution_page_id, financial_type_id, progress_bar_id, start_date, end_date, percentage)
+            SELECT contribution_page_id, financial_type_id, %1, start_date,
+            end_date, percentage FROM civicrm_wci_progress_bar_formula WHERE progress_bar_id=%2";
+
+        CRM_Core_DAO::executeQuery($sql,
+              array(1=>array($new_pb_id, 'Integer'),
+                    2=>array($id, 'Integer'),
+        ));
+      }
+      catch (Exception $e) {
+        CRM_Core_Session::setStatus(ts('Failed to create Progress bar. ') .
+        $e->getMessage(), '', 'error');
+        $transaction->rollback();
+      }
     }
     elseif ($action & CRM_Core_Action::DELETE) {
       $errorScope = CRM_Core_TemporaryErrorScope::useException();
@@ -103,6 +132,12 @@ class CRM_Wci_Page_ProgressBarList extends CRM_Core_Page {
           'url' => CRM_Utils_System::currentPath(),
           'qs' => 'action=update&reset=1&id=%%id%%',
           'title' => ts('Update'),
+        ),
+        CRM_Core_Action::COPY => array(
+          'name' => ts('Clone'),
+          'url' => CRM_Utils_System::currentPath(),
+          'qs' => 'action=copy&reset=1&id=%%id%%',
+          'title' => ts('copy'),
         ),
         CRM_Core_Action::DELETE => array(
           'name' => ts('Delete'),

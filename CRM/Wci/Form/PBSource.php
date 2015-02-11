@@ -53,6 +53,7 @@ class CRM_Wci_Form_PBSource {
         'text', // field type
         'percentage_'.$blockId, // field name
         'Percentage of contribution taken', // field label
+        array('value'=>'100'),
         true // is required
       );
   }

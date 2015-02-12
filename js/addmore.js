@@ -49,8 +49,7 @@ cj(function ( $ ) {
   $('#addmore_link').on('click', function( e ) {
     e.preventDefault();
     var count = parseInt($('input[name=contrib_count]').val());
-    lastElem = "#addmore_link";
-    eval("fname = $('"+lastElem+"').parent().parent();");
+    fname = $('#addmore_link').parent().parent();
 
     count++;
     dataUrl = "civicrm/wci/progress-bar/add?PBSource_block=1&snippet=4&PBblockId=" + count;
@@ -59,7 +58,7 @@ cj(function ( $ ) {
         url     : dataUrl,
         async   : false,
         success : function(html){
-            cj(fname).before(html);
+            fname.before(html);
         }
     });
     $('input[name=contrib_count]').val(count);

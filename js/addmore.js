@@ -52,7 +52,7 @@ cj(function ( $ ) {
     fname = $('#addmore_link').parent().parent();
 
     count++;
-    dataUrl = "civicrm/wci/progress-bar/add?PBSource_block=1&snippet=4&PBblockId=" + count;
+    dataUrl = "./?PBSource_block=1&snippet=4&PBblockId=" + count;
 
     cj.ajax({
         url     : dataUrl,

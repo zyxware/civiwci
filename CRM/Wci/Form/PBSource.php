@@ -23,38 +23,37 @@
 */
 
 class CRM_Wci_Form_PBSource {
-
   static function buildQuickForm(&$form, $blockId, $blockEdit = FALSE) {
-      $form->add(
-        'select', // field type
-        'contribution_page_'.$blockId, // field name
-        'Contribution page', // field label
-        getContributionPageOptions(), // list of options
-        true // is required
-      );
-      $form->add(
-          'select', // field type
-          'financial_type_'.$blockId, // field name
-          'Financial type', // field label
-          getFinancialTypes(), // list of options
-          false // is required
-        );
-      $form->add(
-        'text',
-        'contribution_start_date_'.$blockId,
-        ts('Start Date'), true
-      );
-      $form->add(
-        'text',
-        'contribution_end_date_'.$blockId,
-        ts('End Date')
-      );
-      $form->add(
-        'text', // field type
-        'percentage_'.$blockId, // field name
-        'Percentage of contribution taken', // field label
-        array('value'=>'100'),
-        true // is required
-      );
+    $form->add(
+      'select', // field type
+      'contribution_page_'.$blockId, // field name
+      'Contribution page', // field label
+      getContributionPageOptions(), // list of options
+      true // is required
+    );
+    $form->add(
+      'select', // field type
+      'financial_type_'.$blockId, // field name
+      'Financial type', // field label
+      getFinancialTypes(), // list of options
+      false // is required
+    );
+    $form->add(
+      'text',
+      'contribution_start_date_'.$blockId,
+      ts('Start Date'), true
+    );
+    $form->add(
+      'text',
+      'contribution_end_date_'.$blockId,
+      ts('End Date')
+    );
+    $form->add(
+      'text', // field type
+      'percentage_'.$blockId, // field name
+      'Percentage of contribution taken', // field label
+      array('value'=>'100'),
+      true // is required
+    );
   }
 }

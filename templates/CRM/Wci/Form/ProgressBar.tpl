@@ -60,11 +60,11 @@
     <label><SMALL>
     Progressbar shows the sum of percentage of contributions done on each selected contribution page or financial type.
     </SMALL></label>
-    {foreach from=$pbSrcs item=idsrc}
+    {foreach from=$pbSources item=idsrc}
       {assign var=PBblockId value=$idsrc}
       {include file="CRM/Wci/Form/PBSource.tpl"}
     {/foreach}
-    {if not $pbSrcs}
+    {if not $pbSources}
       {include file="CRM/Wci/Form/PBSource.tpl"}
     {/if}
   {else}

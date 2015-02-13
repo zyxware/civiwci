@@ -52,7 +52,7 @@ cj(function ( $ ) {
     fname = $('#addmore_link').parent().parent();
 
     count++;
-    dataUrl = "./?PBSource_block=1&snippet=4&PBblockId=" + count;
+    dataUrl = location.pathname +"?PBSource_block=1&snippet=4&PBblockId=" + count;
 
     cj.ajax({
         url     : dataUrl,

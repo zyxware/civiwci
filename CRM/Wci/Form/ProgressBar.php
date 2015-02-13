@@ -72,7 +72,7 @@ class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
 
       $query = "SELECT * FROM civicrm_wci_progress_bar_formula WHERE progress_bar_id =%1";
       $params = array(1 => array($this->_id, 'Integer'));
-      $pbSrcs = array();
+      $pbSources = array();
       $dao = CRM_Core_DAO::executeQuery($query, $params, TRUE, 'CRM_Wci_DAO_ProgressBarFormula');
       $remIds = array();
 
@@ -86,7 +86,7 @@ class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
           continue;
         }
 
-        $pbSrcs[] = $count;
+        $pbSources[] = $count;
 
         /*Create PB source block*/
         CRM_Wci_Form_PBSource::buildQuickForm($this, $count);
@@ -111,7 +111,7 @@ class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
       }
       CRM_Utils_System::setTitle(ts('Edit Progress Bar'));
       $count--; // because last iteration increments it to the next
-      $this->assign('pbSrcs', $pbSrcs);
+      $this->assign('pbSources', $pbSources);
     }
     else {
       /*Create PB source block*/

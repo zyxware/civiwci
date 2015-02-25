@@ -408,7 +408,8 @@ class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
     );
 
     $result = civicrm_api3('group', 'get', array(
-      'group_type' => '2' // 2 is for group type - newsletter
+      'group_type' => '2', // 2 is for group type - newsletter
+      'rowCount' => 0,
     ));
     if (0 != $result['count']) {
       foreach ($result['values'] as $group) {

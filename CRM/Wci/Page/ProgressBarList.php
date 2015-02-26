@@ -52,7 +52,8 @@ class CRM_Wci_Page_ProgressBarList extends CRM_Core_Page {
 
       try {
         $sql = "INSERT INTO civicrm_wci_progress_bar (name, starting_amount, goal_amount)
-        SELECT concat(name, '-', id), starting_amount, goal_amount FROM civicrm_wci_progress_bar
+        SELECT concat(name, '-', (SELECT MAX(id) FROM civicrm_wci_progress_bar)),
+        starting_amount, goal_amount FROM civicrm_wci_progress_bar
         WHERE id=%1";
 
         CRM_Core_DAO::executeQuery($sql,

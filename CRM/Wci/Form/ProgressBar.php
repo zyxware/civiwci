@@ -33,10 +33,22 @@ require_once 'CRM/Wci/DAO/ProgressBarFormula.php';
  */
 class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
   private $_id;
+  private $_PBSource_block;
+  public $_PBblockId;
+  public $_rem_ids;
 
   function preProcess() {
+    $this->_PBSource_block= CRM_Utils_Request::retrieve('PBSource_block',
+      'Positive', $this, FALSE, NULL, 'REQUEST');
+    $this->_rem_ids = CRM_Utils_Request::retrieve('rem_ids',
+      'String', $this, FALSE, NULL, 'REQUEST');
+    $this->_PBblockId = CRM_Utils_Request::retrieve('PBblockId', 'Positive',
+      $this, FALSE, NULL, 'REQUEST');
     $this->_id = CRM_Utils_Request::retrieve('id', 'Positive', $this, FALSE, NULL, 'REQUEST');
+    $this->assign('PBblockId', $this->_PBblockId);
+    $this->assign('PBSource_block', $this->_PBSource_block);
     CRM_Core_Resources::singleton()->addScriptFile('com.zyxware.civiwci', 'js/addmore.js');
+
     parent::preProcess();
   }
 
@@ -60,39 +72,26 @@ class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
 
       $query = "SELECT * FROM civicrm_wci_progress_bar_formula WHERE progress_bar_id =%1";
       $params = array(1 => array($this->_id, 'Integer'));
-
+      $pbSources = array();
       $dao = CRM_Core_DAO::executeQuery($query, $params, TRUE, 'CRM_Wci_DAO_ProgressBarFormula');
+      $remIds = array();
+
+      if(isset($this->_rem_ids)){
+        $remIds =  explode(',', $this->_rem_ids);
+      }
+
       while ($dao->fetch()) {
-        $this->add(
-          'select', // field type
-          'contribution_page_'.$count, // field name
-          'Contribution page', // field label
-          getContributionPageOptions(), // list of options
-          false // is required
-        );
-        $this->add(
-          'select', // field type
-          'financial_type_'.$count, // field name
-          'Financial type', // field label
-          getFinancialTypes(), // list of options
-          false // is required
-        );
-        $this->add(
-          'text',
-          'contribution_start_date_' . $count ,
-          ts('Start Date')
-        );
-        $this->add(
-          'text',
-          'contribution_end_date_' . $count,
-          ts('End Date')
-        );
-        $this->add(
-          'text', // field type
-          'percentage_'.$count, // field name
-          'Percentage of contribution taken', // field label
-          false // is required
-        );
+        if(in_array($dao->id, $remIds)) {
+          $count++;
+          continue;
+        }
+
+        $pbSources[] = $count;
+
+        /*Create PB source block*/
+        CRM_Wci_Form_PBSource::buildQuickForm($this, $count);
+
+
         //save formula id
         $this->addElement('hidden', 'contrib_elem_'.$count , $dao->id);
 
@@ -108,88 +107,69 @@ class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
               'contribution_end_date_'.$count => $dao->end_date));
         //set default for start date and end date.
         $count++;
+
       }
       CRM_Utils_System::setTitle(ts('Edit Progress Bar'));
       $count--; // because last iteration increments it to the next
+      $this->assign('pbSources', $pbSources);
     }
     else {
-      /** New progress bar*/
-      $this->add(
-        'select', // field type
-        'contribution_page_1', // field name
-        'Contribution page', // field label
-        getContributionPageOptions(), // list of options
-        true // is required
-      );
-      $this->add(
-          'select', // field type
-          'financial_type_'.$count, // field name
-          'Financial type', // field label
-          getFinancialTypes(), // list of options
-          false // is required
-        );
-      $this->add(
-        'text',
-        'contribution_start_date_1',
-        ts('Start Date')
-      );
-      $this->add(
-        'text',
-        'contribution_end_date_1',
-        ts('End Date')
-      );
-      $this->add(
-        'text', // field type
-        'percentage_1', // field name
-        'Percentage of contribution taken', // field label
-        true // is required
-      );
+      /*Create PB source block*/
+      CRM_Wci_Form_PBSource::buildQuickForm($this, $count);
       CRM_Utils_System::setTitle(ts('Create Progress Bar'));
     }
 
     $this->addElement('hidden', 'contrib_count', $count);
+   //removed elem id
+   $this->addElement('hidden', 'rem_ids', '');
   }
 
   function buildQuickForm() {
+    if(isset($this->_PBSource_block)){
+      CRM_Wci_Form_PBSource::buildQuickForm($this, $this->_PBblockId);
+      $this->assign('elementNames', $this->getRenderableElementNames());
+      return;
+    } else {
+      $this->add(
+        'text', // field type
+        'progressbar_name', // field name
+        'Name', // field label
+        true // is required
+      )->setSize(35);
+      $this->add(
+        'text', // field type
+        'starting_amount', // field name
+        'Starting amount', // field label
+        true // is required
+      )->setSize(35);
+      $this->add(
+        'text', // field type
+        'goal_amount', // field name
+        'Goal amount', // field label
+        true // is required
+      )->setSize(35);
 
-    $this->add(
-      'text', // field type
-      'progressbar_name', // field name
-      'Name', // field label
-      true // is required
-    )->setSize(35);
-    $this->add(
-      'text', // field type
-      'starting_amount', // field name
-      'Starting amount', // field label
-      true // is required
-    )->setSize(35);
-    $this->add(
-      'text', // field type
-      'goal_amount', // field name
-      'Goal amount', // field label
-      true // is required
-    )->setSize(35);
+      $this->fillData();
 
-    $this->fillData();
+      $this->addElement('link', 'addmore_link',' ', 'addmore', 'Add another contribution page or financial type.');
 
-    $this->addElement('link', 'addmore_link',' ', 'addmore', 'Add another contribution page or financial type.');
+      $this->addButtons(array(
+        array(
+          'type' => 'submit',
+          'name' => ts('Save'),
+          'isDefault' => TRUE,
+        ),
+      ));
 
-    $this->addButtons(array(
-      array(
-        'type' => 'submit',
-        'name' => ts('Save'),
-        'isDefault' => TRUE,
-      ),
-    ));
+      // export form elements
+      $this->assign('elementNames', $this->getRenderableElementNames());
 
-    // export form elements
-    $this->assign('elementNames', $this->getRenderableElementNames());
-
-    parent::buildQuickForm();
+      parent::buildQuickForm();
+    }
   }
 
   function postProcess() {
+
     $errorScope = CRM_Core_TemporaryErrorScope::useException();
     if (isset($this->_id)) {
       try {
@@ -207,8 +187,11 @@ class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
         /** Delete existiing formula fields and add fields fresh*/
         CRM_Core_DAO::executeQuery('DELETE FROM civicrm_wci_progress_bar_formula
             WHERE progress_bar_id=%1', array(1 => array($this->_id, 'Integer')));
-
-        for($i = 1; $i <= (int)$_REQUEST['contrib_count']; $i++) {
+        $elem_added = 0;
+        for($i = 1; $elem_added < (int)$_REQUEST['contrib_count']; $i++) {
+          if(!isset($_REQUEST['contribution_page_' . (string)$i])) {
+            continue;
+          }
           $page = 'contribution_page_' . (string)$i;
           $type = 'financial_type_' . (string)$i;
           $perc = 'percentage_' . (string)$i;
@@ -235,6 +218,7 @@ class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
               5 => array($end, 'Date'),
               6 => array($_REQUEST[$perc], 'Float')
             ));
+            $elem_added++;
         }
         $transaction->commit();
         CRM_Wci_BAO_WidgetCache::deleteWidgetCacheByProgressbar($this->_id);
@@ -245,7 +229,6 @@ class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
         CRM_Core_Session::setStatus(ts('Failed to create progress bar'), '', 'error');
         $transaction->rollback();
       }
-
     }
     else {
       $sql = "INSERT INTO civicrm_wci_progress_bar

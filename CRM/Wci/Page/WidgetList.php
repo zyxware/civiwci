@@ -48,6 +48,34 @@ class CRM_Wci_Page_WidgetList extends CRM_Core_Page {
       $controller->process();
       return $controller->run();
     }
+    elseif ($action & CRM_Core_Action::COPY) {
+      try {
+        $sql = "INSERT INTO civicrm_wci_widget (title, logo_image, image,
+        button_title, button_link_to, progress_bar_id, description,
+        email_signup_group_id, size_variant, color_title, color_title_bg,
+        color_progress_bar, color_progress_bar_bg, color_widget_bg, color_description, color_border,
+        color_button, color_button_bg, hide_title, hide_border, hide_pbcap,
+        color_btn_newsletter, color_btn_newsletter_bg, newsletter_text,
+        color_newsletter_text, style_rules, override, custom_template, show_pb_perc)
+        SELECT concat(title, '-', (SELECT MAX(id) FROM civicrm_wci_widget)), logo_image, image,
+        button_title, button_link_to, progress_bar_id, description,
+        email_signup_group_id, size_variant, color_title, color_title_bg,
+        color_progress_bar, color_progress_bar_bg, color_widget_bg, color_description, color_border,
+        color_button, color_button_bg, hide_title, hide_border, hide_pbcap,
+        color_btn_newsletter, color_btn_newsletter_bg, newsletter_text,
+        color_newsletter_text, style_rules, override, custom_template, show_pb_perc FROM civicrm_wci_widget WHERE id=%1";
+        CRM_Core_DAO::executeQuery("SET foreign_key_checks = 0;");
+        CRM_Core_DAO::executeQuery($sql,
+              array(1=>array($id, 'Integer'),
+        ));
+        CRM_Core_DAO::executeQuery("SET foreign_key_checks = 1;");
+      }
+      catch (Exception $e) {
+        CRM_Core_Session::setStatus(ts('Failed to create widget. ') .
+        $e->getMessage(), '', 'error');
+        $transaction->rollback();
+      }
+    }
     elseif ($action & CRM_Core_Action::DELETE) {
       try {
         $transaction = new CRM_Core_Transaction();
@@ -101,6 +129,12 @@ class CRM_Wci_Page_WidgetList extends CRM_Core_Page {
           'url' => CRM_Utils_System::currentPath(),
           'qs' => 'action=update&reset=1&id=%%id%%',
           'title' => ts('Update'),
+        ),
+        CRM_Core_Action::COPY => array(
+          'name' => ts('Clone'),
+          'url' => CRM_Utils_System::currentPath(),
+          'qs' => 'action=copy&reset=1&id=%%id%%',
+          'title' => ts('copy'),
         ),
         CRM_Core_Action::DELETE => array(
           'name' => ts('Delete'),

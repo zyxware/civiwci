@@ -20,6 +20,7 @@
  | Technologies at info[AT]zyxware[DOT]com.                           |
  +--------------------------------------------------------------------+
 *}
+
 {literal}
 <style>
     .crm-wci-pb hr {
@@ -31,36 +32,56 @@
 </style>
 {/literal}
 {* HEADER *}
+
+{if not $PBSource_block}
 <div class="crm-block crm-form-block">
   <div class="crm-submit-buttons">
   {include file="CRM/common/formButtons.tpl" location="top"}
   </div>
 
-  {foreach from=$elementNames item=elementName}
     <div class="crm-section">
-      <div class="label">{$form.$elementName.label}</div>
-      {if substr($elementName, 0, 23)  eq 'contribution_start_date'}
-        <div class="content">{$form.$elementName.html}
-          <span class="description">(Format YYYY-MM-DD)</span>
-          <br>
-          <span class="description">{ts}Date from which contributions to be added to this progressbar. Keep it empty to select contributions from the beginning.{/ts}</span>
-        </div>
-      {elseif substr($elementName, 0, 21)  eq 'contribution_end_date'}
-        <div class="content">{$form.$elementName.html}
-          <span class="description">(Format YYYY-MM-DD)</span>
-          <br>
-          <span class="description">{ts}Date to which contributions to be added to this progressbar. Keep it empty to select contributions up to today.{/ts}</span>
-        </div>
-      {else}
-        <div class="content">{$form.$elementName.html}</div>
-      {/if}
+      <div class="label">{$form.progressbar_name.label}</div>
+      <div class="content">{$form.progressbar_name.html}</div>
       <div class="clear"></div>
     </div>
-  {/foreach}
 
+    <div class="crm-section">
+      <div class="label">{$form.starting_amount.label}</div>
+      <div class="content">{$form.starting_amount.html}</div>
+      <div class="clear"></div>
+    </div>
+
+    <div class="crm-section">
+      <div class="label">{$form.goal_amount.label}</div>
+      <div class="content">{$form.goal_amount.html}</div>
+      <div class="clear"></div>
+    </div>
+    <div class="crm-wci-pb"><hr></div>
+    <label><SMALL>
+    Progressbar shows the sum of percentage of contributions done on each selected contribution page or financial type.
+    </SMALL></label>
+    {foreach from=$pbSources item=idsrc}
+      {assign var=PBblockId value=$idsrc}
+      {include file="CRM/Wci/Form/PBSource.tpl"}
+    {/foreach}
+    {if not $pbSources}
+      {include file="CRM/Wci/Form/PBSource.tpl"}
+    {/if}
+  {else}
+    {include file="CRM/Wci/Form/PBSource.tpl"}
+  {/if}
+
+    <div class="crm-section">
+      <div class="label">{$form.addmore_link.label}</div>
+      <div class="content">{$form.addmore_link.html}</div>
+      <div class="clear"></div>
+    </div>
 
   {* FOOTER *}
+
+{if not $PBSource_block}
   <div class="crm-submit-buttons">
   {include file="CRM/common/formButtons.tpl" location="bottom"}
   </div>
 </div>
+{/if}

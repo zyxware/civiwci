@@ -207,7 +207,7 @@
       <div class="crm-wci-widget-title" id="crm_wid_{$wciform.widgetId}_title">
         {if $wciform.logo_image}
           <span class="crm-logo">
-            <img src="{$wciform.logo_image}" alt={ts}Logo{/ts}>
+            <img src="{$wciform.logo_image}" alt={ts escape='htmlattribute'}Logo{/ts}>
           </span>
         {/if}
         {$wciform.title}
@@ -216,7 +216,7 @@
         {if $wciform.logo_image}
           <div class="crm-wci-widget-title" id="crm_wid_{$wciform.widgetId}_title">
             <span class="crm-logo">
-              <img src="{$wciform.logo_image}" alt={ts}Logo{/ts}>
+              <img src="{$wciform.logo_image}" alt={ts escape='htmlattribute'}Logo{/ts}>
             </span>
           </div>
         {/if}

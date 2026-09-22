@@ -129,7 +129,7 @@ function wci_civicrm_alterSettingsFolders(&$metaDataFolders = NULL) {
 }
 
 function _getMenuKeyMax($menuArray) {
-  $max = array(max(array_keys($menuArray)));
+  $max = [max(array_keys($menuArray))];
   foreach($menuArray as $v) {
     if (!empty($v['child'])) {
       $max[] = _getMenuKeyMax($v['child']);
@@ -140,10 +140,10 @@ function _getMenuKeyMax($menuArray) {
 
 function wci_civicrm_permission(&$permissions) {
   $prefix = ts('CiviWCI') . ': '; // name of extension or module
-  $permissions += array(
+  $permissions += [
     'access CiviWCI Widget' => $prefix . ts('Access CiviWCI Widget'),
     'administer CiviWCI' => $prefix . ts('Administer CiviWCI'),
-  );
+  ];
 }
 
 function wci_civicrm_navigationMenu( &$params ) {
@@ -153,8 +153,8 @@ function wci_civicrm_navigationMenu( &$params ) {
   $helpID = CRM_Core_DAO::getFieldValue('CRM_Core_DAO_Navigation', 'Help', 'id', 'name');
   $params[$maxKey] = $params[$helpID];
   // inserting WCI menu at the place of old help location
-  $params[$helpID] = array (
-    'attributes' => array (
+  $params[$helpID] = [
+    'attributes' => [
     'label' => ts('Widgets and Progress Bars'),
     'name' => 'WCI',
     'url' => null,
@@ -163,10 +163,10 @@ function wci_civicrm_navigationMenu( &$params ) {
     'separator' => 0,
     'parentID' => 0,
     'navID' => $maxKey,
-    'active' => 1),
-    'child' =>  array (
-        '1' => array (
-        'attributes' => array (
+    'active' => 1],
+    'child' =>  [
+        '1' => [
+        'attributes' => [
         'label' => ts('New Widget'),
         'name' => 'new_widget',
         'url' => 'civicrm/wci/widget/add',
@@ -175,10 +175,10 @@ function wci_civicrm_navigationMenu( &$params ) {
         'separator' => 1,
         'parentID' => $maxKey,
         'navID' => $maxKey+1,
-        'active' => 1)),
+        'active' => 1]],
 
-        '2' => array (
-        'attributes' => array (
+        '2' => [
+        'attributes' => [
         'label' => ts('Manage Widgets'),
         'name' => 'manage_widget',
         'url' => 'civicrm/wci/widget?reset=1',
@@ -187,10 +187,10 @@ function wci_civicrm_navigationMenu( &$params ) {
         'separator' => 1,
         'parentID' => $maxKey,
         'navID' => $maxKey+2,
-        'active' => 1)),
+        'active' => 1]],
 
-        '3' => array (
-        'attributes' => array (
+        '3' => [
+        'attributes' => [
         'label' => ts('New Progress Bar'),
         'name' => 'new_progress_bar',
         'url' => 'civicrm/wci/progress-bar/add',
@@ -199,10 +199,10 @@ function wci_civicrm_navigationMenu( &$params ) {
         'separator' => 1,
         'parentID' => $maxKey,
         'navID' => $maxKey+3,
-        'active' => 1)),
+        'active' => 1]],
 
-        '4' => array (
-        'attributes' => array (
+        '4' => [
+        'attributes' => [
         'label' => ts('Manage Progress Bars'),
         'name' => 'manage_progress_bar',
         'url' => 'civicrm/wci/progress-bar?reset=1',
@@ -211,10 +211,10 @@ function wci_civicrm_navigationMenu( &$params ) {
         'separator' => 1,
         'parentID' => $maxKey,
         'navID' => $maxKey+4,
-        'active' => 1)),
+        'active' => 1]],
 
-        '5' => array (
-        'attributes' => array (
+        '5' => [
+        'attributes' => [
         'label' => ts('New Embed Code'),
         'name' => 'new_embed-code',
         'url' => 'civicrm/wci/embed-code/add',
@@ -223,10 +223,10 @@ function wci_civicrm_navigationMenu( &$params ) {
         'separator' => 1,
         'parentID' => $maxKey,
         'navID' => $maxKey+5,
-        'active' => 1)),
+        'active' => 1]],
 
-        '6' => array (
-        'attributes' => array (
+        '6' => [
+        'attributes' => [
         'label' => ts('Manage Embed Code'),
         'name' => 'manage-emebed-code',
         'url' => 'civicrm/wci/embed-code?reset=1',
@@ -235,10 +235,10 @@ function wci_civicrm_navigationMenu( &$params ) {
         'separator' => 1,
         'parentID' => $maxKey,
         'navID' => $maxKey+6,
-        'active' => 1)),
+        'active' => 1]],
 
-        '7' => array (
-        'attributes' => array (
+        '7' => [
+        'attributes' => [
         'label' => ts('Widget Settings'),
         'name' => 'widget-settings',
         'url' => 'civicrm/wci/settings?reset=1',
@@ -247,7 +247,7 @@ function wci_civicrm_navigationMenu( &$params ) {
         'separator' => 1,
         'parentID' => $maxKey,
         'navID' => $maxKey+7,
-        'active' => 1)),
-        ),
-  );
+        'active' => 1]],
+        ],
+  ];
 }

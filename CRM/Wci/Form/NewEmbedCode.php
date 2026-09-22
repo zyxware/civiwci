@@ -52,33 +52,33 @@ class CRM_Wci_Form_NewEmbedCode extends CRM_Core_Form {
       $this->getWidgets(), // list of options
       true // is required
     );
-    $this->addButtons(array(
-      array(
+    $this->addButtons([
+      [
         'type' => 'submit',
         'name' => ts('Save'),
         'isDefault' => TRUE,
-      ),
-        array(
+      ],
+        [
           'type' => 'next',
           'name' => ts('Save & Preview'),
-        ),
-    ));
+        ],
+    ]);
 
     if (isset($this->_id)) {
       $query = "SELECT * FROM civicrm_wci_embed_code WHERE id= %1";
-      $params = array(1 => array($this->_id, 'Integer'));
+      $params = [1 => [$this->_id, 'Integer']];
 
       $dao = CRM_Core_DAO::executeQuery($query, $params, TRUE, 'CRM_Wci_DAO_EmbedCode');
 
       while ($dao->fetch()) {
 
-        $emb_code[$dao->id] = array();
+        $emb_code[$dao->id] = [];
         CRM_Core_DAO::storeValues($dao, $emb_code[$dao->id]);
 
-        $this->setDefaults(array(
-              'title' => $emb_code[$dao->id]['name']));
-        $this->setDefaults(array(
-              'widget' => $emb_code[$dao->id]['widget_id']));
+        $this->setDefaults([
+              'title' => $emb_code[$dao->id]['name']]);
+        $this->setDefaults([
+              'widget' => $emb_code[$dao->id]['widget_id']]);
       }
       CRM_Utils_System::setTitle(ts('Edit embed code'));
       $this->assign('widget_id', $emb_code[$dao->id]['widget_id']);
@@ -95,11 +95,11 @@ class CRM_Wci_Form_NewEmbedCode extends CRM_Core_Form {
     $values = $this->exportValues();
 
     $title = str_replace("'", "''", $values['title']);
-    $params = array(1 => array($title, 'String'),
-      2 => array($values['widget'], 'Integer'),
-    );
+    $params = [1 => [$title, 'String'],
+      2 => [$values['widget'], 'Integer'],
+    ];
     if (isset($this->_id)) {
-      $params += array(3 => array($this->_id, 'Integer'),);
+      $params += [3 => [$this->_id, 'Integer'],];
       $sql = "UPDATE civicrm_wci_embed_code SET name = %1, widget_id = %2 where id = %3" ;
     }
     else {
@@ -127,9 +127,9 @@ class CRM_Wci_Form_NewEmbedCode extends CRM_Core_Form {
   }
 
   function getWidgets() {
-    $options = array(
+    $options = [
       '' => ts('- select -'),
-    );
+    ];
     $widgList = CRM_Wci_BAO_Widget::getWidgetList();
     foreach ($widgList as $widg) {
       $options[$widg['id']] = $widg['title'];
@@ -148,7 +148,7 @@ class CRM_Wci_Form_NewEmbedCode extends CRM_Core_Form {
     // auto-rendered in the loop -- such as "qfKey" and "buttons".  These
     // items don't have labels.  We'll identify renderable by filtering on
     // the 'label'.
-    $elementNames = array();
+    $elementNames = [];
     foreach ($this->_elements as $element) {
       $label = $element->getLabel();
       if (!empty($label)) {

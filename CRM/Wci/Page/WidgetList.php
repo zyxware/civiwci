@@ -66,8 +66,8 @@ class CRM_Wci_Page_WidgetList extends CRM_Core_Page {
         color_newsletter_text, style_rules, override, custom_template, show_pb_perc FROM civicrm_wci_widget WHERE id=%1";
         CRM_Core_DAO::executeQuery("SET foreign_key_checks = 0;");
         CRM_Core_DAO::executeQuery($sql,
-              array(1=>array($id, 'Integer'),
-        ));
+              [1=>[$id, 'Integer'],
+        ]);
         CRM_Core_DAO::executeQuery("SET foreign_key_checks = 1;");
       }
       catch (Exception $e) {
@@ -81,7 +81,7 @@ class CRM_Wci_Page_WidgetList extends CRM_Core_Page {
         $transaction = new CRM_Core_Transaction();
 
         $sql = "DELETE FROM civicrm_wci_widget where id = %1";
-        $params = array(1 => array($id, 'Integer'));
+        $params = [1 => [$id, 'Integer']];
         CRM_Core_DAO::executeQuery($sql, $params);
         $transaction->commit();
       }
@@ -93,12 +93,12 @@ class CRM_Wci_Page_WidgetList extends CRM_Core_Page {
 
     CRM_Utils_System::setTitle(ts('Widget List'));
     $query = "SELECT * FROM civicrm_wci_widget";
-    $params = array();
+    $params = [];
 
     $dao = CRM_Core_DAO::executeQuery($query, $params, TRUE, 'CRM_Wci_DAO_Widget');
 
     while ($dao->fetch()) {
-      $wid_page[$dao->id] = array();
+      $wid_page[$dao->id] = [];
       CRM_Core_DAO::storeValues($dao, $wid_page[$dao->id]);
       $wid_page[$dao->id]['title'] = $wid_page[$dao->id]['title'];
       $description = $wid_page[$dao->id]['description'];
@@ -107,7 +107,7 @@ class CRM_Wci_Page_WidgetList extends CRM_Core_Page {
       $action = array_sum(array_keys($this->actionLinks()));
       //build the normal action links.
       $wid_page[$dao->id]['action'] = CRM_Core_Action::formLink(self::actionLinks(),
-        $action, array('id' => $dao->id));
+        $action, ['id' => $dao->id]);
     }
 
     if (isset($wid_page)) {
@@ -123,27 +123,27 @@ class CRM_Wci_Page_WidgetList extends CRM_Core_Page {
       // helper variable for nicer formatting
       $deleteExtra = ts('Are you sure you want to delete this Widget?');
 
-      self::$_actionLinks = array(
-        CRM_Core_Action::UPDATE => array(
+      self::$_actionLinks = [
+        CRM_Core_Action::UPDATE => [
           'name' => ts('Edit'),
           'url' => CRM_Utils_System::currentPath(),
           'qs' => 'action=update&reset=1&id=%%id%%',
           'title' => ts('Update'),
-        ),
-        CRM_Core_Action::COPY => array(
+        ],
+        CRM_Core_Action::COPY => [
           'name' => ts('Clone'),
           'url' => CRM_Utils_System::currentPath(),
           'qs' => 'action=copy&reset=1&id=%%id%%',
           'title' => ts('copy'),
-        ),
-        CRM_Core_Action::DELETE => array(
+        ],
+        CRM_Core_Action::DELETE => [
           'name' => ts('Delete'),
           'url' => CRM_Utils_System::currentPath(),
           'qs' => 'action=delete&reset=1&id=%%id%%',
           'title' => ts('Delete Custom Field'),
           'extra' => 'onclick = "return confirm(\'' . $deleteExtra . '\');"',
-        ),
-      );
+        ],
+      ];
     }
     return self::$_actionLinks;
   }

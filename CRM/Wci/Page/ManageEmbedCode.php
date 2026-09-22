@@ -53,7 +53,7 @@ class CRM_Wci_Page_ManageEmbedCode extends CRM_Core_Page {
         $transaction = new CRM_Core_Transaction();
 
         $sql = "DELETE FROM civicrm_wci_embed_code where id = %1";
-        $params = array(1 => array($id, 'Integer'));
+        $params = [1 => [$id, 'Integer']];
         CRM_Core_DAO::executeQuery($sql, $params);
         $transaction->commit();
       }
@@ -65,12 +65,12 @@ class CRM_Wci_Page_ManageEmbedCode extends CRM_Core_Page {
 
     CRM_Utils_System::setTitle(ts('Embed Code List'));
     $query = "SELECT * FROM civicrm_wci_embed_code";
-    $params = array();
+    $params = [];
 
     $dao = CRM_Core_DAO::executeQuery($query, $params, TRUE, 'CRM_Wci_DAO_EmbedCode');
 
     while ($dao->fetch()) {
-      $emb_code[$dao->id] = array();
+      $emb_code[$dao->id] = [];
       CRM_Core_DAO::storeValues($dao, $emb_code[$dao->id]);
       $emb_code[$dao->id]['id'] = $emb_code[$dao->id]['id'];
       $emb_code[$dao->id]['name'] = $emb_code[$dao->id]['name'];
@@ -78,7 +78,7 @@ class CRM_Wci_Page_ManageEmbedCode extends CRM_Core_Page {
       $action = array_sum(array_keys($this->actionLinks()));
       //build the normal action links.
       $emb_code[$dao->id]['action'] = CRM_Core_Action::formLink(self::actionLinks(),
-        $action, array('id' => $dao->id));
+        $action, ['id' => $dao->id]);
     }
 
     if (isset($emb_code)) {
@@ -93,21 +93,21 @@ class CRM_Wci_Page_ManageEmbedCode extends CRM_Core_Page {
       // helper variable for nicer formatting
       $deleteExtra = ts('Are you sure you want to delete this Widget?');
 
-      self::$_actionLinks = array(
-        CRM_Core_Action::UPDATE => array(
+      self::$_actionLinks = [
+        CRM_Core_Action::UPDATE => [
           'name' => ts('View and Edit'),
           'url' => CRM_Utils_System::currentPath(),
           'qs' => 'action=update&reset=1&id=%%id%%',
           'title' => ts('Update'),
-        ),
-        CRM_Core_Action::DELETE => array(
+        ],
+        CRM_Core_Action::DELETE => [
           'name' => ts('Delete'),
           'url' => CRM_Utils_System::currentPath(),
           'qs' => 'action=delete&reset=1&id=%%id%%',
           'title' => ts('Delete Custom Field'),
           'extra' => 'onclick = "return confirm(\'' . $deleteExtra . '\');"',
-        ),
-      );
+        ],
+      ];
     }
     return self::$_actionLinks;
   }

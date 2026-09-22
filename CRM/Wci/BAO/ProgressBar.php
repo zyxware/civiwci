@@ -40,13 +40,13 @@ class CRM_Wci_BAO_ProgressBar extends CRM_Wci_DAO_ProgressBar {
    */
   public static function getProgressbarList() {
     $query = "SELECT * FROM civicrm_wci_progress_bar";
-    $params = array();
-    $pbList = array();
+    $params = [];
+    $pbList = [];
 
     $dao = CRM_Core_DAO::executeQuery($query, $params, TRUE, 'CRM_Wci_DAO_ProgressBar');
 
     while ($dao->fetch()) {
-      $pbList[$dao->id] = array();
+      $pbList[$dao->id] = [];
       CRM_Core_DAO::storeValues($dao, $pbList[$dao->id]);
     }
 
@@ -71,7 +71,7 @@ class CRM_Wci_BAO_ProgressBar extends CRM_Wci_DAO_ProgressBar {
         AND (DATE(civicontrib.receive_date) >= if(wcipb.start_date is not NULL, wcipb.start_date, '0000-00-00')
         AND DATE(civicontrib.receive_date) <= if(wcipb.end_date is not NULL, wcipb.end_date, DATE(now())))
         AND wcipb.progress_bar_id =" . $pbId;
-    $params = array();
+    $params = [];
     $daoPbf = CRM_Core_DAO::executeQuery($query, $params);
     if ($daoPbf->fetch()) {
       $amount = $daoPbf->amount;
@@ -82,12 +82,12 @@ class CRM_Wci_BAO_ProgressBar extends CRM_Wci_DAO_ProgressBar {
   public static function getProgressbarInfo($pbId) {
     $ga = 0;
     $query = "SELECT * FROM civicrm_wci_progress_bar where id=" . $pbId;
-    $params = array();
-    $pbInfo = array();
+    $params = [];
+    $pbInfo = [];
     $dao = CRM_Core_DAO::executeQuery($query, $params, TRUE, 'CRM_Wci_DAO_ProgressBar');
 
     while ($dao->fetch()) {
-      $con_page[$dao->id] = array();
+      $con_page[$dao->id] = [];
       CRM_Core_DAO::storeValues($dao, $con_page[$dao->id]);
       $pbInfo['name'] = $con_page[$dao->id]['name'];
       $pbInfo['starting_amount'] = $con_page[$dao->id]['starting_amount'];

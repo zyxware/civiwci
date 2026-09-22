@@ -282,11 +282,11 @@ class CRM_Wci_DAO_Widget extends CRM_Core_DAO
   static function getReferenceColumns()
   {
     if (!self::$_links) {
-      self::$_links = array(
+      self::$_links = [
         new CRM_Core_EntityReference(self::getTableName() , 'button_link_to', 'civicrm_contribution_page', 'id') ,
         new CRM_Core_EntityReference(self::getTableName() , 'progress_bar_id', 'civicrm_wci_progress_bar', 'id') ,
         new CRM_Core_EntityReference(self::getTableName() , 'email_signup_group_id', 'civicrm_group', 'id') ,
-      );
+      ];
     }
     return self::$_links;
   }
@@ -299,207 +299,207 @@ class CRM_Wci_DAO_Widget extends CRM_Core_DAO
   static function &fields()
   {
     if (!(self::$_fields)) {
-      self::$_fields = array(
-        'widget_id' => array(
+      self::$_fields = [
+        'widget_id' => [
           'name' => 'id',
           'type' => CRM_Utils_Type::T_INT,
-          'title' => ts('WCI Widget Id', array('domain' => 'com.zyxware.civiwci')) ,
+          'title' => ts('WCI Widget Id', ['domain' => 'com.zyxware.civiwci']) ,
           'required' => true,
-        ) ,
-        'title' => array(
+        ] ,
+        'title' => [
           'name' => 'title',
           'type' => CRM_Utils_Type::T_STRING,
-          'title' => ts('Widget title', array('domain' => 'com.zyxware.civiwci')) ,
+          'title' => ts('Widget title', ['domain' => 'com.zyxware.civiwci']) ,
           'required' => true,
           'maxlength' => 64,
-        ) ,
-        'logo_image' => array(
+        ] ,
+        'logo_image' => [
           'name' => 'logo_image',
           'type' => CRM_Utils_Type::T_STRING,
-          'title' => ts('Image url of widget logo image', array('domain' => 'com.zyxware.civiwci')) ,
+          'title' => ts('Image url of widget logo image', ['domain' => 'com.zyxware.civiwci']) ,
           'required' => false,
           'maxlength' => 255,
-        ) ,
-        'image' => array(
+        ] ,
+        'image' => [
           'name' => 'image',
           'type' => CRM_Utils_Type::T_STRING,
-          'title' => ts('Url of widget image', array('domain' => 'com.zyxware.civiwci')) ,
+          'title' => ts('Url of widget image', ['domain' => 'com.zyxware.civiwci']) ,
           'required' => false,
           'maxlength' => 255,
-        ) ,
-        'button_title' => array(
+        ] ,
+        'button_title' => [
           'name' => 'button_title',
           'type' => CRM_Utils_Type::T_STRING,
-          'title' => ts('Contribute/Donate button title', array('domain' => 'com.zyxware.civiwci')) ,
+          'title' => ts('Contribute/Donate button title', ['domain' => 'com.zyxware.civiwci']) ,
           'required' => false,
           'maxlength' => 64,
-        ) ,
-        'button_link_to' => array(
+        ] ,
+        'button_link_to' => [
           'name' => 'button_link_to',
           'type' => CRM_Utils_Type::T_INT,
-          'title' => ts('Contribution/Donation page reference', array('domain' => 'com.zyxware.civiwci')) ,
+          'title' => ts('Contribution/Donation page reference', ['domain' => 'com.zyxware.civiwci']) ,
           'required' => false,
-        ) ,
-        'progress_bar_id' => array(
+        ] ,
+        'progress_bar_id' => [
           'name' => 'id',
           'type' => CRM_Utils_Type::T_INT,
-          'title' => ts('WCI Progress Bar Reference Id', array('domain' => 'com.zyxware.civiwci')) ,
+          'title' => ts('WCI Progress Bar Reference Id', ['domain' => 'com.zyxware.civiwci']) ,
           'required' => false,
-        ) ,
-        'description' => array(
+        ] ,
+        'description' => [
           'name' => 'description',
           'type' => CRM_Utils_Type::T_TEXT,
-          'title' => ts('Widget description', array('domain' => 'com.zyxware.civiwci')) ,
+          'title' => ts('Widget description', ['domain' => 'com.zyxware.civiwci']) ,
           'required' => false,
-        ) ,
-        'email_signup_group_id' => array(
+        ] ,
+        'email_signup_group_id' => [
           'name' => 'email_signup_group_id',
           'type' => CRM_Utils_Type::T_INT,
-          'title' => ts('Group reference for email newsletter signup', array('domain' => 'com.zyxware.civiwci')) ,
+          'title' => ts('Group reference for email newsletter signup', ['domain' => 'com.zyxware.civiwci']) ,
           'required' => false,
-        ) ,
-        'size_variant' => array(
+        ] ,
+        'size_variant' => [
           'name' => 'id',
           'type' => CRM_Utils_Type::T_STRING,
-          'title' => ts('Widget size variant', array('domain' => 'com.zyxware.civiwci')) ,
+          'title' => ts('Widget size variant', ['domain' => 'com.zyxware.civiwci']) ,
           'required' => true,
           'maxlength' => 10,
-        ) ,
-        'color_title' => array(
+        ] ,
+        'color_title' => [
           'name' => 'color_title',
           'type' => CRM_Utils_Type::T_STRING,
-          'title' => ts('Widget title color', array('domain' => 'com.zyxware.civiwci')) ,
+          'title' => ts('Widget title color', ['domain' => 'com.zyxware.civiwci']) ,
           'required' => true,
           'maxlength' => 10,
-        ) ,
-        'color_title_bg' => array(
+        ] ,
+        'color_title_bg' => [
           'name' => 'color_title_bg',
           'type' => CRM_Utils_Type::T_STRING,
-          'title' => ts('Widget title background color', array('domain' => 'com.zyxware.civiwci')) ,
+          'title' => ts('Widget title background color', ['domain' => 'com.zyxware.civiwci']) ,
           'required' => true,
           'maxlength' => 10,
-        ) ,
-        'color_progress_bar' => array(
+        ] ,
+        'color_progress_bar' => [
           'name' => 'color_progress_bar',
           'type' => CRM_Utils_Type::T_STRING,
-          'title' => ts('Progress bar color', array('domain' => 'com.zyxware.civiwci')) ,
+          'title' => ts('Progress bar color', ['domain' => 'com.zyxware.civiwci']) ,
           'required' => true,
           'maxlength' => 10,
-        ) ,
-        'color_progress_bar_bg' => array(
+        ] ,
+        'color_progress_bar_bg' => [
           'name' => 'color_progress_bar_bg',
           'type' => CRM_Utils_Type::T_STRING,
-          'title' => ts('Progress bar background color', array('domain' => 'com.zyxware.civiwci')) ,
+          'title' => ts('Progress bar background color', ['domain' => 'com.zyxware.civiwci']) ,
           'required' => true,
           'maxlength' => 10,
-        ) ,
-        'color_widget_bg' => array(
+        ] ,
+        'color_widget_bg' => [
           'name' => 'color_widget_bg',
           'type' => CRM_Utils_Type::T_STRING,
-          'title' => ts('Widget background color', array('domain' => 'com.zyxware.civiwci')) ,
+          'title' => ts('Widget background color', ['domain' => 'com.zyxware.civiwci']) ,
           'required' => true,
           'maxlength' => 10,
-        ) ,
-        'color_description' => array(
+        ] ,
+        'color_description' => [
           'name' => 'color_description',
           'type' => CRM_Utils_Type::T_STRING,
-          'title' => ts('Widget description color', array('domain' => 'com.zyxware.civiwci')) ,
+          'title' => ts('Widget description color', ['domain' => 'com.zyxware.civiwci']) ,
           'required' => true,
           'maxlength' => 10,
-        ) ,
-        'color_border' => array(
+        ] ,
+        'color_border' => [
           'name' => 'color_border',
           'type' => CRM_Utils_Type::T_STRING,
-          'title' => ts('Widget border color', array('domain' => 'com.zyxware.civiwci')) ,
+          'title' => ts('Widget border color', ['domain' => 'com.zyxware.civiwci']) ,
           'required' => true,
           'maxlength' => 10,
-        ) ,
-        'color_button' => array(
+        ] ,
+        'color_button' => [
           'name' => 'color_button',
           'type' => CRM_Utils_Type::T_STRING,
-          'title' => ts('Widget button text color', array('domain' => 'com.zyxware.civiwci')) ,
+          'title' => ts('Widget button text color', ['domain' => 'com.zyxware.civiwci']) ,
           'required' => true,
           'maxlength' => 10,
-        ) ,
-        'color_button_bg' => array(
+        ] ,
+        'color_button_bg' => [
           'name' => 'color_button_bg',
           'type' => CRM_Utils_Type::T_STRING,
-          'title' => ts('Widget button background color', array('domain' => 'com.zyxware.civiwci')) ,
+          'title' => ts('Widget button background color', ['domain' => 'com.zyxware.civiwci']) ,
           'required' => true,
           'maxlength' => 10,
-        ) ,
-        'style_rules' => array(
+        ] ,
+        'style_rules' => [
           'name' => 'style_rules',
           'type' => CRM_Utils_Type::T_TEXT,
-          'title' => ts('Additional style rules', array('domain' => 'com.zyxware.civiwci')) ,
+          'title' => ts('Additional style rules', ['domain' => 'com.zyxware.civiwci']) ,
           'required' => false,
-        ) ,
-        'override' => array(
+        ] ,
+        'override' => [
           'name' => 'override',
           'type' => CRM_Utils_Type::T_BOOLEAN,
-          'title' => ts('Override default template', array('domain' => 'com.zyxware.civiwci')) ,
+          'title' => ts('Override default template', ['domain' => 'com.zyxware.civiwci']) ,
           'required' => false,
-        ) ,
-        'hide_title' => array(
+        ] ,
+        'hide_title' => [
           'name' => 'hide_title',
           'type' => CRM_Utils_Type::T_BOOLEAN,
-          'title' => ts('Hide title, if 1.', array('domain' => 'com.zyxware.civiwci')) ,
+          'title' => ts('Hide title, if 1.', ['domain' => 'com.zyxware.civiwci']) ,
           'required' => false,
-        ) ,
-        'hide_border' => array(
+        ] ,
+        'hide_border' => [
           'name' => 'hide_border',
           'type' => CRM_Utils_Type::T_BOOLEAN,
-          'title' => ts('Hide widget border, if 1.', array('domain' => 'com.zyxware.civiwci')) ,
+          'title' => ts('Hide widget border, if 1.', ['domain' => 'com.zyxware.civiwci']) ,
           'required' => false,
-        ) ,
-        'hide_pbcap' => array(
+        ] ,
+        'hide_pbcap' => [
           'name' => 'hide_pbcap',
           'type' => CRM_Utils_Type::T_BOOLEAN,
-          'title' => ts('Hide pb caption, if 1.', array('domain' => 'com.zyxware.civiwci')) ,
+          'title' => ts('Hide pb caption, if 1.', ['domain' => 'com.zyxware.civiwci']) ,
           'required' => false,
-        ) ,
-        'show_pb_perc' => array(
+        ] ,
+        'show_pb_perc' => [
           'name' => 'show_pb_perc',
           'type' => CRM_Utils_Type::T_BOOLEAN,
-          'title' => ts('pb in %(1) or amount(0).', array('domain' => 'com.zyxware.civiwci')) ,
+          'title' => ts('pb in %(1) or amount(0).', ['domain' => 'com.zyxware.civiwci']) ,
           'required' => false,
-        ) ,
-        'custom_template' => array(
+        ] ,
+        'custom_template' => [
           'name' => 'custom_template',
           'type' => CRM_Utils_Type::T_TEXT,
-          'title' => ts('Widget custom template', array('domain' => 'com.zyxware.civiwci')) ,
+          'title' => ts('Widget custom template', ['domain' => 'com.zyxware.civiwci']) ,
           'required' => false,
-        ) ,
+        ] ,
 
-        'color_btn_newsletter' => array(
+        'color_btn_newsletter' => [
           'name' => 'color_btn_newsletter',
           'type' => CRM_Utils_Type::T_STRING,
-          'title' => ts('Newsletter Button text color', array('domain' => 'com.zyxware.civiwci')) ,
+          'title' => ts('Newsletter Button text color', ['domain' => 'com.zyxware.civiwci']) ,
           'required' => true,
           'maxlength' => 10,
-        ) ,
-        'color_btn_newsletter_bg' => array(
+        ] ,
+        'color_btn_newsletter_bg' => [
           'name' => 'color_btn_newsletter_bg',
           'type' => CRM_Utils_Type::T_STRING,
-          'title' => ts('Newsletter Button color', array('domain' => 'com.zyxware.civiwci')) ,
+          'title' => ts('Newsletter Button color', ['domain' => 'com.zyxware.civiwci']) ,
           'required' => true,
           'maxlength' => 10,
-        ) ,
-        'newsletter_text' => array(
+        ] ,
+        'newsletter_text' => [
           'name' => 'newsletter_text',
           'type' => CRM_Utils_Type::T_STRING,
-          'title' => ts('Newsletter text', array('domain' => 'com.zyxware.civiwci')) ,
+          'title' => ts('Newsletter text', ['domain' => 'com.zyxware.civiwci']) ,
           'required' => true,
           'maxlength' => 64,
-        ) ,
-        'color_newsletter_text' => array(
+        ] ,
+        'color_newsletter_text' => [
           'name' => 'color_newsletter_text',
           'type' => CRM_Utils_Type::T_STRING,
-          'title' => ts('Newsletter text color', array('domain' => 'com.zyxware.civiwci')) ,
+          'title' => ts('Newsletter text color', ['domain' => 'com.zyxware.civiwci']) ,
           'required' => true,
           'maxlength' => 10,
-        ) ,
-      );
+        ] ,
+      ];
     }
     return self::$_fields;
   }
@@ -513,7 +513,7 @@ class CRM_Wci_DAO_Widget extends CRM_Core_DAO
   static function &fieldKeys()
   {
     if (!(self::$_fieldKeys)) {
-      self::$_fieldKeys = array(
+      self::$_fieldKeys = [
         'id' => 'widget_id',
         'title' => 'title',
         'logo_image' => 'logo_image',
@@ -540,7 +540,7 @@ class CRM_Wci_DAO_Widget extends CRM_Core_DAO
         'hide_pbcap' => 'hide_pbcap',
         'show_pb_perc' => 'show_pb_perc',
         'custom_template' => 'custom_template',
-      );
+      ];
     }
     return self::$_fieldKeys;
   }
@@ -575,7 +575,7 @@ class CRM_Wci_DAO_Widget extends CRM_Core_DAO
   static function &import($prefix = false)
   {
     if (!(self::$_import)) {
-      self::$_import = array();
+      self::$_import = [];
       $fields = self::fields();
       foreach($fields as $name => $field) {
         if (CRM_Utils_Array::value('import', $field)) {
@@ -599,7 +599,7 @@ class CRM_Wci_DAO_Widget extends CRM_Core_DAO
   static function &export($prefix = false)
   {
     if (!(self::$_export)) {
-      self::$_export = array();
+      self::$_export = [];
       $fields = self::fields();
       foreach($fields as $name => $field) {
         if (CRM_Utils_Array::value('export', $field)) {

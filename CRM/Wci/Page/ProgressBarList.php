@@ -57,8 +57,8 @@ class CRM_Wci_Page_ProgressBarList extends CRM_Core_Page {
         WHERE id=%1";
 
         CRM_Core_DAO::executeQuery($sql,
-              array(1=>array($id, 'Integer'),
-        ));
+              [1=>[$id, 'Integer'],
+        ]);
 
         $new_pb_id = CRM_Core_DAO::singleValueQuery('SELECT LAST_INSERT_ID()');
 
@@ -68,9 +68,9 @@ class CRM_Wci_Page_ProgressBarList extends CRM_Core_Page {
             end_date, percentage FROM civicrm_wci_progress_bar_formula WHERE progress_bar_id=%2";
 
         CRM_Core_DAO::executeQuery($sql,
-              array(1=>array($new_pb_id, 'Integer'),
-                    2=>array($id, 'Integer'),
-        ));
+              [1=>[$new_pb_id, 'Integer'],
+                    2=>[$id, 'Integer'],
+        ]);
       }
       catch (Exception $e) {
         CRM_Core_Session::setStatus(ts('Failed to create Progress bar. ') .
@@ -83,11 +83,11 @@ class CRM_Wci_Page_ProgressBarList extends CRM_Core_Page {
       try {
         $transaction = new CRM_Core_Transaction();
         $sql = "DELETE FROM civicrm_wci_progress_bar_formula where progress_bar_id = %1";
-        $params = array(1 => array($id, 'Integer'));
+        $params = [1 => [$id, 'Integer']];
         CRM_Core_DAO::executeQuery($sql, $params);
 
         $sql = "DELETE FROM civicrm_wci_progress_bar where id = %1";
-        $params = array(1 => array($id, 'Integer'));
+        $params = [1 => [$id, 'Integer']];
         CRM_Core_DAO::executeQuery($sql, $params);
         $transaction->commit();
       }
@@ -101,18 +101,18 @@ class CRM_Wci_Page_ProgressBarList extends CRM_Core_Page {
     CRM_Utils_System::setTitle(ts('Progress Bar List'));
 
     $query = "SELECT * FROM civicrm_wci_progress_bar";
-    $params = array();
+    $params = [];
 
     $dao = CRM_Core_DAO::executeQuery($query, $params, TRUE, 'CRM_Wci_DAO_ProgressBar');
 
     while ($dao->fetch()) {
-      $con_page[$dao->id] = array();
+      $con_page[$dao->id] = [];
       CRM_Core_DAO::storeValues($dao, $con_page[$dao->id]);
 
       $action = array_sum(array_keys($this->actionLinks()));
       //build the normal action links.
       $con_page[$dao->id]['action'] = CRM_Core_Action::formLink(self::actionLinks(),
-        $action, array('id' => $dao->id));
+        $action, ['id' => $dao->id]);
     }
 
     if (isset($con_page)) {
@@ -127,27 +127,27 @@ class CRM_Wci_Page_ProgressBarList extends CRM_Core_Page {
       // helper variable for nicer formatting
       $deleteExtra = ts('Are you sure you want to delete this Progressbar page?');
 
-      self::$_actionLinks = array(
-        CRM_Core_Action::UPDATE => array(
+      self::$_actionLinks = [
+        CRM_Core_Action::UPDATE => [
           'name' => ts('Edit'),
           'url' => CRM_Utils_System::currentPath(),
           'qs' => 'action=update&reset=1&id=%%id%%',
           'title' => ts('Update'),
-        ),
-        CRM_Core_Action::COPY => array(
+        ],
+        CRM_Core_Action::COPY => [
           'name' => ts('Clone'),
           'url' => CRM_Utils_System::currentPath(),
           'qs' => 'action=copy&reset=1&id=%%id%%',
           'title' => ts('copy'),
-        ),
-        CRM_Core_Action::DELETE => array(
+        ],
+        CRM_Core_Action::DELETE => [
           'name' => ts('Delete'),
           'url' => CRM_Utils_System::currentPath(),
           'qs' => 'action=delete&reset=1&id=%%id%%',
           'title' => ts('Delete Custom Field'),
           'extra' => 'onclick = "return confirm(\'' . $deleteExtra . '\');"',
-        ),
-      );
+        ],
+      ];
     }
     return self::$_actionLinks;
   }

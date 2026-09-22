@@ -23,13 +23,13 @@
 */
 
   function getContributionPageOptions() {
-    $options = array(
+    $options = [
       0 => ts('- select -'),
-    );
+    ];
 
-    $result = civicrm_api3('contribution_page', 'get', array(
+    $result = civicrm_api3('contribution_page', 'get', [
       'rowCount' => 0 // Fetch all contribution pages.
-    ));
+    ]);
     foreach ($result['values'] as $contribution_page) {
       $options[$contribution_page['id']] = $contribution_page['title'];
     }
@@ -40,9 +40,9 @@
   function getFinancialTypes() {
     $query = "SELECT id, name FROM civicrm_financial_type";
     $dao = CRM_Core_DAO::executeQuery($query);
-    $options = array(
+    $options = [
       0 => ts('- select -'),
-    );
+    ];
 
     while ($dao->fetch()) {
       $options[$dao->id] = $dao->name;

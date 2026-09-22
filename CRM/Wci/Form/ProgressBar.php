@@ -57,24 +57,24 @@ class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
     if (isset($this->_id)) {
       /** Updating existing progress bar*/
       $query = "SELECT * FROM civicrm_wci_progress_bar where id=%1";
-      $params = array(1 => array($this->_id, 'Integer'));
+      $params = [1 => [$this->_id, 'Integer']];
 
       $dao = CRM_Core_DAO::executeQuery($query, $params, TRUE, 'CRM_Wci_DAO_ProgressBar');
 
       if ($dao->fetch()) {
-        $this->setDefaults(array(
-          'progressbar_name' => $dao->name));
-        $this->setDefaults(array(
-          'starting_amount' => $dao->starting_amount));
-        $this->setDefaults(array(
-          'goal_amount' => $dao->goal_amount));
+        $this->setDefaults([
+          'progressbar_name' => $dao->name]);
+        $this->setDefaults([
+          'starting_amount' => $dao->starting_amount]);
+        $this->setDefaults([
+          'goal_amount' => $dao->goal_amount]);
       }
 
       $query = "SELECT * FROM civicrm_wci_progress_bar_formula WHERE progress_bar_id =%1";
-      $params = array(1 => array($this->_id, 'Integer'));
-      $pbSources = array();
+      $params = [1 => [$this->_id, 'Integer']];
+      $pbSources = [];
       $dao = CRM_Core_DAO::executeQuery($query, $params, TRUE, 'CRM_Wci_DAO_ProgressBarFormula');
-      $remIds = array();
+      $remIds = [];
 
       if(isset($this->_rem_ids)){
         $remIds =  explode(',', $this->_rem_ids);
@@ -95,16 +95,16 @@ class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
         //save formula id
         $this->addElement('hidden', 'contrib_elem_'.$count , $dao->id);
 
-        $this->setDefaults(array(
-              'contribution_page_'.$count => $dao->contribution_page_id));
-        $this->setDefaults(array(
-              'financial_type_'.$count => $dao->financial_type_id));
-        $this->setDefaults(array(
-              'percentage_'.$count => $dao->percentage));
-        $this->setDefaults(array(
-              'contribution_start_date_'.$count => $dao->start_date));
-        $this->setDefaults(array(
-              'contribution_end_date_'.$count => $dao->end_date));
+        $this->setDefaults([
+              'contribution_page_'.$count => $dao->contribution_page_id]);
+        $this->setDefaults([
+              'financial_type_'.$count => $dao->financial_type_id]);
+        $this->setDefaults([
+              'percentage_'.$count => $dao->percentage]);
+        $this->setDefaults([
+              'contribution_start_date_'.$count => $dao->start_date]);
+        $this->setDefaults([
+              'contribution_end_date_'.$count => $dao->end_date]);
         //set default for start date and end date.
         $count++;
 
@@ -153,13 +153,13 @@ class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
 
       $this->addElement('link', 'addmore_link',' ', 'addmore', 'Add another contribution page or financial type.');
 
-      $this->addButtons(array(
-        array(
+      $this->addButtons([
+        [
           'type' => 'submit',
           'name' => ts('Save'),
           'isDefault' => TRUE,
-        ),
-      ));
+        ],
+      ]);
 
       // export form elements
       $this->assign('elementNames', $this->getRenderableElementNames());
@@ -179,14 +179,14 @@ class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
           starting_amount = %2, goal_amount = %3 where id = %4";
 
         CRM_Core_DAO::executeQuery($sql,
-              array(1=>array($_REQUEST['progressbar_name'], 'String'),
-              2=>array($_REQUEST['starting_amount'], 'Float'),
-              3=>array($_REQUEST['goal_amount'], 'Float'),
-              4=>array($this->_id, 'Integer'),
-        ));
+              [1=>[$_REQUEST['progressbar_name'], 'String'],
+              2=>[$_REQUEST['starting_amount'], 'Float'],
+              3=>[$_REQUEST['goal_amount'], 'Float'],
+              4=>[$this->_id, 'Integer'],
+        ]);
         /** Delete existiing formula fields and add fields fresh*/
         CRM_Core_DAO::executeQuery('DELETE FROM civicrm_wci_progress_bar_formula
-            WHERE progress_bar_id=%1', array(1 => array($this->_id, 'Integer')));
+            WHERE progress_bar_id=%1', [1 => [$this->_id, 'Integer']]);
         $elem_added = 0;
         for($i = 1; $elem_added < (int)$_REQUEST['contrib_count']; $i++) {
           if(!isset($_REQUEST['contribution_page_' . (string)$i])) {
@@ -210,14 +210,14 @@ class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
             $end = CRM_Utils_Date::processDate($_REQUEST[$edate], NULL, FALSE, "Ymd");
           }
           CRM_Core_DAO::executeQuery($sql,
-            array(
-              1 => array($_REQUEST[$page], 'Integer'),
-              2 => array($_REQUEST[$type], 'Integer'),
-              3 => array($this->_id, 'Integer'),
-              4 => array($start, 'Date'),
-              5 => array($end, 'Date'),
-              6 => array($_REQUEST[$perc], 'Float')
-            ));
+            [
+              1 => [$_REQUEST[$page], 'Integer'],
+              2 => [$_REQUEST[$type], 'Integer'],
+              3 => [$this->_id, 'Integer'],
+              4 => [$start, 'Date'],
+              5 => [$end, 'Date'],
+              6 => [$_REQUEST[$perc], 'Float']
+            ]);
             $elem_added++;
         }
         $transaction->commit();
@@ -236,10 +236,10 @@ class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
       try {
         $transaction = new CRM_Core_Transaction();
         CRM_Core_DAO::executeQuery($sql,
-          array(1=>array($_REQUEST['progressbar_name'], 'String'),
-          2=>array($_REQUEST['starting_amount'], 'Float'),
-          3=>array($_REQUEST['goal_amount'], 'Float'),
-        ));
+          [1=>[$_REQUEST['progressbar_name'], 'String'],
+          2=>[$_REQUEST['starting_amount'], 'Float'],
+          3=>[$_REQUEST['goal_amount'], 'Float'],
+        ]);
         $progressbar_id = CRM_Core_DAO::singleValueQuery('SELECT LAST_INSERT_ID()');
         for($i = 1; $i <= (int)$_REQUEST['contrib_count']; $i++) {
           $page = 'contribution_page_' . (string)$i;
@@ -260,14 +260,14 @@ class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
             $end = CRM_Utils_Date::processDate($_REQUEST[$edate], NULL, FALSE, "Ymd");
           }
           CRM_Core_DAO::executeQuery($sql,
-            array(
-              1 => array($_REQUEST[$page], 'Integer'),
-              2 => array($_REQUEST[$type], 'Integer'),
-              3 => array($progressbar_id, 'Integer'),
-              4 => array($start, 'Date'),
-              5 => array($end, 'Date'),
-              6 => array($_REQUEST[$perc], 'Float')
-            ));
+            [
+              1 => [$_REQUEST[$page], 'Integer'],
+              2 => [$_REQUEST[$type], 'Integer'],
+              3 => [$progressbar_id, 'Integer'],
+              4 => [$start, 'Date'],
+              5 => [$end, 'Date'],
+              6 => [$_REQUEST[$perc], 'Float']
+            ]);
         }
         $transaction->commit();
         CRM_Utils_System::redirect('civicrm/wci/progress-bar?reset=1');
@@ -293,7 +293,7 @@ class CRM_Wci_Form_ProgressBar extends CRM_Core_Form {
     // auto-rendered in the loop -- such as "qfKey" and "buttons".  These
     // items don't have labels.  We'll identify renderable by filtering on
     // the 'label'.
-    $elementNames = array();
+    $elementNames = [];
     foreach ($this->_elements as $element) {
       $label = $element->getLabel();
       if (!empty($label)) {

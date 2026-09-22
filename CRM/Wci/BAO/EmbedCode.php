@@ -42,7 +42,7 @@ class CRM_Wci_BAO_EmbedCode extends CRM_Wci_DAO_EmbedCode {
     $widgetId = 0;
     if (isset($embed_id)) {
       $query = "SELECT * FROM civicrm_wci_embed_code where id=" . $embed_id;
-      $params = array();
+      $params = [];
       $dao = CRM_Core_DAO::executeQuery($query, $params, TRUE, 'CRM_Wci_DAO_EmbedCode');
       if ($dao->fetch()) {
         $widgetId = $dao->widget_id;

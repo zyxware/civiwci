@@ -124,31 +124,31 @@ class CRM_Wci_DAO_ProgressBar extends CRM_Core_DAO
   static function &fields()
   {
     if (!(self::$_fields)) {
-      self::$_fields = array(
-        'progress_bar_id' => array(
+      self::$_fields = [
+        'progress_bar_id' => [
           'name' => 'id',
           'type' => CRM_Utils_Type::T_INT,
-          'title' => ts('WCI Progress Bar Id', array('domain' => 'com.zyxware.civiwci')) ,
+          'title' => ts('WCI Progress Bar Id', ['domain' => 'com.zyxware.civiwci']) ,
           'required' => true,
-        ) ,
-        'name' => array(
+        ] ,
+        'name' => [
           'name' => 'name',
           'type' => CRM_Utils_Type::T_STRING,
-          'title' => ts('Progress Bar Name', array('domain' => 'com.zyxware.civiwci')) ,
+          'title' => ts('Progress Bar Name', ['domain' => 'com.zyxware.civiwci']) ,
           'required' => true,
           'maxlength' => 64,
-        ) ,
-        'starting_amount' => array(
+        ] ,
+        'starting_amount' => [
           'name' => 'starting_amount',
           'type' => CRM_Utils_Type::T_FLOAT,
           'required' => false,
-        ) ,
-        'goal_amount' => array(
+        ] ,
+        'goal_amount' => [
           'name' => 'goal_amount',
           'type' => CRM_Utils_Type::T_FLOAT,
           'required' => false,
-        ) ,
-      );
+        ] ,
+      ];
     }
     return self::$_fields;
   }
@@ -162,12 +162,12 @@ class CRM_Wci_DAO_ProgressBar extends CRM_Core_DAO
   static function &fieldKeys()
   {
     if (!(self::$_fieldKeys)) {
-      self::$_fieldKeys = array(
+      self::$_fieldKeys = [
         'id' => 'progress_bar_id',
         'name' => 'name',
         'starting_amount' => 'starting_amount',
         'goal_amount' => 'goal_amount',
-      );
+      ];
     }
     return self::$_fieldKeys;
   }
@@ -202,7 +202,7 @@ class CRM_Wci_DAO_ProgressBar extends CRM_Core_DAO
   static function &import($prefix = false)
   {
     if (!(self::$_import)) {
-      self::$_import = array();
+      self::$_import = [];
       $fields = self::fields();
       foreach($fields as $name => $field) {
         if (CRM_Utils_Array::value('import', $field)) {
@@ -226,7 +226,7 @@ class CRM_Wci_DAO_ProgressBar extends CRM_Core_DAO
   static function &export($prefix = false)
   {
     if (!(self::$_export)) {
-      self::$_export = array();
+      self::$_export = [];
       $fields = self::fields();
       foreach($fields as $name => $field) {
         if (CRM_Utils_Array::value('export', $field)) {

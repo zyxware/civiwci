@@ -34,11 +34,11 @@ class CRM_Wci_BAO_Widget extends CRM_Wci_DAO_Widget {
   public static function getWidgetData($widgetId) {
 
     $query = "SELECT * FROM civicrm_wci_widget where id=".$widgetId;
-    $params = array();
+    $params = [];
 
     $dao = CRM_Core_DAO::executeQuery($query, $params, TRUE, 'CRM_Wci_DAO_Widget');
 
-    $data = array();
+    $data = [];
     while ($dao->fetch()) {
       $data["title"] = $dao->title;
       $data["logo_image"] = $dao->logo_image;
@@ -73,7 +73,7 @@ class CRM_Wci_BAO_Widget extends CRM_Wci_DAO_Widget {
       $data["hide_border"] = $dao->hide_border;
       $data["hide_pbcap"] = $dao->hide_pbcap;
       $data["color_bar"] = $dao->color_progress_bar;
-      $defProf = civicrm_api3('setting', 'getValue', array('group' => 'Wci Preference', 'name' => 'default_wci_profile'));
+      $defProf = civicrm_api3('setting', 'getValue', ['group' => 'Wci Preference', 'name' => 'default_wci_profile']);
       $data["emailSignupGroupFormURL"] = CRM_Utils_System::baseCMSURL() . '/civicrm/profile/create?reset=1&amp;gid=' . $defProf;
       $data["color_btn_newsletter"] = $dao->color_btn_newsletter;
       $data["color_btn_newsletter_bg"] = $dao->color_btn_newsletter_bg;
@@ -90,13 +90,13 @@ class CRM_Wci_BAO_Widget extends CRM_Wci_DAO_Widget {
    */
   public static function getWidgetList() {
     $query = "SELECT * FROM civicrm_wci_widget";
-    $params = array();
-    $widgList = array();
+    $params = [];
+    $widgList = [];
 
     $dao = CRM_Core_DAO::executeQuery($query, $params, TRUE, 'CRM_Wci_DAO_Widget');
 
     while ($dao->fetch()) {
-      $widgList[$dao->id] = array();
+      $widgList[$dao->id] = [];
       CRM_Core_DAO::storeValues($dao, $widgList[$dao->id]);
     }
 

@@ -36,18 +36,18 @@ class CRM_Wci_BAO_WidgetCache extends CRM_Wci_DAO_WidgetCache {
     $expire_on = PHP_INT_MAX;
     if ($widget['dynamic'] == TRUE) {
       $cacheTime = civicrm_api3('setting', 'getValue',
-        array('group' => 'Wci Preference', 'name' => 'widget_cache_timeout'));
+        ['group' => 'Wci Preference', 'name' => 'widget_cache_timeout']);
       $expire_on = $timenow + ($cacheTime * 60);
     }
     $query = "INSERT INTO civicrm_wci_widget_cache (widget_id, widget_code, expire, createdtime)
     VALUES (%1, %2, %3, %4)
     ON DUPLICATE KEY UPDATE widget_id = %1, widget_code = %2, expire = %3, createdtime = %4";
-    $params = array(
-      1 => array($widgetId, 'Integer'),
-      2 => array($widget['code'], 'String'),
-      3 => array($expire_on, 'Integer'),
-      4 => array($timenow, 'Integer')
-    );
+    $params = [
+      1 => [$widgetId, 'Integer'],
+      2 => [$widget['code'], 'String'],
+      3 => [$expire_on, 'Integer'],
+      4 => [$timenow, 'Integer']
+    ];
     CRM_Core_DAO::executeQuery($query, $params, TRUE, 'CRM_Wci_DAO_WidgetCache');
   }
 
@@ -55,8 +55,8 @@ class CRM_Wci_BAO_WidgetCache extends CRM_Wci_DAO_WidgetCache {
     $code = "";
     $query = "SELECT widget_code FROM civicrm_wci_widget_cache where widget_id = %1
     AND expire >= %2";
-    $dao = CRM_Core_DAO::executeQuery($query, array(1 => array($widgetId, 'Integer'),
-      2 => array(time(), 'Integer')), TRUE, 'CRM_Wci_DAO_WidgetCache');
+    $dao = CRM_Core_DAO::executeQuery($query, [1 => [$widgetId, 'Integer'],
+      2 => [time(), 'Integer']], TRUE, 'CRM_Wci_DAO_WidgetCache');
     if ($dao->fetch()) {
       $code = $dao->widget_code;
     }
@@ -67,11 +67,11 @@ class CRM_Wci_BAO_WidgetCache extends CRM_Wci_DAO_WidgetCache {
     $code = "";
     $query = "DELETE FROM civicrm_wci_widget_cache where widget_id = %1";
     $dao = CRM_Core_DAO::executeQuery($query,
-      array(1 => array($widgetId, 'Integer')), TRUE, 'CRM_Wci_DAO_WidgetCache');
+      [1 => [$widgetId, 'Integer']], TRUE, 'CRM_Wci_DAO_WidgetCache');
   }
 
   public static function deleteWidgetCacheByProgressbar($pbId) {
     $query = "DELETE wc FROM civicrm_wci_widget_cache as wc INNER JOIN civicrm_wci_widget w on w.id = wc.widget_id WHERE w.progress_bar_id =%1";
-    $dao = CRM_Core_DAO::executeQuery($query, array(1 => array($pbId, 'Integer')), TRUE, 'CRM_Wci_DAO_WidgetCache');
+    $dao = CRM_Core_DAO::executeQuery($query, [1 => [$pbId, 'Integer']], TRUE, 'CRM_Wci_DAO_WidgetCache');
   }
 }

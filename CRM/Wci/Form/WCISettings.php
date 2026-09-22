@@ -32,20 +32,20 @@ class CRM_Wci_Form_WCISettings extends CRM_Core_Form {
   function buildQuickForm() {
     $this->add('text', 'default_profile', ts('Default profile'),true)->setSize(45);
     $this->add('text', 'widget_cache_timeout', ts('Widget cache timeout'),true)->setSize(45);
-    $this->addButtons(array(
-      array(
+    $this->addButtons([
+      [
         'type' => 'submit',
         'name' => ts('Save'),
         'isDefault' => TRUE,
-      ),
-    ));
+      ],
+    ]);
 $cacheTime = 1;
-    $cacheTime = civicrm_api3('setting', 'getValue', array('group' => 'Wci Preference', 'name' => 'widget_cache_timeout'));
-    $defProf =   civicrm_api3('setting', 'getValue', array('group' => 'Wci Preference', 'name' => 'default_wci_profile'));
-    $this->setDefaults(array(
-              'default_profile' => $defProf));
-    $this->setDefaults(array(
-              'widget_cache_timeout' => $cacheTime));
+    $cacheTime = civicrm_api3('setting', 'getValue', ['group' => 'Wci Preference', 'name' => 'widget_cache_timeout']);
+    $defProf =   civicrm_api3('setting', 'getValue', ['group' => 'Wci Preference', 'name' => 'default_wci_profile']);
+    $this->setDefaults([
+              'default_profile' => $defProf]);
+    $this->setDefaults([
+              'widget_cache_timeout' => $cacheTime]);
 
     // export form elements
     $this->assign('elementNames', $this->getRenderableElementNames());
@@ -57,8 +57,8 @@ $cacheTime = 1;
 
   function postProcess() {
     $values = $this->exportValues();
-    civicrm_api3('setting', 'create', array('sequential' => 1, 'default_wci_profile' => $values['default_profile']));
-    civicrm_api3('setting', 'create', array('sequential' => 1, 'widget_cache_timeout' => $values['widget_cache_timeout']));
+    civicrm_api3('setting', 'create', ['sequential' => 1, 'default_wci_profile' => $values['default_profile']]);
+    civicrm_api3('setting', 'create', ['sequential' => 1, 'widget_cache_timeout' => $values['widget_cache_timeout']]);
     CRM_Core_Session::setStatus(ts('Widget settings are saved to database'), '', 'success');
     parent::postProcess();
   }
@@ -72,11 +72,11 @@ $cacheTime = 1;
   }
   function getWidgets() {
     $query = "SELECT * FROM civicrm_wci_widget";
-    $params = array();
+    $params = [];
 
-    $widgetlist = array(
+    $widgetlist = [
       '' => ts('- select -'),
-    );
+    ];
 
     $dao = CRM_Core_DAO::executeQuery($query, $params, TRUE, 'CRM_Wci_DAO_Widget');
 
@@ -96,7 +96,7 @@ $cacheTime = 1;
     // auto-rendered in the loop -- such as "qfKey" and "buttons".  These
     // items don't have labels.  We'll identify renderable by filtering on
     // the 'label'.
-    $elementNames = array();
+    $elementNames = [];
     foreach ($this->_elements as $element) {
       $label = $element->getLabel();
       if (!empty($label)) {

@@ -21,8 +21,8 @@
  | Technologies at info[AT]zyxware[DOT]com.                           |
  +--------------------------------------------------------------------+
 */
-return array(
-  'default_wci_profile' => array(
+return [
+  'default_wci_profile' => [
     'group_name' => 'Wci Preference',
     'group' => 'wci',
     'name' => 'default_wci_profile',
@@ -30,8 +30,8 @@ return array(
     'default' => 0,
     'description' => 'Default profile id',
     'help_text' => 'Sets default profile id',
-  ),
-  'widget_cache_timeout' => array(
+  ],
+  'widget_cache_timeout' => [
     'group_name' => 'Wci Preference',
     'group' => 'wci',
     'name' => 'widget_cache_timeout',
@@ -39,5 +39,5 @@ return array(
     'default' => 0,
     'description' => 'Widget timeout',
     'help_text' => 'widget timeout',
-  ),
- );
+  ],
+ ];

@@ -123,10 +123,10 @@ class CRM_Wci_DAO_ProgressBarFormula extends CRM_Core_DAO
   static function getReferenceColumns()
   {
     if (!self::$_links) {
-      self::$_links = array(
+      self::$_links = [
         new CRM_Core_EntityReference(self::getTableName() , 'progress_bar_id', 'civicrm_wci_progress_bar', 'id') ,
         new CRM_Core_EntityReference(self::getTableName() , 'contribution_page_id', 'civicrm_contribution_page', 'id') ,
-      );
+      ];
     }
     return self::$_links;
   }
@@ -139,42 +139,42 @@ class CRM_Wci_DAO_ProgressBarFormula extends CRM_Core_DAO
   static function &fields()
   {
     if (!(self::$_fields)) {
-      self::$_fields = array(
-        'progress_bar_formula_id' => array(
+      self::$_fields = [
+        'progress_bar_formula_id' => [
           'name' => 'id',
           'type' => CRM_Utils_Type::T_INT,
-          'title' => ts('WCI Progress Bar Formula Entry Id', array('domain' => 'com.zyxware.civiwci')) ,
+          'title' => ts('WCI Progress Bar Formula Entry Id', ['domain' => 'com.zyxware.civiwci']) ,
           'required' => true,
-        ) ,
-        'contribution_page_id' => array(
+        ] ,
+        'contribution_page_id' => [
           'name' => 'contribution_page_id',
           'type' => CRM_Utils_Type::T_INT,
-          'title' => ts('Contribution Page Reference Id', array('domain' => 'com.zyxware.civiwci')) ,
+          'title' => ts('Contribution Page Reference Id', ['domain' => 'com.zyxware.civiwci']) ,
           'required' => true,
-        ) ,
-        'progress_bar_id' => array(
+        ] ,
+        'progress_bar_id' => [
           'name' => 'progress_bar_id',
           'type' => CRM_Utils_Type::T_INT,
-          'title' => ts('Progress Bar Reference Id', array('domain' => 'com.zyxware.civiwci')) ,
+          'title' => ts('Progress Bar Reference Id', ['domain' => 'com.zyxware.civiwci']) ,
           'required' => true,
-        ) ,
-        'start_date' => array(
+        ] ,
+        'start_date' => [
           'name' => 'start_date',
           'type' => CRM_Utils_Type::T_DATE,
-          'title' => ts('Start date', array('domain' => 'com.zyxware.civiwci'))
-        ),
-        'end_date' => array(
+          'title' => ts('Start date', ['domain' => 'com.zyxware.civiwci'])
+        ],
+        'end_date' => [
           'name' => 'end_date',
           'type' => CRM_Utils_Type::T_DATE,
-          'title' => ts('End date', array('domain' => 'com.zyxware.civiwci'))
-        ),
-        'percentage' => array(
+          'title' => ts('End date', ['domain' => 'com.zyxware.civiwci'])
+        ],
+        'percentage' => [
           'name' => 'percentage',
           'type' => CRM_Utils_Type::T_FLOAT,
-          'title' => ts('Percentage Amount', array('domain' => 'com.zyxware.civiwci')) ,
+          'title' => ts('Percentage Amount', ['domain' => 'com.zyxware.civiwci']) ,
           'required' => true,
-        )
-      );
+        ]
+      ];
     }
     return self::$_fields;
   }
@@ -188,14 +188,14 @@ class CRM_Wci_DAO_ProgressBarFormula extends CRM_Core_DAO
   static function &fieldKeys()
   {
     if (!(self::$_fieldKeys)) {
-      self::$_fieldKeys = array(
+      self::$_fieldKeys = [
         'id' => 'progress_bar_formula_id',
         'contribution_page_id' => 'contribution_page_id',
         'progress_bar_id' => 'progress_bar_id',
         'start_date' => 'start_date',
         'end_date' => 'end_date',
         'percentage' => 'percentage'
-      );
+      ];
     }
     return self::$_fieldKeys;
   }
@@ -230,7 +230,7 @@ class CRM_Wci_DAO_ProgressBarFormula extends CRM_Core_DAO
   static function &import($prefix = false)
   {
     if (!(self::$_import)) {
-      self::$_import = array();
+      self::$_import = [];
       $fields = self::fields();
       foreach($fields as $name => $field) {
         if (CRM_Utils_Array::value('import', $field)) {
@@ -255,7 +255,7 @@ class CRM_Wci_DAO_ProgressBarFormula extends CRM_Core_DAO
   static function &export($prefix = false)
   {
     if (!(self::$_export)) {
-      self::$_export = array();
+      self::$_export = [];
       $fields = self::fields();
       foreach($fields as $name => $field) {
         if (CRM_Utils_Array::value('export', $field)) {

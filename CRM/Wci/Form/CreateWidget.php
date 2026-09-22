@@ -51,76 +51,76 @@ class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
     $this->_id = CRM_Utils_Request::retrieve('id', 'Positive', $this,
           FALSE, NULL, 'REQUEST' );
 
-    $this->_colorFields = array('color_title' => array(ts('Title Text Color'),
+    $this->_colorFields = ['color_title' => [ts('Title Text Color'),
         'text',
         FALSE,
         '#BF0F0F',
-      ),
-      'color_title_bg' => array(ts('Title background color'),
+      ],
+      'color_title_bg' => [ts('Title background color'),
         'text',
         FALSE,
         '#FFFFFF',
-      ),
-      'color_bar' => array(ts('Progress Bar Color'),
+      ],
+      'color_bar' => [ts('Progress Bar Color'),
         'text',
         FALSE,
         '#BF0F0F',
-      ),
-      'color_bar_bg' => array(ts('Progress Bar Background Color'),
+      ],
+      'color_bar_bg' => [ts('Progress Bar Background Color'),
         'text',
         FALSE,
         '#FFFFFF',
-      ),
-      'color_widget_bg' => array(ts('Background color'),
+      ],
+      'color_widget_bg' => [ts('Background color'),
         'text',
         FALSE,
         '#FFFFFF',
-      ),
-      'color_description' => array(ts('Description color'),
+      ],
+      'color_description' => [ts('Description color'),
         'text',
         FALSE,
         '#000000',
-      ),
-      'color_border' => array(ts('Border color'),
+      ],
+      'color_border' => [ts('Border color'),
         'text',
         FALSE,
         '#BF0F0F',
-      ),
-      'color_button' => array(ts('Button text color'),
+      ],
+      'color_button' => [ts('Button text color'),
         'text',
         FALSE,
         '#FFFFFF',
-      ),
-      'color_button_bg' => array(ts('Button background color'),
+      ],
+      'color_button_bg' => [ts('Button background color'),
         'text',
         FALSE,
         '#BF0F0F',
-      ),
-      'color_btn_newsletter' => array(ts('Newsletter Button text color'),
+      ],
+      'color_btn_newsletter' => [ts('Newsletter Button text color'),
         'text',
         FALSE,
         '#FFFFFF',
-      ),
-      'color_btn_newsletter_bg' => array(ts('Newsletter Button color'),
+      ],
+      'color_btn_newsletter_bg' => [ts('Newsletter Button color'),
         'text',
         FALSE,
         '#BF0F0F',
-      ),
-      'newsletter_text' => array(ts('Newsletter text'),
+      ],
+      'newsletter_text' => [ts('Newsletter text'),
         'text',
         FALSE,
         'Get the monthly newsletter',
-      ),
-      'color_newsletter_text' => array(ts('Newsletter text color'),
+      ],
+      'color_newsletter_text' => [ts('Newsletter text color'),
         'text',
         FALSE,
         '#BF0F0F',
-      ),
-      );
+      ],
+      ];
   }
 
   function setDefaultValues() {
-    $defaults = array();
+    $defaults = [];
     if (!isset($this->_id)) {
       $defaults['size_variant'] = 'normal';
       $defaults['show_pb_perc'] = 1;
@@ -140,7 +140,7 @@ class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
     $this->add('text', 'button_title', ts('Contribution button title'))->setSize(45);
     $this->add('select', 'progress_bar', ts('Progress bar'), $this->getProgressBars());
 
-    $pbtype = array();
+    $pbtype = [];
     $pbtype[1] = "Percentage";
     $pbtype[0] = "Amount";
     $this->addRadio('show_pb_perc', ts('Progressbar caption type'), $pbtype,
@@ -165,92 +165,92 @@ class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
     $this->add('textarea', 'custom_template', ts('Custom template:<br><SMALL><font color="red">Please customize the smarty v2 template only if you know what you are doing</font></SMALL>'), 'style=width:94%')->setRows(10);
 
     $this->addElement('submit','preview','name="Save and Preview" id="preview"');
-    $this->addButtons(array(
-      array(
+    $this->addButtons([
+      [
         'type' => 'submit',
         'name' => ts('Save'),
         'isDefault' => TRUE,
-      ),
-        array(
+      ],
+        [
           'type' => 'next',
           'name' => ts('Save & Preview'),
-        ),
-    ));
+        ],
+    ]);
     // export form elements
     $this->assign('elementNames', $this->getRenderableElementNames());
     if (isset($this->_id)) {
 
       $query = "SELECT * FROM civicrm_wci_widget WHERE id=%1";
-      $params = array(1 => array($this->_id, 'Integer'));
+      $params = [1 => [$this->_id, 'Integer']];
 
       $dao = CRM_Core_DAO::executeQuery($query, $params, TRUE, 'CRM_Wci_DAO_Widget');
 
       while ($dao->fetch()) {
-        $wid_page[$dao->id] = array();
+        $wid_page[$dao->id] = [];
         CRM_Core_DAO::storeValues($dao, $wid_page[$dao->id]);
-        $this->setDefaults(array(
-              'title' => $wid_page[$dao->id]['title']));
-        $this->setDefaults(array(
-              'logo_image' => $wid_page[$dao->id]['logo_image']));
-        $this->setDefaults(array(
-              'image' => $wid_page[$dao->id]['image']));
-        $this->setDefaults(array(
-              'button_link_to' => $wid_page[$dao->id]['button_link_to']));
-        $this->setDefaults(array(
-              'button_title' => $wid_page[$dao->id]['button_title']));
-        $this->setDefaults(array(
-              'progress_bar' => $dao->progress_bar_id));
+        $this->setDefaults([
+              'title' => $wid_page[$dao->id]['title']]);
+        $this->setDefaults([
+              'logo_image' => $wid_page[$dao->id]['logo_image']]);
+        $this->setDefaults([
+              'image' => $wid_page[$dao->id]['image']]);
+        $this->setDefaults([
+              'button_link_to' => $wid_page[$dao->id]['button_link_to']]);
+        $this->setDefaults([
+              'button_title' => $wid_page[$dao->id]['button_title']]);
+        $this->setDefaults([
+              'progress_bar' => $dao->progress_bar_id]);
         $description = $wid_page[$dao->id]['description'];
-        $this->setDefaults(array(
-              'description' => $description));
-        $this->setDefaults(array(
-              'email_signup_group_id' => $wid_page[$dao->id]['email_signup_group_id']));
-        $this->setDefaults(array(
-              'size_variant' => $dao->size_variant));
-        $this->setDefaults(array(
-              'color_title' => $wid_page[$dao->id]['color_title']));
-        $this->setDefaults(array(
-              'color_title_bg' => $wid_page[$dao->id]['color_title_bg']));
-        $this->setDefaults(array(
-              'color_bar' => $wid_page[$dao->id]['color_progress_bar']));
-        $this->setDefaults(array(
-              'color_bar_bg' => $wid_page[$dao->id]['color_progress_bar_bg']));
-        $this->setDefaults(array(
-              'color_widget_bg' => $wid_page[$dao->id]['color_widget_bg']));
-        $this->setDefaults(array(
-              'color_description' => $wid_page[$dao->id]['color_description']));
-        $this->setDefaults(array(
-              'color_border' => $wid_page[$dao->id]['color_border']));
-        $this->setDefaults(array(
-              'color_button' => $wid_page[$dao->id]['color_button']));
-        $this->setDefaults(array(
-              'color_button_bg' => $wid_page[$dao->id]['color_button_bg']));
-        $this->setDefaults(array(
-              'style_rules' => $wid_page[$dao->id]['style_rules']));
-        $this->setDefaults(array(
-              'override' => $wid_page[$dao->id]['override']));
-        $this->setDefaults(array(
-              'hide_title' => $wid_page[$dao->id]['hide_title']));
-        $this->setDefaults(array(
-              'hide_border' => $wid_page[$dao->id]['hide_border']));
-        $this->setDefaults(array(
-              'hide_pbcap' => $wid_page[$dao->id]['hide_pbcap']));
-        $this->setDefaults(array(
-              'show_pb_perc' => $wid_page[$dao->id]['show_pb_perc']));
+        $this->setDefaults([
+              'description' => $description]);
+        $this->setDefaults([
+              'email_signup_group_id' => $wid_page[$dao->id]['email_signup_group_id']]);
+        $this->setDefaults([
+              'size_variant' => $dao->size_variant]);
+        $this->setDefaults([
+              'color_title' => $wid_page[$dao->id]['color_title']]);
+        $this->setDefaults([
+              'color_title_bg' => $wid_page[$dao->id]['color_title_bg']]);
+        $this->setDefaults([
+              'color_bar' => $wid_page[$dao->id]['color_progress_bar']]);
+        $this->setDefaults([
+              'color_bar_bg' => $wid_page[$dao->id]['color_progress_bar_bg']]);
+        $this->setDefaults([
+              'color_widget_bg' => $wid_page[$dao->id]['color_widget_bg']]);
+        $this->setDefaults([
+              'color_description' => $wid_page[$dao->id]['color_description']]);
+        $this->setDefaults([
+              'color_border' => $wid_page[$dao->id]['color_border']]);
+        $this->setDefaults([
+              'color_button' => $wid_page[$dao->id]['color_button']]);
+        $this->setDefaults([
+              'color_button_bg' => $wid_page[$dao->id]['color_button_bg']]);
+        $this->setDefaults([
+              'style_rules' => $wid_page[$dao->id]['style_rules']]);
+        $this->setDefaults([
+              'override' => $wid_page[$dao->id]['override']]);
+        $this->setDefaults([
+              'hide_title' => $wid_page[$dao->id]['hide_title']]);
+        $this->setDefaults([
+              'hide_border' => $wid_page[$dao->id]['hide_border']]);
+        $this->setDefaults([
+              'hide_pbcap' => $wid_page[$dao->id]['hide_pbcap']]);
+        $this->setDefaults([
+              'show_pb_perc' => $wid_page[$dao->id]['show_pb_perc']]);
 
-        $this->setDefaults(array(
-              'color_btn_newsletter' => $wid_page[$dao->id]['color_btn_newsletter']));
-        $this->setDefaults(array(
-              'color_btn_newsletter_bg' => $wid_page[$dao->id]['color_btn_newsletter_bg']));
-        $this->setDefaults(array(
-              'newsletter_text' => $wid_page[$dao->id]['newsletter_text']));
-        $this->setDefaults(array(
-              'color_newsletter_text' => $wid_page[$dao->id]['color_newsletter_text']));
+        $this->setDefaults([
+              'color_btn_newsletter' => $wid_page[$dao->id]['color_btn_newsletter']]);
+        $this->setDefaults([
+              'color_btn_newsletter_bg' => $wid_page[$dao->id]['color_btn_newsletter_bg']]);
+        $this->setDefaults([
+              'newsletter_text' => $wid_page[$dao->id]['newsletter_text']]);
+        $this->setDefaults([
+              'color_newsletter_text' => $wid_page[$dao->id]['color_newsletter_text']]);
 
         if(true == $wid_page[$dao->id]['override']) {
           $cust_templ =  html_entity_decode($wid_page[$dao->id]['custom_template']);
-          $this->setDefaults(array(
-              'custom_template' => $cust_templ));
+          $this->setDefaults([
+              'custom_template' => $cust_templ]);
         } else {
           $output = file_get_contents('templates/CRM/Wci/Page/WCIWidget.tpl', FILE_USE_INCLUDE_PATH);
           $elem = $this->getElement('custom_template');
@@ -302,35 +302,35 @@ class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
     }
 
     $title = str_replace("'", "''", $values['title']);
-    $params = array(1 => array($title, 'String'),
-      2 => array($values['logo_image'], 'String'),
-      3 => array($values['image'], 'String'),
-      4 => array($values['button_title'], 'String'),
-      5 => array($values['button_link_to'], 'String'),
-      6 => array($values['progress_bar'], 'Integer'),
-      7 => array(str_replace("'", "''", $values['description']), 'String'),
-      8 => array($values['email_signup_group_id'], 'String'),
-      9 => array($values['size_variant'], 'String'),
-      10 => array($values['color_title'], 'String'),
-      11 => array($values['color_title_bg'], 'String'),
-      12 => array($values['color_bar'], 'String'),
-      13 => array($values['color_bar_bg'], 'String'),
-      14 => array($values['color_widget_bg'], 'String'),
-      15 => array($values['color_description'], 'String'),
-      16 => array($values['color_border'], 'String'),
-      17 => array($values['color_button'], 'String'),
-      18 => array($values['color_button_bg'], 'String'),
-      19 => array($hide_title, 'Integer'),
-      20 => array($hide_border, 'Integer'),
-      21 => array($hide_pbcap, 'Integer'),
-      22 => array($values['color_btn_newsletter'], 'String'),
-      23 => array($values['color_btn_newsletter_bg'], 'String'),
-      24 => array($values['newsletter_text'], 'String'),
-      25 => array($values['color_newsletter_text'], 'String'),
-      26 => array($values['style_rules'], 'String'),
-      27 => array($override, 'Integer'),
-      28 => array($values['custom_template'], 'String'),
-      29 => array($values['show_pb_perc'], 'Integer'),);
+    $params = [1 => [$title, 'String'],
+      2 => [$values['logo_image'], 'String'],
+      3 => [$values['image'], 'String'],
+      4 => [$values['button_title'], 'String'],
+      5 => [$values['button_link_to'], 'String'],
+      6 => [$values['progress_bar'], 'Integer'],
+      7 => [str_replace("'", "''", $values['description']), 'String'],
+      8 => [$values['email_signup_group_id'], 'String'],
+      9 => [$values['size_variant'], 'String'],
+      10 => [$values['color_title'], 'String'],
+      11 => [$values['color_title_bg'], 'String'],
+      12 => [$values['color_bar'], 'String'],
+      13 => [$values['color_bar_bg'], 'String'],
+      14 => [$values['color_widget_bg'], 'String'],
+      15 => [$values['color_description'], 'String'],
+      16 => [$values['color_border'], 'String'],
+      17 => [$values['color_button'], 'String'],
+      18 => [$values['color_button_bg'], 'String'],
+      19 => [$hide_title, 'Integer'],
+      20 => [$hide_border, 'Integer'],
+      21 => [$hide_pbcap, 'Integer'],
+      22 => [$values['color_btn_newsletter'], 'String'],
+      23 => [$values['color_btn_newsletter_bg'], 'String'],
+      24 => [$values['newsletter_text'], 'String'],
+      25 => [$values['color_newsletter_text'], 'String'],
+      26 => [$values['style_rules'], 'String'],
+      27 => [$override, 'Integer'],
+      28 => [$values['custom_template'], 'String'],
+      29 => [$values['show_pb_perc'], 'Integer'],];
 
     if (isset($this->_id)) {
       $sql = "UPDATE civicrm_wci_widget SET title = %1, logo_image =%2,
@@ -345,7 +345,7 @@ class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
       color_newsletter_text = %25, style_rules = %26, override = %27,
       custom_template = %28, show_pb_perc = %29 where id = %30";
 
-      $params += array(30 => array($this->_id, 'Integer'),);
+      $params += [30 => [$this->_id, 'Integer'],];
     }
     else {
       $sql = "INSERT INTO civicrm_wci_widget (title, logo_image, image,
@@ -391,9 +391,9 @@ class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
   }
 
   function getProgressBars() {
-    $options = array(
+    $options = [
       0 => ts('- select -'),
-    );
+    ];
     $pbList = CRM_Wci_BAO_ProgressBar::getProgressbarList();
     foreach ($pbList as $pb) {
       $options[$pb['id']] = $pb['name'];
@@ -403,14 +403,14 @@ class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
   }
 
   function getGroupOptions() {
-    $options = array(
+    $options = [
       0 => ts('- select -'),
-    );
+    ];
 
-    $result = civicrm_api3('group', 'get', array(
+    $result = civicrm_api3('group', 'get', [
       'group_type' => '2', // 2 is for group type - newsletter
       'rowCount' => 0,
-    ));
+    ]);
     if (0 != $result['count']) {
       foreach ($result['values'] as $group) {
         $options[$group['id']] = $group['title'];
@@ -420,11 +420,11 @@ class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
   }
 
   function getSizeOptions() {
-    $options = array(
+    $options = [
       'thin' => ts('Thin (150px)'),
       'normal' => ts('Normal (200px)'),
       'wide' => ts('Wide (250px)'),
-    );
+    ];
 
     return $options;
   }
@@ -439,7 +439,7 @@ class CRM_Wci_Form_CreateWidget extends CRM_Core_Form {
     // auto-rendered in the loop -- such as "qfKey" and "buttons".  These
     // items don't have labels.  We'll identify renderable by filtering on
     // the 'label'.
-    $elementNames = array();
+    $elementNames = [];
     foreach ($this->_elements as $element) {
       $label = $element->getLabel();
       if (!empty($label)) {

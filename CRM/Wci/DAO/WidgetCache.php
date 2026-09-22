@@ -130,27 +130,27 @@ class CRM_Wci_DAO_WidgetCache extends CRM_Core_DAO
   static function &fields()
   {
     if (!(self::$_fields)) {
-      self::$_fields = array(
-        'widget_id' => array(
+      self::$_fields = [
+        'widget_id' => [
           'name' => 'widget_id',
           'type' => CRM_Utils_Type::T_INT,
           'required' => true,
-        ) ,
-        'widget_code' => array(
+        ] ,
+        'widget_code' => [
           'name' => 'widget_code',
           'type' => CRM_Utils_Type::T_TEXT,
-          'title' => ts('widget code', array('domain' => 'com.zyxware.civiwci')) ,
+          'title' => ts('widget code', ['domain' => 'com.zyxware.civiwci']) ,
           'required' => false,
-        ) ,
-        'expire' => array(
+        ] ,
+        'expire' => [
           'name' => 'ts',
           'type' => CRM_Utils_Type::T_INT,
-          'title' => ts('timestamp', array('domain' => 'com.zyxware.civiwci')) ,
+          'title' => ts('timestamp', ['domain' => 'com.zyxware.civiwci']) ,
           'required' => false,
-        ) ,
+        ] ,
 
 
-      );
+      ];
     }
     return self::$_fields;
   }
@@ -164,11 +164,11 @@ class CRM_Wci_DAO_WidgetCache extends CRM_Core_DAO
   static function &fieldKeys()
   {
     if (!(self::$_fieldKeys)) {
-      self::$_fieldKeys = array(
+      self::$_fieldKeys = [
         'widget_id' => 'widget_id',
         'widget_code' => 'widget_code',
         'expire' => 'expire',
-      );
+      ];
     }
     return self::$_fieldKeys;
   }
@@ -203,7 +203,7 @@ class CRM_Wci_DAO_WidgetCache extends CRM_Core_DAO
   static function &import($prefix = false)
   {
     if (!(self::$_import)) {
-      self::$_import = array();
+      self::$_import = [];
       $fields = self::fields();
       foreach($fields as $name => $field) {
         if (CRM_Utils_Array::value('import', $field)) {
@@ -227,7 +227,7 @@ class CRM_Wci_DAO_WidgetCache extends CRM_Core_DAO
   static function &export($prefix = false)
   {
     if (!(self::$_export)) {
-      self::$_export = array();
+      self::$_export = [];
       $fields = self::fields();
       foreach($fields as $name => $field) {
         if (CRM_Utils_Array::value('export', $field)) {

@@ -98,8 +98,8 @@ function onReady( ) {
 
     $config = CRM_Core_Config::singleton();
 
-    $embedId = CRM_Utils_Request::retrieve('id', 'Positive', CRM_Core_DAO::$_nullObject);
-    $preview = CRM_Utils_Request::retrieve('preview', 'Positive', CRM_Core_DAO::$_nullObject);
+    $embedId = CRM_Utils_Request::retrieve('id', 'Positive', NULL);
+    $preview = CRM_Utils_Request::retrieve('preview', 'Positive', NULL);
 
     $output  = $license_text;
     $output .= 'var wciwidgetcode =  ' . CRM_Wci_WidgetCode::get_widget_code($embedId, $preview) . ';';
